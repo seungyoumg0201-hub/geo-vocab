@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r5">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r6">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/favicon-32.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -126,6 +126,12 @@ details{margin-top:8px}summary{cursor:pointer;font-weight:700;color:var(--acc);m
 .dday{color:var(--bad);font-variant-numeric:tabular-nums}.dday.today{background:var(--bad);color:#fff;padding:0 6px;border-radius:6px}
 .schbar{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;font-size:.78em}.sch{background:var(--bg2,rgba(127,127,127,.08));border-radius:999px;padding:4px 10px;color:var(--mut)}.sch b{color:var(--fg);font-weight:600}.sch em{font-style:normal;color:var(--acc);font-weight:700;margin-left:2px}.sch.past{opacity:.5}.sch.now{outline:2px solid var(--bad)}
 .schbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-left:-4px;margin-right:-4px;padding:2px 4px}.schbar::-webkit-scrollbar{display:none}.sch{flex:none;white-space:nowrap}
+.seg{display:flex;gap:4px;background:var(--bd);padding:3px;border-radius:12px}.seg button{flex:1;border:0;background:transparent;padding:8px 4px;border-radius:9px;font-weight:600;color:var(--mut);min-height:38px}.seg button.on{background:var(--card,#fff);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.rank{list-style:none;margin:8px 0 0;padding:0}.rank li{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--bd)}.rank li.me{background:rgba(49,130,246,.08);border-radius:10px}.rank .rk{width:2em;text-align:center;font-weight:700}.rank .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rank .nm em{font-style:normal;font-size:.75em;background:var(--acc);color:#fff;border-radius:6px;padding:1px 6px;margin-left:4px}.rank .vl{font-variant-numeric:tabular-nums;font-weight:700}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;box-shadow:0 0 0 3px rgba(34,197,94,.2);animation:pulse 2s infinite}@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(34,197,94,0)}}
+.onchip{float:right;border:0;background:rgba(34,197,94,.1);color:var(--fg);border-radius:999px;padding:4px 10px;font-size:.78em;margin:-4px -4px 6px 8px;min-height:28px}.onh{font-size:1em;margin:16px 0 8px}.onl{display:flex;flex-wrap:wrap;gap:6px}.onl span{background:var(--bd);border-radius:999px;padding:3px 10px;font-size:.85em}.onl span.me{background:var(--acc);color:#fff}
+.gbtn b{color:#4285f4;margin-right:4px}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
 </style></head><body>
 <header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="review"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="card"><span class="ic">🃏</span>카드</button><button data-m="quiz"><span class="ic">✏️</span>퀴즈</button><button data-m="stats"><span class="ic">📊</span>통계</button><button data-m="data"><span class="ic">⚙️</span>설정</button></nav>
@@ -468,6 +474,73 @@ function ddSched(){const rows=SCHED.map(([k,d])=>{const n=dayDiff(d);const [y,m,
 (function(){const _rh=renderHome;renderHome=function(){_rh.apply(this,arguments);const c=document.querySelector('#v-home .box');if(c&&!c.querySelector('.schbar'))c.insertAdjacentHTML('beforeend',ddSched())};
  function arm(){const now=Date.now(),k=new Date(now+9*3600e3),next=Date.UTC(k.getUTCFullYear(),k.getUTCMonth(),k.getUTCDate()+1)-9*3600e3;setTimeout(()=>{if(typeof cur!=='undefined'&&cur==='home')renderHome();else{try{renderHome()}catch(e){}}arm()},next-now+1000)}arm();
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&document.querySelector('#v-home.on, #v-home:not([hidden])'))try{renderHome()}catch(e){}});})();
+// ---- Cloud (optional): Firebase Auth + Firestore sync + RTDB presence + leaderboard. App works fully without it.
+var FBV='10.12.2',FB_CFG={apiKey:'AIzaSyD_1gGwE9fuurmdR3OFKiTy5RfWRGpPIEU',authDomain:'geo-vocab.firebaseapp.com',projectId:'geo-vocab',storageBucket:'geo-vocab.firebasestorage.app',messagingSenderId:'871138215339',appId:'1:871138215339:web:4221ec7bff77e8cae73eee',databaseURL:'https://geo-vocab-default-rtdb.asia-southeast1.firebasedatabase.app'};
+var CL={st:'off',user:null,err:'',online:[],board:null,boardAt:0,dirty:false,lastPush:0,syncMsg:''};
+var fb=null,fbP=null;
+function cloudLoad(){if(fbP)return fbP;const u=m=>`https://www.gstatic.com/firebasejs/${FBV}/firebase-${m}.js`;CL.st='loading';
+ fbP=Promise.all(['app','auth','firestore','database'].map(m=>import(u(m)))).then(([A,Au,F,D])=>{const app=A.initializeApp(FB_CFG);fb={A,Au,F,D,app,auth:Au.getAuth(app),db:F.getFirestore(app),rt:D.getDatabase(app)};CL.st='ready';
+  Au.onAuthStateChanged(fb.auth,u=>{CL.user=u;localStorage.setItem('gv_fb',u?'1':'0');if(u)onLogin(u);else{CL.syncMsg='';presenceOff()}cloudUI()});watchOnline();return fb})
+ .catch(e=>{CL.st='fail';CL.err=navigator.onLine?'클라우드 기능을 불러오지 못했어요':'오프라인 — 로그인·랭킹은 온라인에서 사용할 수 있어요';fbP=null;cloudUI();throw e});return fbP}
+function nick(){return (S.nick||'').trim()||(CL.user?'학습자'+CL.user.uid.slice(0,4):'')}
+function cleanNick(s){return (s||'').replace(/[<>\u0000-\u001f]/g,'').trim().slice(0,16)}
+// metrics
+function wkStart(d=today()){return d-((d+3)%7)}
+function metrics(){let reviews=0,wk=0;const w0=wkStart();for(const d in hist){const h=hist[d],v=(h.rev||0)+(h.n||0);reviews+=v;if(+d>=w0)wk+=v}
+ let c=0,n=0;for(const k in acc){c+=acc[k].c||0;n+=acc[k].n||0}return {reviews:Math.min(reviews,9999999),wk:Math.min(wk,999999),wkId:w0,acc:n?Math.round(c/n*1000)/10:0,answered:Math.min(n,9999999),streak:Math.min(streak(),10000)}}
+// sync
+async function onLogin(u){const {F}=fb;CL.syncMsg='동기화 중…';cloudUI();try{const ref=F.doc(fb.db,'users',u.uid);const snap=await F.getDoc(ref);
+  if(snap.exists()){const d=snap.data();if(d.p){try{mergeIn(JSON.parse(d.p))}catch(e){}}if(!S.nick&&d.nick){S.nick=d.nick;save()}}
+  if(!S.nick){S.nick=cleanNick((u.displayName||'').split(' ')[0])||('학습자'+u.uid.slice(0,4));save()}
+  await cloudPush(true);presenceOn();CL.syncMsg='✅ 동기화됨';try{render()}catch(e){}}catch(e){CL.syncMsg='⚠️ 동기화 실패: '+(e.code||e.message);console.warn(e)}cloudUI()}
+async function cloudPush(force){if(!fb||!CL.user)return;if(!force&&!CL.dirty)return;CL.dirty=false;const {F}=fb,uid=CL.user.uid,m=metrics();
+ const p=JSON.stringify(progressObj());if(p.length>900000){CL.syncMsg='⚠️ 진도 데이터가 너무 커서 클라우드에 저장할 수 없어요';return}
+ const nk=cleanNick(nick())||'학습자';
+ await F.setDoc(F.doc(fb.db,'users',uid),{p,nick:nk,v:1,updatedAt:F.serverTimestamp()});
+ await F.setDoc(F.doc(fb.db,'leaderboard',uid),{nick:nk,reviews:m.reviews,wk:m.wk,wkId:m.wkId,acc:m.acc,answered:m.answered,streak:m.streak,updatedAt:F.serverTimestamp()});
+ CL.lastPush=Date.now();CL.board=null}
+(function(){const set0=LS.set;let t=null;LS.set=(k,v)=>{set0(k,v);if(PKEYS.includes(k)&&CL.user){CL.dirty=true;clearTimeout(t);t=setTimeout(()=>cloudPush().catch(e=>console.warn(e)),5000)}};
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&CL.dirty)cloudPush().catch(()=>{})})})();
+// presence
+var presRef=null;
+function presenceOn(){if(!fb||!CL.user)return;const {D}=fb;presRef=D.ref(fb.rt,'status/'+CL.user.uid);const con=D.ref(fb.rt,'.info/connected');
+ D.onValue(con,s=>{if(s.val()!==true||!presRef)return;D.onDisconnect(presRef).remove().then(()=>D.set(presRef,{nick:cleanNick(nick())||'학습자',at:D.serverTimestamp()}))})}
+function presenceOff(){if(presRef&&fb){fb.D.remove(presRef).catch(()=>{});presRef=null}}
+function watchOnline(){const {D}=fb;D.onValue(D.ref(fb.rt,'status'),s=>{const v=s.val()||{};CL.online=Object.entries(v).map(([k,x])=>({uid:k,nick:(x&&x.nick)||'학습자'}));onlineUI()},()=>{CL.online=[];CL.onErr=true;onlineUI()})}
+async function login(){try{await cloudLoad();const {Au}=fb,pv=new Au.GoogleAuthProvider();const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+  if(standalone)await Au.signInWithRedirect(fb.auth,pv);else await Au.signInWithPopup(fb.auth,pv)}catch(e){if(e&&e.code=='auth/popup-blocked'){try{await fb.Au.signInWithRedirect(fb.auth,new fb.Au.GoogleAuthProvider())}catch(_){}}else if(e&&e.code&&e.code!='auth/popup-closed-by-user'&&e.code!='auth/cancelled-popup-request')toast('로그인 실패: '+e.code)}}
+async function logout(){if(!fb)return;try{await cloudPush(true)}catch(e){}presenceOff();await fb.Au.signOut(fb.auth);toast('로그아웃했어요 — 이 기기의 진도는 그대로 남아 있어요')}
+// leaderboard
+async function loadBoard(){await cloudLoad();const {F}=fb;const q=F.query(F.collection(fb.db,'leaderboard'),F.orderBy('reviews','desc'),F.limit(200));const s=await F.getDocs(q);CL.board=s.docs.map(d=>Object.assign({uid:d.id},d.data()));CL.boardAt=Date.now();return CL.board}
+var rankTab='wk';
+function boardHTML(){if(!CL.board)return `<p class="mut">${CL.st=='fail'?esc(CL.err):'랭킹 불러오는 중…'}</p>`;const w0=wkStart(),me=CL.user&&CL.user.uid;
+ const key={wk:'wk',all:'reviews',acc:'acc',streak:'streak'}[rankTab];let rows=CL.board.map(r=>Object.assign({},r,{wk:r.wkId==w0?r.wk:0}));
+ if(rankTab=='acc')rows=rows.filter(r=>(r.answered||0)>=30);rows=rows.filter(r=>(r[key]||0)>0).sort((a,b)=>(b[key]||0)-(a[key]||0)).slice(0,50);
+ const unit={wk:'회',all:'회',acc:'%',streak:'일'}[rankTab];
+ if(!rows.length)return `<p class="mut">${rankTab=='acc'?'30문항 이상 푼 학습자가 아직 없어요.':'아직 기록이 없어요. 첫 번째 주인공이 되어 보세요!'}</p>`;
+ return `<ol class="rank">${rows.map((r,i)=>`<li class="${r.uid==me?'me':''}"><span class="rk">${i<3?['🥇','🥈','🥉'][i]:i+1}</span><span class="nm">${esc(r.nick||'학습자')}${r.uid==me?' <em>나</em>':''}</span><span class="vl">${(r[key]||0).toLocaleString()}${unit}</span></li>`).join('')}</ol>`}
+function rankSection(){return `<div class="box sec" id="rankbox"><h2>🏆 랭킹</h2><div class="seg" id="rtab">${[['wk','이번 주'],['all','누적'],['acc','정답률'],['streak','연속 학습']].map(([k,l])=>`<button data-k="${k}" class="${rankTab==k?'on':''}">${l}</button>`).join('')}</div>
+ <p class="mut" style="margin:6px 0">${rankTab=='wk'?'월요일 4시 기준 이번 주 인출·문제 풀이 횟수':rankTab=='acc'?'30문항 이상 푼 학습자의 누적 정답률':rankTab=='streak'?'하루도 빠짐없이 공부한 연속 일수':'지금까지의 인출·문제 풀이 횟수'}${CL.user?'':' · 로그인하면 내 기록도 올라가요'}</p><div id="rlist">${boardHTML()}</div><div id="onl2"></div></div>`}
+function bindRank(){const t=$('#rtab');if(!t)return;t.onclick=e=>{const b=e.target.closest('button');if(!b)return;rankTab=b.dataset.k;$$('#rtab button').forEach(x=>x.classList.toggle('on',x==b));$('#rlist').innerHTML=boardHTML()};
+ if(!CL.board||Date.now()-CL.boardAt>60000)loadBoard().then(()=>{const l=$('#rlist');if(l)l.innerHTML=boardHTML()}).catch(e=>{const l=$('#rlist');if(l)l.innerHTML=`<p class="mut">${esc(CL.st=='fail'?CL.err:(e.code=='permission-denied'?'랭킹 서버를 준비 중이에요. 잠시 후 다시 확인해 주세요.':'랭킹을 불러오지 못했어요 ('+(e.code||'오류')+')'))}</p>`});onlineUI()}
+function onlineUI(){const n=CL.online.length;const chip=$('#onl');if(chip){chip.classList.toggle('hide',!fb||CL.st!='ready'||CL.onErr);chip.innerHTML=`<span class="dot"></span>지금 접속 중 <b>${n}</b>명`}
+ const box=$('#onl2');if(box)box.innerHTML=fb&&CL.st=='ready'&&!CL.onErr?`<h3 class="onh"><span class="dot"></span>지금 접속 중 ${n}명</h3>${n?`<div class="onl">${CL.online.slice(0,60).map(o=>`<span class="${CL.user&&o.uid==CL.user.uid?'me':''}">${esc(o.nick)}</span>`).join('')}${n>60?`<span>외 ${n-60}명</span>`:''}</div>`:'<p class="mut">로그인한 학습자가 접속하면 여기에 보여요.</p>'}`:''}
+function accountSection(){const u=CL.user;return `<div class="box sec" id="acct"><h2>👤 계정 · 클라우드 동기화 <span class="mut" style="font-weight:400;font-size:.8em">(선택)</span></h2>
+ ${u?`<p>✅ <b>${esc(u.email||'Google 계정')}</b>로 로그인됨 <span class="mut">${esc(CL.syncMsg)}</span></p>
+ <div class="set"><label>닉네임<span class="mut">랭킹·접속자 목록에 공개돼요 (최대 16자)</span></label><input class="inp" id="snick" maxlength="16" value="${esc(S.nick||'')}" placeholder="${esc(nick())}"></div>
+ <div class="row"><button id="csync">🔄 지금 동기화</button><button id="clogout">로그아웃</button></div>
+ <p class="mut">진도는 자동으로 클라우드에 저장되고, 다른 기기에서 같은 계정으로 로그인하면 합쳐져요. 공개되는 정보는 닉네임과 학습 횟수·정답률·연속 일수뿐이에요.</p>`
+ :`<p class="mut">로그인 없이도 모든 기능을 쓸 수 있어요. Google로 로그인하면 PC·휴대폰 진도가 자동으로 합쳐지고 랭킹에 참여할 수 있어요.</p>
+ <div class="row"><button id="clogin" class="gbtn">${CL.st=='loading'?'불러오는 중…':'<b>G</b> Google로 로그인'}</button></div>${CL.st=='fail'?`<p class="mut">${esc(CL.err)}</p>`:''}`}</div>`}
+function cloudUI(){const a=$('#acct');if(a&&mode=='data'){a.outerHTML=accountSection();bindAcct()}const ub=$('#ubtn');if(ub)ub.textContent=CL.user?'👤':'🔑'}
+function bindAcct(){const l=$('#clogin');if(l)l.onclick=()=>{l.disabled=true;login().finally(()=>{l.disabled=false})};const o=$('#clogout');if(o)o.onclick=()=>logout();
+ const s=$('#csync');if(s)s.onclick=async()=>{s.disabled=true;try{await cloudPush(true);CL.syncMsg='✅ 방금 동기화됨'}catch(e){CL.syncMsg='⚠️ '+(e.code||e.message)}cloudUI()};
+ const n=$('#snick');if(n)n.onchange=async()=>{S.nick=cleanNick(n.value);n.value=S.nick;save();try{await cloudPush(true);if(presRef)fb.D.update(presRef,{nick:cleanNick(nick())||'학습자'});toast('닉네임을 저장했어요')}catch(e){toast('저장 실패: '+(e.code||''))}}}
+(function(){const rd=renderData;renderData=function(){rd.apply(this,arguments);const v=$('#v-data');v.insertAdjacentHTML('afterbegin',accountSection());bindAcct()};
+ const rs=renderStats;renderStats=function(){rs.apply(this,arguments);const v=$('#v-stats');v.insertAdjacentHTML('beforeend',rankSection());bindRank()};
+ const rh=renderHome;renderHome=function(){rh.apply(this,arguments);const b=document.querySelector('#v-home .box');if(b&&!$('#onl'))b.insertAdjacentHTML('afterbegin',`<button id="onl" class="onchip hide" title="랭킹 보기"></button>`);const c=$('#onl');if(c)c.onclick=()=>go('stats');onlineUI()};
+ if(localStorage.getItem('gv_fb')=='1'&&navigator.onLine)(window.requestIdleCallback||setTimeout)(()=>cloudLoad().catch(()=>{}),1);
+ addEventListener('online',()=>{if(localStorage.getItem('gv_fb')=='1')cloudLoad().catch(()=>{})})})();
 // ---- settings & sync
 const PKEYS=['gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
