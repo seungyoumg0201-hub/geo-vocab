@@ -1,0 +1,4977 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>지리 임용 핵심 단어장</title><meta name="theme-color" content="#111827">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--fg:#191f28;--mut:#6b7684;--bd:#e5e8eb;--acc:#3182f6;--accs:#e8f3ff;--ok:#0f9d58;--oks:#e6f6ec;--bad:#e5484d;--bads:#fdecec;--sh:0 4px 20px rgba(0,0,0,.06);--g:#3182f6}
+[data-theme=dark]{--bg:#101318;--card:#1b1f27;--fg:#eef1f5;--mut:#9aa4b2;--bd:#2c323d;--accs:#1c2b45;--oks:#123322;--bads:#3a1a1c;--sh:0 4px 20px rgba(0,0,0,.4)}
+body[data-g=자연지리]{--g:#12b886}body[data-g=인문지리]{--g:#7048e8}body[data-g=지리교육론]{--g:#f59f00}body[data-g="지역지리 및 기타"]{--g:#1c7ed6}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;font-size:17px;line-height:1.7;word-break:keep-all;padding-bottom:84px}
+header{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd)}
+.hd{max-width:820px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px}
+h1{font-size:19px;margin:0;flex:1;letter-spacing:-.3px}h1 b{color:var(--acc)}
+button,select,input,textarea{font:inherit;color:var(--fg)}
+button{cursor:pointer;border:0;background:none;-webkit-tap-highlight-color:transparent}
+.ib{min-width:44px;height:44px;border-radius:12px;background:var(--card);border:1px solid var(--bd);font-size:18px}
+nav{display:flex;gap:4px}nav button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 14px;border-radius:12px;color:var(--mut);font-size:15px;font-weight:600}
+nav button .ic{font-size:20px;line-height:1}nav button.on{color:var(--acc);background:var(--accs)}
+@media(max-width:719px){header{backdrop-filter:none;background:var(--bg)}nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);border-top:1px solid var(--bd);justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}nav button{flex:1;font-size:12px;padding:6px 2px}nav button.on{background:none}.hd nav{}}
+@media(min-width:720px){body{padding-bottom:30px}nav button{flex-direction:row;gap:6px}}
+main{max-width:820px;margin:0 auto;padding:16px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+#cats button{flex:none;min-height:44px;padding:8px 16px;border-radius:999px;background:var(--card);border:1px solid var(--bd);font-weight:600;font-size:15px}
+#cats button.on{background:var(--g);border-color:var(--g);color:#fff}#cats button.on .mut{color:#ffffffcc}
+#subs button{flex:none;min-height:36px;padding:4px 12px;border-radius:999px;font-size:14px;color:var(--mut);background:transparent;border:1px solid var(--bd)}
+#subs button.on{color:var(--g);border-color:var(--g);background:var(--card);font-weight:700}
+.tools{display:flex;gap:8px;margin:4px 0 14px}
+.tools input,.tools select{min-height:46px;border-radius:12px;border:1px solid var(--bd);background:var(--card);padding:0 14px;font-size:16px}
+.tools input{flex:1;min-width:0}.tools button{min-height:46px;padding:0 14px;border-radius:12px;background:var(--card);border:1px solid var(--bd);font-weight:600}
+.prog{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--mut);font-weight:600}
+.bar{flex:1;height:8px;background:var(--bd);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--g);border-radius:99px;transition:width .3s}
+.card{perspective:1400px;height:min(56vh,440px);min-height:320px;margin:14px 0;touch-action:pan-y;user-select:none}
+.inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d;cursor:pointer}
+.flip .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card);border-radius:24px;box-shadow:var(--sh);border:1px solid var(--bd);border-top:6px solid var(--g);padding:56px 28px 28px;display:flex;flex-direction:column;justify-content:center;overflow:auto}
+.back{transform:rotateY(180deg);justify-content:flex-start}
+.term{font-size:clamp(30px,7vw,40px);font-weight:800;text-align:center;letter-spacing:-.5px;line-height:1.3}
+.en{color:var(--mut);text-align:center;margin-top:8px;font-size:17px}
+.hint{color:var(--mut);text-align:center;margin-top:28px;font-size:14px}
+.def{font-size:19px;line-height:1.8;font-weight:500}
+.meta{position:absolute;top:16px;left:20px;right:20px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;color:var(--mut);font-weight:600}
+.meta .sj{color:var(--g)}
+.tag{font-size:12px;background:var(--accs);color:var(--acc);border-radius:8px;padding:3px 8px;font-weight:700;white-space:nowrap}
+.conf{margin-top:18px;padding:12px 14px;background:var(--bg);border-radius:12px;font-size:15px;color:var(--mut)}
+.ctl{display:grid;grid-template-columns:56px 1fr 1fr 56px;gap:10px}
+.ctl button{min-height:56px;border-radius:16px;font-weight:700;font-size:16px;background:var(--card);border:1px solid var(--bd)}
+#ok{background:var(--oks);color:var(--ok);border-color:transparent}#bad{background:var(--bads);color:var(--bad);border-color:transparent}
+.box{background:var(--card);border:1px solid var(--bd);border-radius:24px;padding:24px;box-shadow:var(--sh)}
+.qmeta{font-size:14px;color:var(--mut);font-weight:600}.qq{font-size:21px;font-weight:700;line-height:1.55;margin:10px 0 18px;letter-spacing:-.2px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;margin:10px 0;padding:16px 18px;border-radius:16px;border:2px solid var(--bd);background:var(--card);font-size:17px;line-height:1.6;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--acc)}.opt .n{flex:none;width:28px;height:28px;border-radius:8px;background:var(--bg);display:grid;place-items:center;font-weight:700;font-size:14px;color:var(--mut)}
+.opt.right{border-color:var(--ok);background:var(--oks)}.opt.right .n{background:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bads)}.opt.wrong .n{background:var(--bad);color:#fff}
+.exp{margin-top:16px;padding:18px 20px;border-radius:16px;background:var(--accs);font-size:17px;line-height:1.8}
+.exp.okx{background:var(--oks)}.exp.badx{background:var(--bads)}.exp b{display:block;margin-bottom:4px}
+.nextb{width:100%;min-height:54px;margin-top:14px;border-radius:16px;background:var(--acc);color:#fff;font-weight:700;font-size:17px}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.seg{display:flex;background:var(--bd);border-radius:12px;padding:3px}.seg select{border:0;background:var(--card);border-radius:10px;min-height:40px;padding:0 10px}
+.score{font-weight:700;color:var(--acc)}
+.list .it{background:var(--card);border:1px solid var(--bd);border-left:5px solid var(--g);border-radius:16px;padding:16px 18px;margin-bottom:10px}
+.list .it b{font-size:18px}.mut{color:var(--mut);font-size:14px}
+.hide{display:none!important}textarea{width:100%;height:140px;background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px;font-size:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row button{min-height:44px;padding:0 14px;border-radius:12px;background:var(--bg);border:1px solid var(--bd);font-weight:600}
+code{background:var(--bg);padding:1px 6px;border-radius:6px;font-size:14px}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+</style></head><body>
+<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b></h1>
+<nav><button data-m="card" class="on"><span class="ic">🃏</span>카드</button><button data-m="quiz"><span class="ic">✏️</span>용어 퀴즈</button><button data-m="mcq"><span class="ic">📝</span>5지선다</button><button data-m="list"><span class="ic">📚</span>목록</button><button data-m="data"><span class="ic">⚙️</span>설정</button></nav>
+<button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
+<main>
+<div class="chips" id="cats"></div><div class="chips" id="subs"></div>
+<div class="tools" id="tools"><input id="q" placeholder="🔍 용어·영문·정의 검색" aria-label="검색">
+<select id="filt" aria-label="학습 상태"><option value="all">전체</option><option value="hard">헷갈려요</option><option value="new">미학습</option><option value="ok">외웠어요</option></select>
+<button id="shuf" aria-label="섞기">🔀</button></div>
+<div id="v-card"><div class="prog"><span id="pos"></span><div class="bar"><i id="pbar"></i></div><span id="stat"></span></div>
+<div class="card" id="card"><div class="inner"><div class="face front"><div class="meta"><span class="sj" id="fc"></span><span id="fx"></span></div><div class="term" id="ft"></div><div class="en" id="fe"></div><div class="hint">탭하여 뜻 보기 · 좌우로 밀어 넘기기</div></div>
+<div class="face back"><div class="meta"><span class="sj" id="bc"></span><span id="bm"></span></div><div class="def" id="bd"></div><div class="conf" id="bx"></div></div></div></div>
+<div class="ctl"><button id="prev" aria-label="이전">◀</button><button id="bad">🤔 헷갈려요</button><button id="ok">✅ 외웠어요</button><button id="next" aria-label="다음">▶</button></div></div>
+<div id="v-quiz" class="hide"><div class="qtop"><div class="seg"><select id="qdir"><option value="t2d">용어 → 정의</option><option value="d2t">정의 → 용어</option></select></div><span class="score" id="qscore"></span></div><div class="box" id="qbox"></div></div>
+<div id="v-mcq" class="hide"><div class="qtop"><span class="qmeta">임용 기출 개념 확인</span><span class="score" id="mscore"></span></div><div class="box" id="mbox"></div></div>
+<div id="v-list" class="hide list"></div>
+<div id="v-data" class="hide box"><h2 style="margin-top:0;font-size:20px">데이터 · 설정</h2><p>단어 데이터는 이 파일 안 <code>&lt;script id="terms"&gt;</code> JSON 배열입니다. 필드: <code>term, en, def, cat, distractors[3], exam[]</code>.</p>
+<p>내 서브노트 단어 추가: 같은 형식의 JSON 배열을 붙여넣고 [추가]를 누르면 이 기기에 저장되어 함께 학습됩니다(같은 용어는 덮어씀).</p>
+<textarea id="imp" placeholder='[{"term":"용어","en":"","def":"정의","cat":"지형학","distractors":["a","b","c"]}]'></textarea>
+<div class="row"><button id="impb">추가</button><button id="expb">전체 JSON 내보내기</button><button id="clr">추가 단어 삭제</button><button id="rst">학습 기록 초기화</button></div><p class="mut" id="dmsg"></p>
+<p class="mut">기출 표기(예: 2024 A1)는 KICE 공개 문제지(2017~2026학년도)와 사용자 기출 분석 자료를 대조한 것이며, * 표시는 2016학년도 이전으로 사용자 기출 분석 노트 기준입니다.</p></div>
+</main>
+<script type="application/json" id="terms">[
+{
+"term": "페디먼트",
+"en": "Pediment",
+"def": "건조 지역 산지 전면의 기반암이 침식되어 형성된 완경사 침식면. 얇은 퇴적물로 덮임.",
+"cat": "지형학",
+"distractors": [
+"바하다",
+"선상지",
+"메사"
+],
+"exam": [
+"2022 A12"
+]
+},
+{
+"term": "바하다",
+"en": "Bajada",
+"def": "건조 지역 산록에 여러 선상지가 연결되어 형성된 복합 선상지.",
+"cat": "지형학",
+"distractors": [
+"페디먼트",
+"선상지",
+"플라야"
+],
+"exam": [
+"2022 A"
+]
+},
+{
+"term": "사막 포도",
+"en": "Desert pavement",
+"def": "바람이 세립 물질을 날려 보내(디플레이션) 자갈만 지표에 남아 포장된 듯한 지표면.",
+"cat": "지형학",
+"distractors": [
+"야르당",
+"버섯바위",
+"삼릉석"
+],
+"exam": [
+"2021 A"
+]
+},
+{
+"term": "바르한",
+"en": "Barchan",
+"def": "모래 공급이 적고 일정 방향 바람이 부는 곳의 초승달 모양 사구. 뿔은 바람 불어가는 쪽.",
+"cat": "지형학",
+"distractors": [
+"성사구",
+"종사구",
+"횡사구"
+],
+"exam": [
+"2021 A"
+]
+},
+{
+"term": "도약",
+"en": "Saltation",
+"def": "모래 입자가 바람·물에 의해 튀어 오르며 이동하는 운반 형태.",
+"cat": "지형학",
+"distractors": [
+"포행",
+"부유",
+"견인"
+],
+"exam": []
+},
+{
+"term": "양배암",
+"en": "Roche moutonnée",
+"def": "빙하 침식으로 상류 쪽은 완만·매끈하고 하류 쪽은 뜯겨나가(굴식) 급경사인 암반 언덕.",
+"cat": "지형학",
+"distractors": [
+"드럼린",
+"호른",
+"카르"
+],
+"exam": [
+"2022 A4"
+]
+},
+{
+"term": "카르",
+"en": "Cirque",
+"def": "산 정상부 빙하 침식으로 형성된 반원형 와지(권곡). 빙하 소멸 후 호수(tarn) 형성.",
+"cat": "지형학",
+"distractors": [
+"호른",
+"U자곡",
+"돌리네"
+],
+"exam": [
+"2025 B6"
+]
+},
+{
+"term": "분석구",
+"en": "Scoria cone",
+"def": "화산 쇄설물(스코리아·화산재)이 화구 주변에 쌓여 형성된 원추형 화산. 제주 오름 다수.",
+"cat": "지형학",
+"distractors": [
+"순상 화산",
+"종상 화산",
+"칼데라"
+],
+"exam": [
+"2026 B1"
+]
+},
+{
+"term": "규산(SiO2) 함량",
+"en": "Silica content",
+"def": "용암의 점성을 결정. 많을수록(유문암질) 점성 크고 폭발적, 적을수록(현무암질) 유동성 큼.",
+"cat": "지형학",
+"distractors": [
+"철·마그네슘 함량",
+"휘발성분",
+"용암 온도"
+],
+"exam": [
+"2019 B"
+]
+},
+{
+"term": "폴리에",
+"en": "Polje",
+"def": "카르스트 지역의 대규모 용식 와지로 바닥이 평탄하고 농경지로 이용.",
+"cat": "지형학",
+"distractors": [
+"우발라",
+"돌리네",
+"맹곡"
+],
+"exam": [
+"2025 B6"
+]
+},
+{
+"term": "석회화 단구",
+"en": "Travertine terrace",
+"def": "탄산칼슘이 침전되어 계단 모양으로 쌓인 지형(예: 파묵칼레).",
+"cat": "지형학",
+"distractors": [
+"석회동굴",
+"유석",
+"종유석"
+],
+"exam": [
+"2025 B6"
+]
+},
+{
+"term": "천이점",
+"en": "Knickpoint",
+"def": "하천 종단 곡선에서 경사가 급변하는 지점. 융기·해수면 하강 후 상류로 후퇴.",
+"cat": "지형학",
+"distractors": [
+"침식 기준면",
+"평형 하천",
+"폭포"
+],
+"exam": [
+"2023 B7"
+]
+},
+{
+"term": "지각 평형",
+"en": "Isostasy",
+"def": "지각이 맨틀 위에 떠서 균형을 이루는 상태. 하중 제거 시 반발 융기(예: 후빙기 스칸디나비아).",
+"cat": "지형학",
+"distractors": [
+"판 구조론",
+"해수면 변동",
+"습곡"
+],
+"exam": [
+"2026 B7",
+"2008-18*"
+]
+},
+{
+"term": "망류 하천",
+"en": "Braided channel",
+"def": "하중 공급이 많고 유량 변동이 큰 곳에서 여러 갈래로 갈라졌다 합쳐지는 하도(분합류 하도).",
+"cat": "지형학",
+"distractors": [
+"곡류 하천",
+"직류 하천",
+"감입 곡류"
+],
+"exam": [
+"2015 B논술1*"
+]
+},
+{
+"term": "생육 곡류",
+"en": "Ingrown meander",
+"def": "하방·측방 침식이 함께 일어나 비대칭 횡단면(공격 사면 급경사, 활주 사면 완경사)을 가진 감입 곡류.",
+"cat": "지형학",
+"distractors": [
+"굴착 곡류",
+"자유 곡류",
+"우각호"
+],
+"exam": [
+"2017 A12",
+"2003-6*"
+]
+},
+{
+"term": "애추",
+"en": "Talus",
+"def": "절벽에서 떨어진 암설이 사면 아래 쌓인 퇴적 지형. 아래쪽일수록 큰 암설(낙하 분급).",
+"cat": "지형학",
+"distractors": [
+"암괴류",
+"선상지",
+"모레인"
+],
+"exam": []
+},
+{
+"term": "암괴류",
+"en": "Block stream",
+"def": "주빙하 환경에서 동결 파쇄된 암괴가 골짜기를 따라 흘러내리듯 쌓인 지형. 한국은 빙기의 화석 지형.",
+"cat": "지형학",
+"distractors": [
+"애추",
+"토르",
+"빙퇴석"
+],
+"exam": [
+"2019 B6",
+"2005-11*"
+]
+},
+{
+"term": "솔리플럭션",
+"en": "Solifluction",
+"def": "주빙하 환경에서 녹은 활동층이 사면을 따라 천천히 흘러내리는 현상(젤리플럭션).",
+"cat": "지형학",
+"distractors": [
+"포행",
+"토석류",
+"사태"
+],
+"exam": [
+"2019 B",
+"2011-1차16*"
+]
+},
+{
+"term": "포행",
+"en": "Creep",
+"def": "토양·암설이 매우 느리게 사면 아래로 이동하는 매스무브먼트.",
+"cat": "지형학",
+"distractors": [
+"솔리플럭션",
+"유동",
+"활동"
+],
+"exam": []
+},
+{
+"term": "활동층",
+"en": "Active layer",
+"def": "영구동토 위에서 여름에 녹고 겨울에 다시 어는 층. 두께 증가 시 지반 불안정.",
+"cat": "지형학",
+"distractors": [
+"영구동토층",
+"지하빙",
+"열카르스트"
+],
+"exam": [
+"2024 B9"
+]
+},
+{
+"term": "선상지",
+"en": "Alluvial fan",
+"def": "산지 하천이 평지로 나오는 곡구에서 유속 감소로 퇴적된 부채꼴 지형. 선정-선앙-선단으로 구분되며 선앙은 복류로 건천이 많다.",
+"cat": "지형학",
+"distractors": [
+"삼각주",
+"범람원",
+"바하다"
+],
+"exam": [
+"2022 A12",
+"2012-1차39*"
+]
+},
+{
+"term": "삼각주",
+"en": "Delta",
+"def": "하천이 바다·호수로 유입하는 하구에서 유속 감소로 토사가 퇴적된 지형. 조차가 작고 유입 토사가 많은 곳에서 발달.",
+"cat": "지형학",
+"distractors": [
+"선상지",
+"하구언",
+"사주"
+],
+"exam": [
+"2022 B",
+"2020 B",
+"2009-1차24*"
+]
+},
+{
+"term": "범람원",
+"en": "Floodplain",
+"def": "하천 범람으로 형성된 충적 평야. 자연 제방(조립질, 밭·취락)과 배후 습지(세립질, 논)로 구성.",
+"cat": "지형학",
+"distractors": [
+"하안 단구",
+"선상지",
+"삼각주"
+],
+"exam": [
+"2026 A"
+]
+},
+{
+"term": "자연 제방",
+"en": "Natural levee",
+"def": "범람 시 하도 부근에 조립질 물질이 쌓여 형성된 미고지. 배수가 양호해 취락·밭으로 이용.",
+"cat": "지형학",
+"distractors": [
+"배후 습지",
+"인공 제방",
+"하안 단구"
+],
+"exam": [
+"2024 B"
+]
+},
+{
+"term": "하안 단구",
+"en": "River terrace",
+"def": "과거 하천 바닥·범람원이 지반 융기나 해수면 하강으로 하천 양안에 계단 모양으로 남은 지형. 둥근 자갈이 발견됨.",
+"cat": "지형학",
+"distractors": [
+"해안 단구",
+"범람원",
+"구조 평야"
+],
+"exam": [
+"2020 B"
+]
+},
+{
+"term": "해안 단구",
+"en": "Marine terrace",
+"def": "과거의 파식대·해안이 지반 융기로 해안을 따라 계단 모양으로 남은 지형. 둥근 자갈·모래 퇴적층 발견.",
+"cat": "지형학",
+"distractors": [
+"하안 단구",
+"파식대",
+"해식애"
+],
+"exam": [
+"2017 A2"
+]
+},
+{
+"term": "감입 곡류 하천",
+"en": "Incised meander",
+"def": "지반 융기로 하방 침식이 강화되어 산지 사이를 깊게 파고 흐르는 곡류 하천. 하천 중·상류에 분포.",
+"cat": "지형학",
+"distractors": [
+"자유 곡류 하천",
+"망류 하천",
+"우각호"
+],
+"exam": [
+"2020 B",
+"2017 A"
+]
+},
+{
+"term": "자유 곡류 하천",
+"en": "Free meander",
+"def": "넓은 충적 평야 위를 자유롭게 유로를 바꾸며 흐르는 곡류 하천. 주로 하류에 발달하며 우각호 형성.",
+"cat": "지형학",
+"distractors": [
+"감입 곡류 하천",
+"망류 하천",
+"하안 단구"
+],
+"exam": [
+"2020 B",
+"2019 B"
+]
+},
+{
+"term": "우각호",
+"en": "Oxbow lake",
+"def": "곡류 하천의 유로 변경으로 떨어져 나간 구하도가 쇠뿔 모양의 호수로 남은 것.",
+"cat": "지형학",
+"distractors": [
+"석호",
+"배후 습지",
+"구하도"
+],
+"exam": [
+"2019 B"
+]
+},
+{
+"term": "석호",
+"en": "Lagoon",
+"def": "만의 입구가 사주로 막혀 형성된 호수. 동해안에 발달, 하천 퇴적으로 점차 축소.",
+"cat": "지형학",
+"distractors": [
+"우각호",
+"해안 사구",
+"사주"
+],
+"exam": [
+"2025 A4",
+"2015 A6*"
+]
+},
+{
+"term": "갯벌",
+"en": "Tidal flat",
+"def": "조차가 큰 해안에서 조류에 의해 점토·모래가 퇴적된 평탄 지형. 서·남해안에 발달.",
+"cat": "지형학",
+"distractors": [
+"사빈",
+"사주",
+"염습지"
+],
+"exam": [
+"2026 A5"
+]
+},
+{
+"term": "해식애",
+"en": "Sea cliff",
+"def": "파랑의 침식으로 형성된 해안 절벽. 곶에 발달.",
+"cat": "지형학",
+"distractors": [
+"파식대",
+"해안 단구",
+"시스택"
+],
+"exam": [
+"2020 A"
+]
+},
+{
+"term": "파식대",
+"en": "Wave-cut platform",
+"def": "해식애가 후퇴하며 그 앞에 형성된 평탄한 암반 면.",
+"cat": "지형학",
+"distractors": [
+"해안 단구",
+"해식애",
+"사빈"
+],
+"exam": [
+"2026 B"
+]
+},
+{
+"term": "피오르",
+"en": "Fjord",
+"def": "빙식곡(U자곡)이 해수면 상승으로 침수되어 형성된 좁고 깊은 만. 노르웨이·칠레 남부.",
+"cat": "지형학",
+"distractors": [
+"리아스 해안",
+"에스추어리",
+"빙하호"
+],
+"exam": [
+"2017 A"
+]
+},
+{
+"term": "카르스트 지형",
+"en": "Karst",
+"def": "석회암이 빗물·지하수에 용식되어 형성된 지형. 돌리네·우발라·석회동굴 등.",
+"cat": "지형학",
+"distractors": [
+"화산 지형",
+"빙하 지형",
+"건조 지형"
+],
+"exam": [
+"2021 A",
+"2019 A"
+]
+},
+{
+"term": "용암 대지",
+"en": "Lava plateau",
+"def": "유동성이 큰 현무암질 용암이 열하 분출하여 형성된 평탄한 대지. 예: 철원·평강.",
+"cat": "지형학",
+"distractors": [
+"순상 화산",
+"종상 화산",
+"칼데라"
+],
+"exam": [
+"2019 B",
+"2010-1차16*"
+]
+},
+{
+"term": "기생 화산",
+"en": "Parasitic cone",
+"def": "큰 화산의 산록에 생긴 작은 화산. 제주의 오름.",
+"cat": "지형학",
+"distractors": [
+"종상 화산",
+"칼데라",
+"순상 화산"
+],
+"exam": [
+"2019 B"
+]
+},
+{
+"term": "주상 절리",
+"en": "Columnar joint",
+"def": "용암이 냉각·수축하며 형성된 다각형 기둥 모양의 절리.",
+"cat": "지형학",
+"distractors": [
+"판상 절리",
+"시스택",
+"풍화혈"
+],
+"exam": [
+"2020 A",
+"2018 A",
+"2009-1차22*"
+]
+},
+{
+"term": "고위 평탄면",
+"en": "High-level erosion surface",
+"def": "오랜 침식으로 평탄해진 지형이 융기하여 높은 곳에 남은 평탄면. 대관령 일대, 고랭지 농업.",
+"cat": "지형학",
+"distractors": [
+"하안 단구",
+"용암 대지",
+"구조 평야"
+],
+"exam": [
+"2003-13*"
+]
+},
+{
+"term": "야르당",
+"en": "Yardang",
+"def": "바람의 침식으로 탁월풍 방향으로 길게 깎인 유선형 언덕.",
+"cat": "지형학",
+"distractors": [
+"버섯바위",
+"사막 포도",
+"바르한"
+],
+"exam": []
+},
+{
+"term": "케임 단구",
+"en": "Kame terrace",
+"def": "빙하와 골짜기 사면 사이에 융빙수 퇴적물이 쌓여 형성된 단구 모양 지형.",
+"cat": "지형학",
+"distractors": [
+"에스커",
+"하안 단구",
+"모레인"
+],
+"exam": []
+},
+{
+"term": "드럼린",
+"en": "Drumlin",
+"def": "빙하 진행 방향으로 길쭉한 숟가락을 엎은 모양의 빙퇴석 언덕. 완경사 쪽이 빙하 하류.",
+"cat": "지형학",
+"distractors": [
+"에스커",
+"양배암",
+"모레인"
+],
+"exam": []
+},
+{
+"term": "빙식 계단",
+"en": "Glacial stairway",
+"def": "빙식곡 바닥이 계단 모양으로 굴곡을 이룬 지형.",
+"cat": "지형학",
+"distractors": [
+"빙식곡",
+"현곡",
+"카르"
+],
+"exam": []
+},
+{
+"term": "우발라",
+"en": "Uvala",
+"def": "여러 돌리네가 합쳐져 형성된 복합 돌리네.",
+"cat": "지형학",
+"distractors": [
+"돌리네",
+"폴리에",
+"싱크홀"
+],
+"exam": []
+},
+{
+"term": "맹곡",
+"en": "Blind valley",
+"def": "카르스트 지역에서 하천이 지하로 스며들어 끝이 막힌 골짜기.",
+"cat": "지형학",
+"distractors": [
+"건곡",
+"우발라",
+"싱킹 크리크"
+],
+"exam": []
+},
+{
+"term": "풍극",
+"en": "Wind gap",
+"def": "하천 쟁탈로 물이 흐르지 않게 된 골짜기의 안부(말라버린 옛 유로).",
+"cat": "지형학",
+"distractors": [
+"수극",
+"천이점",
+"안부"
+],
+"exam": []
+},
+{
+"term": "침식 기준면",
+"en": "Base level",
+"def": "하천이 그 이하로 침식할 수 없는 기준 높이. 궁극적 기준면은 해수면.",
+"cat": "지형학",
+"distractors": [
+"천이점",
+"평형 하천",
+"지하수면"
+],
+"exam": []
+},
+{
+"term": "열카르스트",
+"en": "Thermokarst",
+"def": "영구동토의 지하빙이 녹아 지표가 함몰되며 생긴 불규칙한 와지 지형.",
+"cat": "지형학",
+"distractors": [
+"카르스트",
+"활동층",
+"핑고"
+],
+"exam": []
+},
+{
+"term": "배후 습지",
+"en": "Backswamp",
+"def": "자연 제방 뒤쪽의 세립질 물질이 쌓인 저습지. 배수가 불량해 주로 논으로 이용.",
+"cat": "지형학",
+"distractors": [
+"자연 제방",
+"석호",
+"우각호"
+],
+"exam": []
+},
+{
+"term": "사주",
+"en": "Sand bar",
+"def": "연안류에 의해 운반된 모래가 해안을 따라 길게 쌓인 퇴적 지형.",
+"cat": "지형학",
+"distractors": [
+"사빈",
+"사구",
+"육계사주"
+],
+"exam": []
+},
+{
+"term": "사빈",
+"en": "Sandy beach",
+"def": "파랑·연안류에 의해 모래가 해안에 퇴적된 해수욕장 지형. 만(灣)에 주로 발달.",
+"cat": "지형학",
+"distractors": [
+"해안 사구",
+"갯벌",
+"사주"
+],
+"exam": []
+},
+{
+"term": "해안 사구",
+"en": "Coastal dune",
+"def": "사빈의 모래가 바람에 날려 해안 배후에 쌓인 언덕. 지하수 저장·해일 피해 완화 기능.",
+"cat": "지형학",
+"distractors": [
+"사빈",
+"사주",
+"석호"
+],
+"exam": []
+},
+{
+"term": "시스택",
+"en": "Sea stack",
+"def": "해식애가 후퇴하며 단단한 부분이 촛대 모양으로 남은 바위섬.",
+"cat": "지형학",
+"distractors": [
+"해식동",
+"육계도",
+"파식대"
+],
+"exam": []
+},
+{
+"term": "리아스 해안",
+"en": "Ria coast",
+"def": "하천 침식곡이 후빙기 해수면 상승으로 침수되어 형성된 복잡한 해안. 한국 남·서해안.",
+"cat": "지형학",
+"distractors": [
+"피오르",
+"에스추어리",
+"이수 해안"
+],
+"exam": []
+},
+{
+"term": "돌리네",
+"en": "Doline",
+"def": "석회암 지대의 용식으로 생긴 깔때기 모양의 와지. 여러 개가 합쳐지면 우발라.",
+"cat": "지형학",
+"distractors": [
+"우발라",
+"칼데라",
+"폴리에"
+],
+"exam": []
+},
+{
+"term": "칼데라",
+"en": "Caldera",
+"def": "화산 폭발이나 분화구 함몰로 형성된 대형 와지. 예: 백두산 천지, 울릉도 나리 분지.",
+"cat": "지형학",
+"distractors": [
+"화구호",
+"돌리네",
+"기생 화산"
+],
+"exam": []
+},
+{
+"term": "토르",
+"en": "Tor",
+"def": "화강암이 심층 풍화된 후 풍화층이 제거되며 지표에 드러난 핵석 바위.",
+"cat": "지형학",
+"distractors": [
+"돌산",
+"시스택",
+"버트"
+],
+"exam": []
+},
+{
+"term": "U자곡",
+"en": "U-shaped valley",
+"def": "빙하의 침식으로 형성된 단면이 U자형인 골짜기.",
+"cat": "지형학",
+"distractors": [
+"V자곡",
+"피오르",
+"카르"
+],
+"exam": []
+},
+{
+"term": "모레인",
+"en": "Moraine",
+"def": "빙하가 운반한 물질이 분급 없이 퇴적된 지형(빙퇴석).",
+"cat": "지형학",
+"distractors": [
+"에스커",
+"드럼린",
+"선상지"
+],
+"exam": []
+},
+{
+"term": "메사",
+"en": "Mesa",
+"def": "건조 지역에서 수평 지층의 차별 침식으로 남은 탁자 모양의 대지. 더 작아지면 뷰트.",
+"cat": "지형학",
+"distractors": [
+"뷰트",
+"와디",
+"페디먼트"
+],
+"exam": []
+},
+{
+"term": "와디",
+"en": "Wadi",
+"def": "건조 지역에서 평소엔 말라 있다가 비가 오면 물이 흐르는 하천(건천).",
+"cat": "지형학",
+"distractors": [
+"외래 하천",
+"플라야",
+"바하다"
+],
+"exam": []
+},
+{
+"term": "플라야",
+"en": "Playa",
+"def": "건조 지역 분지 내 일시적 호수가 증발하여 염분이 쌓인 평탄지.",
+"cat": "지형학",
+"distractors": [
+"와디",
+"오아시스",
+"석호"
+],
+"exam": []
+},
+{
+"term": "에스커",
+"en": "Esker",
+"def": "빙하 밑을 흐르던 융빙수 하천 퇴적물이 제방 모양으로 길게 남은 빙하 퇴적 지형. 분급 양호.",
+"cat": "지형학",
+"distractors": [
+"드럼린",
+"모레인",
+"케임"
+],
+"exam": []
+},
+{
+"term": "하천 쟁탈",
+"en": "River capture",
+"def": "침식력이 강한 하천이 이웃 하천의 상류를 빼앗아 유역을 넓히는 현상. 쟁탈 지점에 풍극 형성.",
+"cat": "지형학",
+"distractors": [
+"하천 합류",
+"곡류 절단",
+"하천 재편"
+],
+"exam": []
+},
+{
+"term": "입상 붕괴",
+"en": "Granular disintegration",
+"def": "화강암 등 조립질 암석이 광물 입자 단위로 떨어져 나가는 물리적 풍화(마사토 형성).",
+"cat": "지형학",
+"distractors": [
+"박리",
+"절리",
+"염풍화"
+],
+"exam": []
+},
+{
+"term": "풍화 전선",
+"en": "Weathering front",
+"def": "풍화층과 아래 신선한 기반암의 경계면.",
+"cat": "지형학",
+"distractors": [
+"지하수면",
+"침식 기준면",
+"불연속면"
+],
+"exam": []
+},
+{
+"term": "연안류",
+"en": "Longshore current",
+"def": "파랑이 해안에 비스듬히 입사할 때 해안선과 나란히 흐르는 흐름. 사주·사취 형성.",
+"cat": "지형학",
+"distractors": [
+"이안류",
+"조류",
+"해류"
+],
+"exam": []
+},
+{
+"term": "육계도",
+"en": "Land-tied island",
+"def": "육계사주(톰볼로)로 육지와 연결된 섬. 예: 제주 성산 일출봉.",
+"cat": "지형학",
+"distractors": [
+"사주",
+"시스택",
+"곶"
+],
+"exam": []
+},
+{
+"term": "사면 평행 후퇴설",
+"en": "Slope parallel retreat",
+"def": "킹(L. C. King): 사면이 일정 경사를 유지하며 평행하게 후퇴한다는 사면 발달 이론.",
+"cat": "지형학",
+"distractors": [
+"사면 감소설",
+"사면 대체설",
+"침식 윤회설"
+],
+"exam": []
+},
+{
+"term": "사면 대체설",
+"en": "Slope replacement",
+"def": "펭크: 하부의 완경사 사면이 상부 급경사 사면을 점차 대체한다는 사면 발달 이론.",
+"cat": "지형학",
+"distractors": [
+"평행 후퇴설",
+"사면 감소설",
+"침식 윤회설"
+],
+"exam": []
+},
+{
+"term": "돌산",
+"en": "Rocky mountain",
+"def": "기반암(주로 화강암)이 지표에 드러난 산. 예: 북한산·설악산.",
+"cat": "지형학",
+"distractors": [
+"흙산",
+"토르",
+"잔구"
+],
+"exam": []
+},
+{
+"term": "흙산",
+"en": "Earth mountain",
+"def": "두꺼운 풍화층·토양으로 덮인 산. 주로 변성암 산지. 예: 지리산·덕유산.",
+"cat": "지형학",
+"distractors": [
+"돌산",
+"잔구",
+"구조 평야"
+],
+"exam": []
+},
+{
+"term": "경동 지형",
+"en": "Tilted block",
+"def": "한쪽이 크게 융기하여 비대칭 사면을 가진 지형. 한반도는 동고서저.",
+"cat": "지형학",
+"distractors": [
+"습곡 산지",
+"단층 산지",
+"순상지"
+],
+"exam": []
+},
+{
+"term": "열대 수렴대",
+"en": "ITCZ",
+"def": "무역풍이 수렴하는 적도 부근 저압대. 태양 고도에 따라 계절적으로 남북 이동.",
+"cat": "기후학",
+"distractors": [
+"아열대 고압대",
+"한대 전선대",
+"극고압대"
+],
+"exam": [
+"2013-1차21*"
+]
+},
+{
+"term": "활강풍",
+"en": "Katabatic wind",
+"def": "고원·빙상 위에서 냉각된 무거운 공기가 사면을 따라 내려가는 바람. 남극에서 강함.",
+"cat": "기후학",
+"distractors": [
+"푄",
+"해풍",
+"곡풍"
+],
+"exam": [
+"2025 B10"
+]
+},
+{
+"term": "극소용돌이",
+"en": "Polar vortex",
+"def": "극지방 상공의 강한 저기압성 소용돌이. 남극 겨울 성층권 냉각 → 봄철 오존홀 최대.",
+"cat": "기후학",
+"distractors": [
+"제트 기류",
+"블로킹",
+"열대 수렴대"
+],
+"exam": [
+"2025 B2",
+"2021 B"
+]
+},
+{
+"term": "오존홀",
+"en": "Ozone hole",
+"def": "남극 상공 성층권 오존이 봄철(9~10월) 크게 감소하는 현상. CFC가 원인.",
+"cat": "기후학",
+"distractors": [
+"온실 효과",
+"산성비",
+"열섬"
+],
+"exam": [
+"2025 B2"
+]
+},
+{
+"term": "아극 기후",
+"en": "Subarctic climate(Dfc·Dwc)",
+"def": "냉대 기후 중 여름이 짧고 겨울이 매우 추운 기후. 대륙 동안에서 더 남쪽까지 분포. 타이가·포드졸.",
+"cat": "기후학",
+"distractors": [
+"툰드라 기후",
+"냉대 습윤 기후",
+"서안 해양성 기후"
+],
+"exam": [
+"2026 A12",
+"2021 B"
+]
+},
+{
+"term": "쾨펜 기후 구분",
+"en": "Köppen classification",
+"def": "식생 분포를 기준으로 기온·강수량을 이용해 A·B·C·D·E 기후로 구분한 방법.",
+"cat": "기후학",
+"distractors": [
+"손스웨이트 기후 구분",
+"알리소프 기후 구분",
+"기단 분류"
+],
+"exam": [
+"2026 B",
+"2023 A"
+]
+},
+{
+"term": "열대 우림 기후",
+"en": "Af",
+"def": "최한월 평균 기온 18℃ 이상, 연중 강수량이 많아 건기가 없는 기후. 스콜 발생.",
+"cat": "기후학",
+"distractors": [
+"사바나 기후",
+"열대 몬순 기후",
+"서안 해양성 기후"
+],
+"exam": [
+"2025 A",
+"2022 A",
+"2017 B",
+"2009-1차17*"
+]
+},
+{
+"term": "스텝 기후",
+"en": "BS",
+"def": "연 강수량 약 250~500mm의 건조 기후. 짧은 풀 초원 형성, 유목·대규모 밀 재배.",
+"cat": "기후학",
+"distractors": [
+"사막 기후",
+"사바나 기후",
+"툰드라 기후"
+],
+"exam": [
+"2026 B"
+]
+},
+{
+"term": "지중해성 기후",
+"en": "Cs",
+"def": "여름 고온 건조(아열대 고압대), 겨울 온난 습윤(편서풍). 수목 농업(올리브·포도).",
+"cat": "기후학",
+"distractors": [
+"서안 해양성 기후",
+"온대 겨울 건조 기후",
+"사바나 기후"
+],
+"exam": [
+"2026 B",
+"2017 B"
+]
+},
+{
+"term": "시베리아 기단",
+"en": "Continental polar",
+"def": "한랭 건조한 대륙성 기단. 한국 겨울의 북서 계절풍·한파를 유발.",
+"cat": "기후학",
+"distractors": [
+"오호츠크해 기단",
+"북태평양 기단",
+"양쯔강 기단"
+],
+"exam": [
+"2021 A"
+]
+},
+{
+"term": "높새바람",
+"en": "Foehn",
+"def": "늦봄~초여름 북동풍이 태백산맥을 넘으며 영서 지방에 부는 고온 건조한 바람(푄 현상).",
+"cat": "기후학",
+"distractors": [
+"북서 계절풍",
+"해륙풍",
+"편서풍"
+],
+"exam": [
+"2019 A"
+]
+},
+{
+"term": "푄 현상",
+"en": "Foehn effect",
+"def": "습윤한 공기가 산을 넘으며 비를 뿌린 뒤 바람그늘 사면으로 하강하며 고온 건조해지는 현상.",
+"cat": "기후학",
+"distractors": [
+"기온 역전",
+"열섬 현상",
+"엘니뇨"
+],
+"exam": [
+"2019 A",
+"2007-24*"
+]
+},
+{
+"term": "장마 전선",
+"en": "Changma front",
+"def": "북태평양 기단과 오호츠크해 기단(등) 사이에 형성되는 정체 전선. 초여름 집중 강수.",
+"cat": "기후학",
+"distractors": [
+"한랭 전선",
+"온난 전선",
+"폐색 전선"
+],
+"exam": [
+"2018 B"
+]
+},
+{
+"term": "열섬 현상",
+"en": "Urban heat island",
+"def": "도시 중심부 기온이 주변 교외보다 높게 나타나는 현상. 인공열·포장 면적 증가 원인.",
+"cat": "기후학",
+"distractors": [
+"기온 역전",
+"푄 현상",
+"열대야"
+],
+"exam": [
+"2024 B"
+]
+},
+{
+"term": "기온 역전",
+"en": "Temperature inversion",
+"def": "고도가 높아질수록 기온이 높아지는 현상. 맑고 바람 없는 밤 분지에서 잘 발생, 안개·대기오염.",
+"cat": "기후학",
+"distractors": [
+"열섬 현상",
+"푄 현상",
+"복사 냉각"
+],
+"exam": [
+"2019 B",
+"2004-7*"
+]
+},
+{
+"term": "대륙도",
+"en": "Continentality",
+"def": "대륙의 영향을 받는 정도. 대륙 동안이 서안보다 연교차가 크다.",
+"cat": "기후학",
+"distractors": [
+"해양도",
+"연교차",
+"위도"
+],
+"exam": [
+"2026 B"
+]
+},
+{
+"term": "지형성 강수",
+"en": "Orographic precipitation",
+"def": "습윤한 공기가 산지를 타고 상승하며 내리는 비. 바람받이 사면에 다우지 형성.",
+"cat": "기후학",
+"distractors": [
+"대류성 강수",
+"전선성 강수",
+"저기압성 강수"
+],
+"exam": [
+"2018 A"
+]
+},
+{
+"term": "편서풍",
+"en": "Westerlies",
+"def": "아열대 고압대에서 고위도 저압대로 부는 서풍 계열 바람. 중위도 대륙 서안 기후에 영향.",
+"cat": "기후학",
+"distractors": [
+"무역풍",
+"극동풍",
+"제트 기류"
+],
+"exam": [
+"2026 B",
+"2025 B",
+"2024 B",
+"2022 A",
+"2020 B",
+"2020 A",
+"2018 A",
+"2017 A"
+]
+},
+{
+"term": "건조 단열 감률",
+"en": "Dry adiabatic lapse rate",
+"def": "불포화 공기가 상승할 때 약 10℃/km로 냉각되는 비율. 포화 시 습윤 단열 감률(약 5℃/km).",
+"cat": "기후학",
+"distractors": [
+"습윤 단열 감률",
+"환경 감률",
+"기온 역전"
+],
+"exam": []
+},
+{
+"term": "비그늘",
+"en": "Rain shadow",
+"def": "산맥의 바람그늘 사면에서 강수가 적은 지역. 예: 파타고니아 사막.",
+"cat": "기후학",
+"distractors": [
+"바람받이 사면",
+"지형성 강수",
+"열대 수렴대"
+],
+"exam": []
+},
+{
+"term": "온실 효과",
+"en": "Greenhouse effect",
+"def": "대기 중 CO2·메탄·수증기 등이 지구 복사(장파)를 흡수·재복사해 지표를 따뜻하게 하는 현상.",
+"cat": "기후학",
+"distractors": [
+"알베도 효과",
+"오존층 파괴",
+"열섬"
+],
+"exam": []
+},
+{
+"term": "알베도",
+"en": "Albedo",
+"def": "입사한 태양 복사 중 반사되는 비율. 눈·얼음이 높고 숲·바다가 낮음.",
+"cat": "기후학",
+"distractors": [
+"복사 평형",
+"온실 효과",
+"증발산"
+],
+"exam": []
+},
+{
+"term": "사바나 기후",
+"en": "Aw",
+"def": "열대 기후 중 건기와 우기가 뚜렷한 기후. 긴 풀과 관목이 자람.",
+"cat": "기후학",
+"distractors": [
+"열대 우림 기후",
+"스텝 기후",
+"지중해성 기후"
+],
+"exam": []
+},
+{
+"term": "서안 해양성 기후",
+"en": "Cfb",
+"def": "편서풍과 난류의 영향으로 연교차가 작고 연중 강수가 고른 기후. 혼합 농업·낙농.",
+"cat": "기후학",
+"distractors": [
+"지중해성 기후",
+"온난 습윤 기후",
+"냉대 습윤 기후"
+],
+"exam": []
+},
+{
+"term": "툰드라 기후",
+"en": "ET",
+"def": "최난월 평균 기온 0~10℃. 여름에 지표 활동층이 녹고 이끼·지의류가 자람.",
+"cat": "기후학",
+"distractors": [
+"빙설 기후",
+"냉대 기후",
+"고산 기후"
+],
+"exam": []
+},
+{
+"term": "기단",
+"en": "Air mass",
+"def": "넓은 지역에서 기온·습도 등 성질이 비슷한 거대한 공기 덩어리. 발원지 성질을 지님.",
+"cat": "기후학",
+"distractors": [
+"전선",
+"고기압",
+"편서풍"
+],
+"exam": []
+},
+{
+"term": "오호츠크해 기단",
+"en": "Maritime polar",
+"def": "한랭 습윤한 해양성 기단. 늦봄~초여름 영동 지방에 저온 현상(높새바람의 원인).",
+"cat": "기후학",
+"distractors": [
+"시베리아 기단",
+"북태평양 기단",
+"적도 기단"
+],
+"exam": []
+},
+{
+"term": "북태평양 기단",
+"en": "Maritime tropical",
+"def": "고온 다습한 해양성 기단. 한국 여름 무더위·남동(남서) 계절풍.",
+"cat": "기후학",
+"distractors": [
+"오호츠크해 기단",
+"시베리아 기단",
+"적도 기단"
+],
+"exam": []
+},
+{
+"term": "엘니뇨",
+"en": "El Niño",
+"def": "적도 동태평양 해수면 온도가 평년보다 높아지는 현상. 페루 연안 어획량 감소·홍수.",
+"cat": "기후학",
+"distractors": [
+"라니냐",
+"몬순",
+"무역풍"
+],
+"exam": []
+},
+{
+"term": "몬순",
+"en": "Monsoon",
+"def": "계절에 따라 풍향이 바뀌는 바람(계절풍). 대륙과 해양의 비열 차이가 원인.",
+"cat": "기후학",
+"distractors": [
+"편서풍",
+"무역풍",
+"해륙풍"
+],
+"exam": []
+},
+{
+"term": "무역풍",
+"en": "Trade wind",
+"def": "아열대 고압대에서 적도 저압대로 부는 바람. 북반구 북동풍, 남반구 남동풍.",
+"cat": "기후학",
+"distractors": [
+"편서풍",
+"극동풍",
+"계절풍"
+],
+"exam": []
+},
+{
+"term": "이류 안개",
+"en": "Advection fog",
+"def": "따뜻하고 습한 공기가 찬 지표·수면 위로 이동하며 이슬점 이하로 냉각되어 생기는 안개. 해무.",
+"cat": "기후학",
+"distractors": [
+"복사 안개",
+"증기 안개",
+"활승 안개"
+],
+"exam": []
+},
+{
+"term": "이슬점",
+"en": "Dew point",
+"def": "공기가 냉각되어 수증기가 포화되는 온도.",
+"cat": "기후학",
+"distractors": [
+"상대 습도",
+"건조 단열 감률",
+"빙점"
+],
+"exam": []
+},
+{
+"term": "치누크",
+"en": "Chinook",
+"def": "로키산맥 동사면에 부는 고온 건조한 푄 현상 바람.",
+"cat": "기후학",
+"distractors": [
+"보라",
+"미스트랄",
+"시로코"
+],
+"exam": []
+},
+{
+"term": "전향력",
+"en": "Coriolis force",
+"def": "지구 자전으로 운동 방향이 북반구 오른쪽, 남반구 왼쪽으로 휘는 겉보기 힘. 적도에서 0.",
+"cat": "기후학",
+"distractors": [
+"기압 경도력",
+"마찰력",
+"원심력"
+],
+"exam": []
+},
+{
+"term": "해들리 세포",
+"en": "Hadley cell",
+"def": "적도에서 상승한 공기가 아열대(약 30°)에서 하강하는 대기 대순환 세포.",
+"cat": "기후학",
+"distractors": [
+"페렐 세포",
+"극 세포",
+"워커 순환"
+],
+"exam": []
+},
+{
+"term": "워커 순환",
+"en": "Walker circulation",
+"def": "적도 태평양의 동서 방향 대기 순환. 엘니뇨 시 약화.",
+"cat": "기후학",
+"distractors": [
+"해들리 세포",
+"페렐 세포",
+"몬순"
+],
+"exam": []
+},
+{
+"term": "원격 상관",
+"en": "Teleconnection",
+"def": "멀리 떨어진 지역의 기후 변동이 서로 연관되어 나타나는 현상(예: ENSO).",
+"cat": "기후학",
+"distractors": [
+"국지 순환",
+"피드백",
+"되먹임"
+],
+"exam": []
+},
+{
+"term": "용승",
+"en": "Upwelling",
+"def": "심층의 차가운 해수가 표층으로 올라오는 현상. 영양염 풍부, 페루 연안 어장.",
+"cat": "기후학",
+"distractors": [
+"침강",
+"난류",
+"해수면 상승"
+],
+"exam": []
+},
+{
+"term": "한대 전선 이론",
+"en": "Polar front theory",
+"def": "노르웨이 학파: 한대 기단과 열대 기단 경계의 한대 전선에서 온대 저기압이 발생·발달한다는 이론.",
+"cat": "기후학",
+"distractors": [
+"기단 이론",
+"대기 대순환",
+"열대 저기압"
+],
+"exam": []
+},
+{
+"term": "온대 저기압",
+"en": "Extratropical cyclone",
+"def": "중위도 한대 전선에서 발생하는 전선을 동반한 저기압. 편서풍 따라 이동.",
+"cat": "기후학",
+"distractors": [
+"열대 저기압",
+"열저기압",
+"블로킹 고기압"
+],
+"exam": []
+},
+{
+"term": "열대 저기압",
+"en": "Tropical cyclone",
+"def": "수온 약 27℃ 이상 열대 해상에서 발생, 전선이 없고 응결 잠열로 발달(태풍·허리케인·사이클론).",
+"cat": "기후학",
+"distractors": [
+"온대 저기압",
+"토네이도",
+"열저기압"
+],
+"exam": []
+},
+{
+"term": "증발산",
+"en": "Evapotranspiration",
+"def": "지표 증발과 식물 증산을 합한 수분 손실.",
+"cat": "기후학",
+"distractors": [
+"유출",
+"침투",
+"차단"
+],
+"exam": []
+},
+{
+"term": "라니냐",
+"en": "La Niña",
+"def": "적도 동태평양 해수면 온도가 평년보다 낮아지는 현상. 무역풍 강화.",
+"cat": "기후학",
+"distractors": [
+"엘니뇨",
+"몬순",
+"용승"
+],
+"exam": []
+},
+{
+"term": "블로킹 고기압",
+"en": "Blocking high",
+"def": "편서풍 파동이 정체되어 장기간 머무는 고기압(저지 고기압). 이상 기상 유발.",
+"cat": "기후학",
+"distractors": [
+"아열대 고기압",
+"이동성 고기압",
+"열저기압"
+],
+"exam": []
+},
+{
+"term": "성대 토양",
+"en": "Zonal soil",
+"def": "기후·식생의 영향을 크게 받아 형성된 토양. 라테라이트·포드졸·체르노젬 등.",
+"cat": "토양·식생·수문",
+"distractors": [
+"간대 토양",
+"충적토",
+"미성숙토"
+],
+"exam": [
+"2010-1차18*"
+]
+},
+{
+"term": "염류화",
+"en": "Salinization",
+"def": "건조 지역에서 증발량이 많아 토양 표층에 염분이 집적되는 현상.",
+"cat": "토양·식생·수문",
+"distractors": [
+"용탈",
+"사막화",
+"산성화"
+],
+"exam": [
+"2012-1차11*"
+]
+},
+{
+"term": "유역 분지",
+"en": "Drainage basin",
+"def": "하나의 하천과 그 지류에 물을 공급하는 지역. 경계는 분수계.",
+"cat": "토양·식생·수문",
+"distractors": [
+"분수계",
+"배수 밀도",
+"하계망"
+],
+"exam": [
+"2025 B"
+]
+},
+{
+"term": "지하수",
+"en": "Groundwater",
+"def": "지표 아래 토양·암석 틈에 존재하는 물. 지하수면 아래 대수층에 저장.",
+"cat": "토양·식생·수문",
+"distractors": [
+"복류수",
+"피압 지하수",
+"용천"
+],
+"exam": [
+"2025 B",
+"2022 A",
+"2020 A",
+"2018 A"
+]
+},
+{
+"term": "간대 토양",
+"en": "Intrazonal soil",
+"def": "모암·지형의 영향을 크게 받아 형성된 토양. 테라로사·레구르 등.",
+"cat": "토양·식생·수문",
+"distractors": [
+"성대 토양",
+"충적토",
+"포드졸"
+],
+"exam": []
+},
+{
+"term": "충적토",
+"en": "Alluvial soil",
+"def": "하천 퇴적물로 형성된 미성숙 토양. 범람원·삼각주에 분포, 비옥해 농업에 유리.",
+"cat": "토양·식생·수문",
+"distractors": [
+"성대 토양",
+"간대 토양",
+"염류토"
+],
+"exam": []
+},
+{
+"term": "용탈",
+"en": "Leaching",
+"def": "물이 토양을 통과하며 가용성 성분을 아래로 씻어 내리는 작용.",
+"cat": "토양·식생·수문",
+"distractors": [
+"집적",
+"염류화",
+"풍화"
+],
+"exam": []
+},
+{
+"term": "피압 지하수",
+"en": "Artesian water",
+"def": "불투수층 사이의 대수층에 압력을 받고 있는 지하수. 관정 시 자분 가능. 예: 대찬정 분지.",
+"cat": "토양·식생·수문",
+"distractors": [
+"자유면 지하수",
+"복류수",
+"용천"
+],
+"exam": []
+},
+{
+"term": "불투수면",
+"en": "Impervious surface",
+"def": "빗물이 스며들지 못하는 포장 면. 도시화로 증가하면 첨두 유량이 커지고 도달 시간이 짧아짐.",
+"cat": "토양·식생·수문",
+"distractors": [
+"투수면",
+"유역 분지",
+"하상계수"
+],
+"exam": []
+},
+{
+"term": "라테라이트",
+"en": "Laterite",
+"def": "열대 지역에서 염기·규산이 용탈되고 철·알루미늄 산화물이 집적된 붉은 척박 토양.",
+"cat": "토양·식생·수문",
+"distractors": [
+"포드졸",
+"테라로사",
+"체르노젬"
+],
+"exam": []
+},
+{
+"term": "포드졸",
+"en": "Podzol",
+"def": "냉대 침엽수림 지역의 회백색 산성 토양. 용탈 작용 강함.",
+"cat": "토양·식생·수문",
+"distractors": [
+"라테라이트",
+"체르노젬",
+"툰드라토"
+],
+"exam": []
+},
+{
+"term": "체르노젬",
+"en": "Chernozem",
+"def": "온대 초원(스텝) 지역의 유기물이 풍부한 흑색 비옥 토양. 우크라이나 밀 재배.",
+"cat": "토양·식생·수문",
+"distractors": [
+"프레리토",
+"포드졸",
+"레구르"
+],
+"exam": []
+},
+{
+"term": "테라로사",
+"en": "Terra rossa",
+"def": "석회암이 풍화되어 형성된 붉은색 간대 토양. 지중해 연안·한국 석회암 지대.",
+"cat": "토양·식생·수문",
+"distractors": [
+"라테라이트",
+"레구르",
+"현무암 풍화토"
+],
+"exam": []
+},
+{
+"term": "맹그로브",
+"en": "Mangrove",
+"def": "열대·아열대 해안 갯벌 등 조간대에 자라는 염생 수목 군락.",
+"cat": "토양·식생·수문",
+"distractors": [
+"타이가",
+"사바나",
+"경엽수림"
+],
+"exam": []
+},
+{
+"term": "레구르",
+"en": "Regur",
+"def": "인도 데칸고원의 현무암 풍화 흑색토. 목화 재배에 유리.",
+"cat": "토양·식생·수문",
+"distractors": [
+"체르노젬",
+"테라로사",
+"라테라이트"
+],
+"exam": []
+},
+{
+"term": "타이가",
+"en": "Taiga",
+"def": "냉대 기후 지역의 침엽수림. 임업 발달.",
+"cat": "토양·식생·수문",
+"distractors": [
+"열대 우림",
+"경엽수림",
+"툰드라"
+],
+"exam": []
+},
+{
+"term": "경엽수림",
+"en": "Sclerophyll forest",
+"def": "지중해성 기후 지역의 잎이 작고 두꺼운 상록수림(올리브·코르크참나무).",
+"cat": "토양·식생·수문",
+"distractors": [
+"타이가",
+"열대 우림",
+"낙엽 활엽수림"
+],
+"exam": []
+},
+{
+"term": "하상계수",
+"en": "Coefficient of river regime",
+"def": "하천의 최대 유량을 최소 유량으로 나눈 값. 한국은 계절별 강수 차로 매우 큼.",
+"cat": "토양·식생·수문",
+"distractors": [
+"유역 면적",
+"유황 곡선",
+"유출 계수"
+],
+"exam": []
+},
+{
+"term": "축척 계수",
+"en": "Scale factor",
+"def": "투영면상의 거리와 실제 거리의 비. TM 투영에서 중앙 경선 1, 멀어질수록 1보다 커짐.",
+"cat": "지도학·GIS",
+"distractors": [
+"축척",
+"도엽",
+"편차각"
+],
+"exam": [
+"2026 B3",
+"2022 B"
+]
+},
+{
+"term": "세계 측지계",
+"en": "World geodetic system",
+"def": "지구 질량 중심을 원점으로 하는 국제 기준 측지계. 한국은 2003년 이후 도입(한국측지계에서 변환).",
+"cat": "지도학·GIS",
+"distractors": [
+"지역 측지계",
+"지구 타원체",
+"TM 좌표"
+],
+"exam": [
+"2025 A6"
+]
+},
+{
+"term": "정적 도법",
+"en": "Equal-area projection",
+"def": "면적 비율이 정확한 투영법. 예: 몰바이데·페터스. 분포도에 적합.",
+"cat": "지도학·GIS",
+"distractors": [
+"정각 도법",
+"정거 도법",
+"절충 도법"
+],
+"exam": [
+"2016 A6*"
+]
+},
+{
+"term": "정각 도법",
+"en": "Conformal projection",
+"def": "국지적 각도·형태가 정확한 투영법. 예: 메르카토르. 항해도.",
+"cat": "지도학·GIS",
+"distractors": [
+"정적 도법",
+"정거 도법",
+"절충 도법"
+],
+"exam": [
+"2016 A6*"
+]
+},
+{
+"term": "단계 구분도",
+"en": "Choropleth map",
+"def": "행정 구역 등 단위별 통계값을 계급으로 나눠 색·음영 단계로 표현. 비율 자료에 적합.",
+"cat": "지도학·GIS",
+"distractors": [
+"도형 표현도",
+"점묘도",
+"등치선도"
+],
+"exam": [
+"2023 B",
+"2021 B",
+"2013-1차25*",
+"2011-1차38*",
+"2007-16*"
+]
+},
+{
+"term": "래스터 데이터",
+"en": "Raster",
+"def": "격자(셀)로 공간을 표현하는 데이터 모델. 연속 현상·중첩 연산에 유리(DEM, 위성 영상).",
+"cat": "지도학·GIS",
+"distractors": [
+"벡터 데이터",
+"TIN",
+"속성 데이터"
+],
+"exam": [
+"2013-1차20*"
+]
+},
+{
+"term": "벡터 데이터",
+"en": "Vector",
+"def": "점·선·면과 좌표로 공간을 표현하는 데이터 모델. 위상 관계 표현·정밀도 유리.",
+"cat": "지도학·GIS",
+"distractors": [
+"래스터 데이터",
+"DEM",
+"격자"
+],
+"exam": [
+"2025 A6",
+"2013-1차20*"
+]
+},
+{
+"term": "지오레퍼런싱",
+"en": "Georeferencing",
+"def": "스캔 지도·영상에 실제 좌표를 부여하여 좌표계에 맞추는 작업.",
+"cat": "지도학·GIS",
+"distractors": [
+"지오코딩",
+"리샘플링",
+"투영 변환"
+],
+"exam": [
+"2025 A6"
+]
+},
+{
+"term": "재분류",
+"en": "Reclassification",
+"def": "래스터 셀 값을 새 기준에 따라 다시 분류하는 GIS 연산.",
+"cat": "지도학·GIS",
+"distractors": [
+"중첩 분석",
+"보간",
+"버퍼 분석"
+],
+"exam": [
+"2015 A8*"
+]
+},
+{
+"term": "NDVI",
+"en": "Normalized Difference Vegetation Index",
+"def": "(근적외선−적색)/(근적외선+적색). 값이 클수록 식생 활력 높음.",
+"cat": "지도학·GIS",
+"distractors": [
+"열적외선 영상",
+"가시광선 영상",
+"알베도"
+],
+"exam": [
+"2024 B4"
+]
+},
+{
+"term": "공간 해상도",
+"en": "Spatial resolution",
+"def": "영상의 한 화소가 나타내는 지표 면적의 크기. 작을수록 정밀.",
+"cat": "지도학·GIS",
+"distractors": [
+"분광 해상도",
+"시간 해상도",
+"축척"
+],
+"exam": [
+"2022 B10",
+"2019 B",
+"2013-1차20*"
+]
+},
+{
+"term": "GIS",
+"en": "Geographic Information System",
+"def": "공간 데이터를 수집·저장·분석·표현하는 지리 정보 시스템. 중첩 분석·버퍼 분석 등.",
+"cat": "지도학·GIS",
+"distractors": [
+"원격 탐사",
+"GPS",
+"주제도"
+],
+"exam": [
+"2026 B",
+"2025 A",
+"2021 A",
+"2020 B",
+"2018 B",
+"2018 A",
+"2017 B"
+]
+},
+{
+"term": "중첩 분석",
+"en": "Overlay analysis",
+"def": "GIS에서 여러 주제도 레이어를 겹쳐 조건에 맞는 지역을 찾는 기법.",
+"cat": "지도학·GIS",
+"distractors": [
+"버퍼 분석",
+"네트워크 분석",
+"지오코딩"
+],
+"exam": [
+"2020 B",
+"2019 B",
+"2016 B3*",
+"2004-1*"
+]
+},
+{
+"term": "평면 직각 좌표 원점 가산값",
+"en": "False easting/northing",
+"def": "좌표가 음수가 되지 않게 원점에 더하는 값. 한국 TM: X(N) 600,000m, Y(E) 200,000m.",
+"cat": "지도학·GIS",
+"distractors": [
+"축척 계수",
+"경위도 원점",
+"편차각"
+],
+"exam": []
+},
+{
+"term": "지구 타원체",
+"en": "Reference ellipsoid",
+"def": "지구를 수학적으로 근사한 회전 타원체(GRS80 등). 경위도 계산의 기준.",
+"cat": "지도학·GIS",
+"distractors": [
+"지오이드",
+"측지계",
+"구면"
+],
+"exam": []
+},
+{
+"term": "티소 지수",
+"en": "Tissot's indicatrix",
+"def": "지도 투영에서 각 지점의 왜곡(면적·형태)을 원이 타원으로 변형되는 정도로 나타낸 것.",
+"cat": "지도학·GIS",
+"distractors": [
+"축척 계수",
+"편차각",
+"해상도"
+],
+"exam": []
+},
+{
+"term": "절충 도법",
+"en": "Compromise projection",
+"def": "면적·형태 왜곡을 모두 적당히 줄인 투영. 예: 로빈슨 도법(표준 위선 남·북위 38°).",
+"cat": "지도학·GIS",
+"distractors": [
+"정적 도법",
+"정각 도법",
+"정거 도법"
+],
+"exam": []
+},
+{
+"term": "왜상 통계 지도",
+"en": "Cartogram",
+"def": "통계값 크기에 비례하여 지역 면적을 변형한 지도.",
+"cat": "지도학·GIS",
+"distractors": [
+"단계 구분도",
+"도형 표현도",
+"유선도"
+],
+"exam": []
+},
+{
+"term": "지오코딩",
+"en": "Geocoding",
+"def": "주소 등 텍스트 위치 정보를 좌표로 변환하는 작업.",
+"cat": "지도학·GIS",
+"distractors": [
+"지오레퍼런싱",
+"디지타이징",
+"보간"
+],
+"exam": []
+},
+{
+"term": "보간",
+"en": "Interpolation",
+"def": "측정된 지점 값으로 미측정 지점 값을 추정하는 기법(IDW, 크리깅 등).",
+"cat": "지도학·GIS",
+"distractors": [
+"재분류",
+"중첩 분석",
+"버퍼 분석"
+],
+"exam": []
+},
+{
+"term": "네트워크 분석",
+"en": "Network analysis",
+"def": "도로망 등 선형 연결망에서 최단 경로·서비스 권역 등을 분석.",
+"cat": "지도학·GIS",
+"distractors": [
+"버퍼 분석",
+"중첩 분석",
+"보간"
+],
+"exam": []
+},
+{
+"term": "감독 분류",
+"en": "Supervised classification",
+"def": "분석자가 훈련 지역을 지정해 영상의 화소를 분류하는 방법.",
+"cat": "지도학·GIS",
+"distractors": [
+"무감독 분류",
+"재분류",
+"리샘플링"
+],
+"exam": []
+},
+{
+"term": "무감독 분류",
+"en": "Unsupervised classification",
+"def": "통계적 군집화로 화소를 자동 분류한 뒤 분석자가 의미를 부여하는 방법.",
+"cat": "지도학·GIS",
+"distractors": [
+"감독 분류",
+"재분류",
+"보간"
+],
+"exam": []
+},
+{
+"term": "원격 탐사",
+"en": "Remote sensing",
+"def": "인공위성·항공기 등을 이용해 대상에 직접 접촉하지 않고 정보를 얻는 기술.",
+"cat": "지도학·GIS",
+"distractors": [
+"GIS",
+"GPS",
+"현지 조사"
+],
+"exam": []
+},
+{
+"term": "버퍼 분석",
+"en": "Buffer analysis",
+"def": "GIS에서 특정 대상으로부터 일정 거리 이내 영역을 설정해 분석하는 기법.",
+"cat": "지도학·GIS",
+"distractors": [
+"중첩 분석",
+"네트워크 분석",
+"보간"
+],
+"exam": []
+},
+{
+"term": "횡축 메르카토르 도법",
+"en": "Transverse Mercator(TM)",
+"def": "원통을 지구에 가로로 접하게 한 투영. 중앙 경선 부근 왜곡이 작아 지형도·평면직각좌표에 사용.",
+"cat": "지도학·GIS",
+"distractors": [
+"메르카토르 도법",
+"람베르트 정각원추",
+"UTM"
+],
+"exam": []
+},
+{
+"term": "지오이드",
+"en": "Geoid",
+"def": "평균 해수면을 육지까지 연장한 가상의 등중력면. 높이(표고)의 기준.",
+"cat": "지도학·GIS",
+"distractors": [
+"지구 타원체",
+"측지계",
+"기준면"
+],
+"exam": []
+},
+{
+"term": "분위수 분류",
+"en": "Quantile classification",
+"def": "각 계급에 같은 개수의 관측 단위가 들어가도록 나누는 계급 구분.",
+"cat": "지도학·GIS",
+"distractors": [
+"등간격 분류",
+"자연 단절 분류",
+"표준 편차 분류"
+],
+"exam": []
+},
+{
+"term": "메타데이터",
+"en": "Metadata",
+"def": "공간 데이터의 내용·좌표계·제작 시기·품질 등을 설명하는 데이터에 관한 데이터.",
+"cat": "지도학·GIS",
+"distractors": [
+"속성 데이터",
+"공간 데이터",
+"위상 데이터"
+],
+"exam": []
+},
+{
+"term": "열적외선",
+"en": "Thermal infrared",
+"def": "지표에서 방출되는 열 에너지를 감지하는 파장대. 지표 온도·열섬 분석.",
+"cat": "지도학·GIS",
+"distractors": [
+"근적외선",
+"가시광선",
+"마이크로파"
+],
+"exam": []
+},
+{
+"term": "총재생산율",
+"en": "Gross reproduction rate",
+"def": "여성 1명이 가임 기간 낳는 평균 여아 수.",
+"cat": "인구지리",
+"distractors": [
+"합계 출산율",
+"순재생산율",
+"대체 출산율"
+],
+"exam": [
+"2014 A5*"
+]
+},
+{
+"term": "상주주의 / 현주주의",
+"en": "De jure / De facto",
+"def": "센서스에서 평소 거주지 기준(상주) 또는 조사 시점 소재지 기준(현주)으로 인구를 집계하는 방식.",
+"cat": "인구지리",
+"distractors": [
+"등록 방식",
+"표본 조사",
+"주민등록"
+],
+"exam": [
+"2025 B4"
+]
+},
+{
+"term": "트랜스이주",
+"en": "Transmigration",
+"def": "이주자가 출신국과 정착국 양쪽에 사회적 관계를 유지하며 살아가는 국제 이주 형태(초국적 이주).",
+"cat": "인구지리",
+"distractors": [
+"순환 이주",
+"연쇄 이주",
+"디아스포라"
+],
+"exam": [
+"2016 A3*"
+]
+},
+{
+"term": "디아스포라",
+"en": "Diaspora",
+"def": "본토를 떠나 세계 각지에 흩어져 살며 정체성을 유지하는 민족 집단.",
+"cat": "인구지리",
+"distractors": [
+"난민",
+"트랜스이주",
+"엔클레이브"
+],
+"exam": [
+"2018 B3",
+"2011-1차37*"
+]
+},
+{
+"term": "합계 출산율",
+"en": "Total fertility rate",
+"def": "여성 1명이 가임 기간(15~49세)에 낳을 것으로 예상되는 평균 출생아 수. 대체 출산율은 약 2.1.",
+"cat": "인구지리",
+"distractors": [
+"조출생률",
+"인구 부양비",
+"대체 출산율"
+],
+"exam": [
+"2026 A2",
+"2014 A5*"
+]
+},
+{
+"term": "노년 부양비",
+"en": "Old-age dependency ratio",
+"def": "생산 가능 인구(15~64세) 100명당 65세 이상 인구 수.",
+"cat": "인구지리",
+"distractors": [
+"유소년 부양비",
+"노령화 지수",
+"총부양비"
+],
+"exam": [
+"2022 B"
+]
+},
+{
+"term": "노령화 지수",
+"en": "Aging index",
+"def": "유소년 인구(0~14세) 100명당 노년 인구(65세 이상) 수.",
+"cat": "인구지리",
+"distractors": [
+"노년 부양비",
+"고령 인구 비율",
+"총부양비"
+],
+"exam": [
+"2012-1차38*",
+"2011-1차25*"
+]
+},
+{
+"term": "배출-흡인 요인",
+"en": "Push-pull factors",
+"def": "인구 이동을 출발지의 밀어내는 요인과 도착지의 끌어당기는 요인으로 설명.",
+"cat": "인구지리",
+"distractors": [
+"라벤스타인 법칙",
+"중력 모형",
+"중개 기회"
+],
+"exam": [
+"2016 A3*"
+]
+},
+{
+"term": "대체 출산율",
+"en": "Replacement fertility",
+"def": "인구 규모를 유지하는 데 필요한 합계 출산율 수준(선진국 약 2.1).",
+"cat": "인구지리",
+"distractors": [
+"합계 출산율",
+"조출생률",
+"총재생산율"
+],
+"exam": []
+},
+{
+"term": "총부양비",
+"en": "Total dependency ratio",
+"def": "생산 가능 인구 100명당 유소년+노년 인구.",
+"cat": "인구지리",
+"distractors": [
+"노년 부양비",
+"노령화 지수",
+"유소년 부양비"
+],
+"exam": []
+},
+{
+"term": "표준화 사망률",
+"en": "Standardized mortality rate",
+"def": "연령 구조 차이를 보정해 지역 간 비교하도록 계산한 사망률.",
+"cat": "인구지리",
+"distractors": [
+"조사망률",
+"영아 사망률",
+"기대 수명"
+],
+"exam": []
+},
+{
+"term": "연앙 인구",
+"en": "Mid-year population",
+"def": "해당 연도 7월 1일(중앙 시점) 인구. 조출생률 등 비율 계산의 분모.",
+"cat": "인구지리",
+"distractors": [
+"상주 인구",
+"주간 인구",
+"총인구"
+],
+"exam": []
+},
+{
+"term": "두뇌 유출",
+"en": "Brain drain",
+"def": "고학력·전문 인력이 다른 나라로 유출되는 현상.",
+"cat": "인구지리",
+"distractors": [
+"두뇌 순환",
+"인적 자본",
+"연쇄 이주"
+],
+"exam": []
+},
+{
+"term": "인구 변천 모형",
+"en": "Demographic transition model",
+"def": "출생률·사망률 변화에 따라 고위 정지기→초기 확장기→후기 확장기→저위 정지기로 인구가 변화한다는 모형.",
+"cat": "인구지리",
+"distractors": [
+"로지스틱 모형",
+"맬서스 인구론",
+"인구 피라미드"
+],
+"exam": []
+},
+{
+"term": "고령 사회",
+"en": "Aged society",
+"def": "총인구 중 65세 이상 비율이 14% 이상인 사회(7% 고령화 사회, 20% 초고령 사회).",
+"cat": "인구지리",
+"distractors": [
+"고령화 사회",
+"초고령 사회",
+"인구 절벽"
+],
+"exam": []
+},
+{
+"term": "라벤스타인의 인구 이동 법칙",
+"en": "Ravenstein's laws",
+"def": "인구 이동은 대체로 단거리, 단계적으로 이루어지며 이동에는 역류가 따른다는 등의 법칙.",
+"cat": "인구지리",
+"distractors": [
+"중력 모형",
+"배출-흡인 이론",
+"리의 이동 모형"
+],
+"exam": []
+},
+{
+"term": "이중 도시",
+"en": "Dual city",
+"def": "고차 생산자 서비스 고소득층과 저임금 서비스 계층으로 양극화된 도시.",
+"cat": "도시지리",
+"distractors": [
+"분절 도시",
+"종주 도시",
+"세계 도시"
+],
+"exam": [
+"2017 B4"
+]
+},
+{
+"term": "생산자 서비스",
+"en": "Producer services",
+"def": "기업 활동을 지원하는 금융·법률·광고·컨설팅 등 서비스. 세계 도시에 집중.",
+"cat": "도시지리",
+"distractors": [
+"소비자 서비스",
+"공공 서비스",
+"FIRE"
+],
+"exam": [
+"2022 B9"
+]
+},
+{
+"term": "네트워크 도시 체계",
+"en": "Network city system",
+"def": "배튼: 도시 간 수평적·쌍방향 흐름과 보완성을 강조하는 도시 체계(↔ 중심지 체계의 수직적·일방향).",
+"cat": "도시지리",
+"distractors": [
+"중심지 체계",
+"종주 도시 체계",
+"회랑 도시"
+],
+"exam": [
+"2012-1차32*"
+]
+},
+{
+"term": "여과 과정",
+"en": "Filtering",
+"def": "고소득층이 새 주택으로 이동하면 기존 주택이 점차 낮은 소득 계층으로 넘어가는 과정.",
+"cat": "도시지리",
+"distractors": [
+"침입과 천이",
+"젠트리피케이션",
+"레드라이닝"
+],
+"exam": [
+"2025 A10",
+"2021 A"
+]
+},
+{
+"term": "사회 지역 분석",
+"en": "Social area analysis",
+"def": "경제적 지위·가족적 지위·민족적 지위 지표로 도시 내부를 분석. 경제적 지위=선형, 가족적 지위=동심원, 민족=군집(다핵).",
+"cat": "도시지리",
+"distractors": [
+"요인 생태학",
+"동심원 모형",
+"입찰 지대"
+],
+"exam": [
+"2015 A3*",
+"2011-1차34*",
+"2011-1차28*",
+"2010-1차40*",
+"2009-1차31*",
+"2007-8*"
+]
+},
+{
+"term": "지대 격차",
+"en": "Rent gap",
+"def": "닐 스미스: 잠재적 지대와 현재 실현 지대의 차이. 격차가 커지면 재투자(젠트리피케이션) 발생.",
+"cat": "도시지리",
+"distractors": [
+"입찰 지대",
+"경제 지대",
+"위치 지대"
+],
+"exam": [
+"2014 B 논술1*"
+]
+},
+{
+"term": "게토",
+"en": "Ghetto",
+"def": "차별·강제로 특정 소수 집단이 격리되어 거주하는 지역.",
+"cat": "도시지리",
+"distractors": [
+"엔클레이브",
+"거류지",
+"슬럼"
+],
+"exam": [
+"2015 B2*"
+]
+},
+{
+"term": "기업가주의 도시",
+"en": "Urban entrepreneurialism",
+"def": "하비: 도시 정부가 관리주의에서 벗어나 투자 유치·장소 마케팅 등 기업처럼 경쟁하는 통치 방식.",
+"cat": "도시지리",
+"distractors": [
+"관리주의",
+"케인스주의",
+"도시 재생"
+],
+"exam": [
+"2017 B"
+]
+},
+{
+"term": "에지 시티",
+"en": "Edge city",
+"def": "교외 고속도로 결절에 형성된 업무·상업 중심지(가로).",
+"cat": "도시지리",
+"distractors": [
+"침상 도시",
+"위성 도시",
+"신도시"
+],
+"exam": [
+"2017 A",
+"2012-1차33*",
+"2011-1차34*",
+"2008-11*"
+]
+},
+{
+"term": "중심지 이론",
+"en": "Central place theory",
+"def": "크리스탈러가 제시한 이론. 중심지의 계층, 재화 도달 범위·최소 요구치, 육각형 배후지로 취락 분포 설명.",
+"cat": "도시지리",
+"distractors": [
+"입지 삼각형",
+"튀넨의 고립국",
+"순위-규모 법칙"
+],
+"exam": [
+"2019 A",
+"2018 A",
+"2006-12*",
+"2004-12*"
+]
+},
+{
+"term": "최소 요구치",
+"en": "Threshold",
+"def": "중심지 기능이 유지되기 위한 최소한의 수요(인구) 범위. 재화 도달 범위 ≥ 최소 요구치여야 입지.",
+"cat": "도시지리",
+"distractors": [
+"재화의 도달 범위",
+"배후지",
+"중심성"
+],
+"exam": [
+"2010-1차3*"
+]
+},
+{
+"term": "젠트리피케이션",
+"en": "Gentrification",
+"def": "낙후된 구도심에 중산층 이상이 유입되며 지가·임대료가 올라 원주민이 밀려나는 현상.",
+"cat": "도시지리",
+"distractors": [
+"도심 공동화",
+"스프롤 현상",
+"역도시화"
+],
+"exam": [
+"2021 B4",
+"2017 B",
+"2014 B논술1*",
+"2014 B 논술1*",
+"2012-2차4*",
+"2012-1차29*",
+"2011-1차28*",
+"2009-1차26*"
+]
+},
+{
+"term": "입찰 지대",
+"en": "Bid rent",
+"def": "각 토지 이용이 지불할 수 있는 지대. 도심에서 멀어질수록 낮아지며 접근성이 높은 곳은 상업 기능이 차지.",
+"cat": "도시지리",
+"distractors": [
+"경제 지대",
+"위치 지대",
+"지가 경사"
+],
+"exam": [
+"2022 A"
+]
+},
+{
+"term": "세계 도시 가설",
+"en": "World city hypothesis",
+"def": "프리드먼: 세계 도시는 세계 경제 통제 기능이 집중된 결절로, 핵심·반주변부에 위계적으로 분포하며 사회적 양극화(이중 도시)가 나타난다.",
+"cat": "도시지리",
+"distractors": [
+"중심지 이론",
+"종주 도시",
+"세계 체제론"
+],
+"exam": []
+},
+{
+"term": "침입과 천이",
+"en": "Invasion and succession",
+"def": "시카고학파: 새로운 집단이 기존 지역에 들어와(침입) 경쟁 후 지역 성격이 바뀌는(천이) 과정.",
+"cat": "도시지리",
+"distractors": [
+"여과 과정",
+"젠트리피케이션",
+"동화"
+],
+"exam": []
+},
+{
+"term": "레드라이닝",
+"en": "Redlining",
+"def": "금융 기관이 특정(소수 민족·저소득) 지역을 지도에 빨간 선으로 표시해 대출을 거부하는 차별 관행.",
+"cat": "도시지리",
+"distractors": [
+"블록버스팅",
+"스티어링",
+"젠트리피케이션"
+],
+"exam": []
+},
+{
+"term": "블록버스팅",
+"en": "Blockbusting",
+"def": "부동산 업자가 소수 집단 유입 공포를 조장해 백인 주택을 싸게 사서 비싸게 되파는 관행.",
+"cat": "도시지리",
+"distractors": [
+"레드라이닝",
+"스티어링",
+"여과 과정"
+],
+"exam": []
+},
+{
+"term": "비유사성 지수",
+"en": "Index of dissimilarity",
+"def": "두 집단의 공간적 분포 차이(거주지 분리) 정도를 0~100으로 나타낸 지수.",
+"cat": "도시지리",
+"distractors": [
+"입지 계수",
+"고립 지수",
+"지니 계수"
+],
+"exam": []
+},
+{
+"term": "재화의 도달 범위",
+"en": "Range of good",
+"def": "중심지 기능이 제공하는 재화·서비스를 이용하기 위해 소비자가 이동하는 최대 거리.",
+"cat": "도시지리",
+"distractors": [
+"최소 요구치",
+"배후지",
+"통근권"
+],
+"exam": []
+},
+{
+"term": "순위-규모 법칙",
+"en": "Rank-size rule",
+"def": "n번째 도시 인구는 최대 도시 인구의 1/n이라는 지프(Zipf)의 법칙.",
+"cat": "도시지리",
+"distractors": [
+"종주 도시화",
+"중심지 이론",
+"중력 모형"
+],
+"exam": []
+},
+{
+"term": "종주 도시",
+"en": "Primate city",
+"def": "국가 내 최대 도시 인구가 2위 도시의 2배 이상인 등 지나치게 큰 도시(제퍼슨).",
+"cat": "도시지리",
+"distractors": [
+"세계 도시",
+"메갈로폴리스",
+"위성 도시"
+],
+"exam": []
+},
+{
+"term": "동심원 모형",
+"en": "Concentric zone model",
+"def": "버제스가 시카고를 바탕으로 도시 내부가 도심을 중심으로 동심원 구조를 이룬다고 제시한 모형.",
+"cat": "도시지리",
+"distractors": [
+"선형 모형",
+"다핵심 모형",
+"중심지 이론"
+],
+"exam": []
+},
+{
+"term": "다핵심 모형",
+"en": "Multiple nuclei model",
+"def": "해리스·울만이 제시. 도시가 여러 개의 핵을 중심으로 성장한다는 모형.",
+"cat": "도시지리",
+"distractors": [
+"동심원 모형",
+"선형 모형",
+"중심지 이론"
+],
+"exam": []
+},
+{
+"term": "도심 공동화",
+"en": "Doughnut phenomenon",
+"def": "도심의 상주 인구가 감소해 주간·야간 인구 차가 커지는 현상.",
+"cat": "도시지리",
+"distractors": [
+"젠트리피케이션",
+"교외화",
+"역도시화"
+],
+"exam": []
+},
+{
+"term": "스프롤 현상",
+"en": "Urban sprawl",
+"def": "도시가 무계획적으로 교외로 확산되는 현상.",
+"cat": "도시지리",
+"distractors": [
+"젠트리피케이션",
+"연담화",
+"교외화"
+],
+"exam": []
+},
+{
+"term": "뉴어바니즘",
+"en": "New Urbanism",
+"def": "보행·대중교통 중심, 복합 용도, 공공 공간을 강조하는 근린 설계 운동(예: 시사이드).",
+"cat": "도시지리",
+"distractors": [
+"전원도시",
+"스마트 성장",
+"교외화"
+],
+"exam": []
+},
+{
+"term": "전원도시",
+"en": "Garden city",
+"def": "하워드가 제안한 도시와 농촌의 장점을 결합한 자족적 계획도시(그린벨트 포함).",
+"cat": "도시지리",
+"distractors": [
+"뉴어바니즘",
+"위성 도시",
+"신도시"
+],
+"exam": []
+},
+{
+"term": "도시화 곡선",
+"en": "Urbanization curve",
+"def": "도시화율 변화를 초기·가속화·종착 단계의 S자 형태로 나타낸 곡선.",
+"cat": "도시지리",
+"distractors": [
+"인구 변천 모형",
+"순위-규모 법칙",
+"인구 피라미드"
+],
+"exam": []
+},
+{
+"term": "과잉 도시화",
+"en": "Over-urbanization",
+"def": "산업화 수준에 비해 도시화가 지나치게 빠르게 진행되는 현상(가도시화). 개발도상국.",
+"cat": "도시지리",
+"distractors": [
+"역도시화",
+"교외화",
+"종주 도시화"
+],
+"exam": []
+},
+{
+"term": "선형 모형",
+"en": "Sector model",
+"def": "호이트가 제시. 주거지 등이 교통로를 따라 부채꼴로 확장된다는 도시 내부 구조 모형.",
+"cat": "도시지리",
+"distractors": [
+"동심원 모형",
+"다핵심 모형",
+"입찰 지대 모형"
+],
+"exam": []
+},
+{
+"term": "경로 의존성",
+"en": "Path dependence",
+"def": "과거의 선택·우연이 이후 경제 발전 경로를 제약하는 성질(진화경제지리). 고착(lock-in)으로 이어질 수 있음.",
+"cat": "경제지리",
+"distractors": [
+"규모의 경제",
+"집적 이익",
+"누적적 인과"
+],
+"exam": [
+"2024 A",
+"2017 B5"
+]
+},
+{
+"term": "착근성",
+"en": "Embeddedness",
+"def": "경제 활동이 사회적 관계·제도·장소에 뿌리내린 성질(폴라니·그라노베터).",
+"cat": "경제지리",
+"distractors": [
+"경로 의존성",
+"제도적 밀집",
+"집적 경제"
+],
+"exam": [
+"2025 B8"
+]
+},
+{
+"term": "산업 지구",
+"en": "Industrial district",
+"def": "마셜: 중소기업이 집적해 전문화된 노동·정보 확산 등 외부 경제를 누리는 지역(제3이탈리아).",
+"cat": "경제지리",
+"distractors": [
+"클러스터",
+"허브앤스포크",
+"위성 산업 지구"
+],
+"exam": [
+"2026 A",
+"2020 A7",
+"2018 A7",
+"2017 A",
+"2016 B5*"
+]
+},
+{
+"term": "클러스터",
+"en": "Cluster",
+"def": "포터: 특정 분야의 상호 연관된 기업·기관이 지리적으로 집중해 경쟁과 협력을 하는 집합체.",
+"cat": "경제지리",
+"distractors": [
+"산업 지구",
+"혁신 도시",
+"복합 단지"
+],
+"exam": [
+"2026 A",
+"2023 A8",
+"2016 B4*",
+"2012-1차30*",
+"2009-1차32*"
+]
+},
+{
+"term": "포스트포디즘",
+"en": "Post-Fordism",
+"def": "대량 생산(포디즘) 이후 유연 생산·다품종 소량·유연 노동을 특징으로 하는 생산 체제.",
+"cat": "경제지리",
+"distractors": [
+"포디즘",
+"테일러주의",
+"신국제 분업"
+],
+"exam": [
+"2020 B9",
+"2013-1차37*"
+]
+},
+{
+"term": "신국제 분업",
+"en": "New international division of labour",
+"def": "다국적 기업이 노동집약 생산 공정을 저임금 개발도상국으로 이전하며 나타난 분업 구조.",
+"cat": "경제지리",
+"distractors": [
+"전통적 국제 분업",
+"공정 간 분업",
+"비교 우위"
+],
+"exam": [
+"2026 B4"
+]
+},
+{
+"term": "상품 사슬",
+"en": "Global commodity chain",
+"def": "제레피: 상품의 생산~소비 과정 연계. 생산자 주도형(자동차)·구매자 주도형(의류).",
+"cat": "경제지리",
+"distractors": [
+"가치 사슬",
+"글로벌 생산 네트워크",
+"공정 간 분업"
+],
+"exam": [
+"2026 B",
+"2025 B",
+"2019 A",
+"2018 A7",
+"2014 A서술4*",
+"2013-1차32*"
+]
+},
+{
+"term": "글로벌 생산 네트워크",
+"en": "GPN",
+"def": "가치·권력·착근성(영토·사회·네트워크)을 핵심으로 기업 간·비기업 행위자 관계를 분석하는 틀.",
+"cat": "경제지리",
+"distractors": [
+"상품 사슬",
+"GVC",
+"클러스터"
+],
+"exam": [
+"2026 A",
+"2019 A"
+]
+},
+{
+"term": "입지 계수",
+"en": "Location quotient",
+"def": "지역의 특정 산업 비중 / 전국의 그 산업 비중. 1보다 크면 특화(기반 산업).",
+"cat": "경제지리",
+"distractors": [
+"비유사성 지수",
+"기반 승수",
+"원료 지수"
+],
+"exam": [
+"2022 A11"
+]
+},
+{
+"term": "기반 활동",
+"en": "Basic activity",
+"def": "지역 외부로 재화·서비스를 판매해 소득을 들여오는 활동(↔ 비기반 활동).",
+"cat": "경제지리",
+"distractors": [
+"비기반 활동",
+"입지 계수",
+"승수 효과"
+],
+"exam": [
+"2022 A"
+]
+},
+{
+"term": "신경제지리학",
+"en": "New economic geography",
+"def": "크루그먼: 수확 체증·운송비·구심력/원심력으로 집적과 핵심-주변 구조 형성을 설명.",
+"cat": "경제지리",
+"distractors": [
+"진화경제지리",
+"베버 입지론",
+"중심지 이론"
+],
+"exam": [
+"2024 A"
+]
+},
+{
+"term": "원료 지향 공업",
+"en": "Raw-material oriented",
+"def": "원료의 무게·부피가 제품 생산 과정에서 크게 감소하거나 부패하기 쉬운 공업. 예: 시멘트, 통조림.",
+"cat": "경제지리",
+"distractors": [
+"시장 지향 공업",
+"적환지 지향 공업",
+"노동 지향 공업"
+],
+"exam": [
+"2021 B"
+]
+},
+{
+"term": "시장 지향 공업",
+"en": "Market oriented",
+"def": "제품 생산 과정에서 무게·부피가 증가하거나 변질되기 쉬운 공업. 예: 음료, 제빙, 가구.",
+"cat": "경제지리",
+"distractors": [
+"원료 지향 공업",
+"노동 지향 공업",
+"입지 자유형 공업"
+],
+"exam": [
+"2021 B"
+]
+},
+{
+"term": "적환지 지향 공업",
+"en": "Break-of-bulk oriented",
+"def": "원료 수입이 많아 항구 등 적환지에 입지하는 공업. 예: 제철, 정유.",
+"cat": "경제지리",
+"distractors": [
+"원료 지향 공업",
+"시장 지향 공업",
+"집적 지향 공업"
+],
+"exam": [
+"2021 B"
+]
+},
+{
+"term": "집적 이익",
+"en": "Agglomeration economies",
+"def": "관련 기업이 모여 비용 절감·정보 교류 등 얻는 이익.",
+"cat": "경제지리",
+"distractors": [
+"규모의 경제",
+"범위의 경제",
+"분산 이익"
+],
+"exam": [
+"2020 A",
+"2011-1차27*"
+]
+},
+{
+"term": "탈공업화",
+"en": "Deindustrialization",
+"def": "제조업 비중이 감소하고 서비스업 비중이 커지는 현상.",
+"cat": "경제지리",
+"distractors": [
+"역도시화",
+"산업 공동화",
+"공정 간 분업"
+],
+"exam": [
+"2019 B"
+]
+},
+{
+"term": "플랜테이션",
+"en": "Plantation",
+"def": "열대 지역에서 선진국 자본·기술과 원주민 노동력이 결합된 대규모 단일 상품 작물 재배.",
+"cat": "경제지리",
+"distractors": [
+"이동식 화전 농업",
+"기업적 곡물 농업",
+"혼합 농업"
+],
+"exam": [
+"2019 A"
+]
+},
+{
+"term": "제도적 밀집",
+"en": "Institutional thickness",
+"def": "애쉬·스리프트: 지역 내 다양한 제도·조직의 밀도와 상호작용이 지역 발전을 뒷받침함.",
+"cat": "경제지리",
+"distractors": [
+"착근성",
+"산업 지구",
+"클러스터"
+],
+"exam": []
+},
+{
+"term": "노동의 공간 분업",
+"en": "Spatial divisions of labour",
+"def": "매시: 자본이 지역별 노동 특성을 이용해 기능(본사·R&D·생산)을 공간적으로 분리 배치함.",
+"cat": "경제지리",
+"distractors": [
+"신국제 분업",
+"산업 공동화",
+"누적적 인과"
+],
+"exam": []
+},
+{
+"term": "누적적 인과",
+"en": "Cumulative causation",
+"def": "미르달: 성장 지역은 역류 효과로 계속 성장하고 낙후 지역은 더 뒤처져 지역 격차가 확대된다는 이론.",
+"cat": "경제지리",
+"distractors": [
+"확산 효과",
+"성장극 이론",
+"경로 의존성"
+],
+"exam": []
+},
+{
+"term": "글로벌 가치 사슬 거버넌스",
+"en": "GVC governance",
+"def": "제레피 등: 시장형·모듈형·관계형·전속형·위계형 5유형으로 선도 기업의 조정 방식을 구분.",
+"cat": "경제지리",
+"distractors": [
+"상품 사슬",
+"GPN",
+"공정 간 분업"
+],
+"exam": []
+},
+{
+"term": "튀넨의 고립국 이론",
+"en": "Von Thünen model",
+"def": "시장과의 거리에 따른 수송비·위치 지대 차이로 농업 토지 이용이 동심원 구조를 이룬다는 이론.",
+"cat": "경제지리",
+"distractors": [
+"베버의 공업 입지론",
+"중심지 이론",
+"입찰 지대 이론"
+],
+"exam": []
+},
+{
+"term": "베버의 공업 입지론",
+"en": "Weber's least cost theory",
+"def": "수송비·노동비·집적 이익을 고려해 최소 비용 지점에 공장이 입지한다는 이론.",
+"cat": "경제지리",
+"distractors": [
+"튀넨의 고립국 이론",
+"뢰슈의 최대 수요 이론",
+"중심지 이론"
+],
+"exam": []
+},
+{
+"term": "원료 지수",
+"en": "Material index",
+"def": "국지 원료 중량 / 제품 중량. 1보다 크면 원료 지향, 작으면 시장 지향 입지.",
+"cat": "경제지리",
+"distractors": [
+"입지 삼각형",
+"등비용선",
+"적환지"
+],
+"exam": []
+},
+{
+"term": "공정 간 분업",
+"en": "Spatial division of labour",
+"def": "기업의 본사·연구소·생산 공장이 서로 다른 지역에 분산 입지하는 현상(다국적 기업).",
+"cat": "경제지리",
+"distractors": [
+"수평적 분업",
+"집적 이익",
+"탈공업화"
+],
+"exam": []
+},
+{
+"term": "산업 공동화",
+"en": "Industrial hollowing-out",
+"def": "생산 시설의 해외 이전으로 국내 제조업 기반이 약화되는 현상.",
+"cat": "경제지리",
+"distractors": [
+"탈공업화",
+"도심 공동화",
+"공정 간 분업"
+],
+"exam": []
+},
+{
+"term": "비교 우위",
+"en": "Comparative advantage",
+"def": "상대적으로 기회비용이 낮은 재화 생산에 특화하면 무역으로 상호 이익을 얻는다는 개념(리카도).",
+"cat": "경제지리",
+"distractors": [
+"절대 우위",
+"규모의 경제",
+"보호 무역"
+],
+"exam": []
+},
+{
+"term": "이동식 화전 농업",
+"en": "Shifting cultivation",
+"def": "열대 우림 지역에서 숲을 태워 경작하다 지력이 떨어지면 이동하는 농업.",
+"cat": "경제지리",
+"distractors": [
+"플랜테이션",
+"유목",
+"수목 농업"
+],
+"exam": []
+},
+{
+"term": "혼합 농업",
+"en": "Mixed farming",
+"def": "작물 재배와 가축 사육을 결합한 농업. 서부 유럽에서 발달.",
+"cat": "경제지리",
+"distractors": [
+"낙농업",
+"원예 농업",
+"기업적 목축"
+],
+"exam": []
+},
+{
+"term": "수목 농업",
+"en": "Tree crop farming",
+"def": "지중해성 기후 지역에서 여름 건조에 강한 올리브·포도·코르크 등을 재배하는 농업.",
+"cat": "경제지리",
+"distractors": [
+"플랜테이션",
+"혼합 농업",
+"원예 농업"
+],
+"exam": []
+},
+{
+"term": "암묵지",
+"en": "Tacit knowledge",
+"def": "말·문서로 표현하기 어려운 경험적 지식. 대면 접촉으로 전달되어 집적을 촉진.",
+"cat": "경제지리",
+"distractors": [
+"형식지",
+"명제적 지식",
+"글로벌 파이프라인"
+],
+"exam": []
+},
+{
+"term": "신자유주의",
+"en": "Neoliberalism",
+"def": "시장 자유·규제 완화·민영화를 강조하는 정치경제 체제(워싱턴 합의).",
+"cat": "경제지리",
+"distractors": [
+"케인스주의",
+"발전 국가",
+"종속 이론"
+],
+"exam": []
+},
+{
+"term": "글로벌 파이프라인",
+"en": "Global pipelines",
+"def": "클러스터 외부와의 의도적 지식 연결 통로(↔ 로컬 버즈).",
+"cat": "경제지리",
+"distractors": [
+"로컬 버즈",
+"암묵지",
+"가치 사슬"
+],
+"exam": []
+},
+{
+"term": "종속 이론",
+"en": "Dependency theory",
+"def": "주변부의 저발전이 중심부 자본주의와의 불평등한 관계 때문이라는 이론.",
+"cat": "경제지리",
+"distractors": [
+"근대화 이론",
+"세계 체제론",
+"비교 우위"
+],
+"exam": []
+},
+{
+"term": "수입 대체 산업화",
+"en": "Import substitution industrialization",
+"def": "수입품을 국내 생산으로 대체하며 보호 무역 하에 산업화하는 전략(↔ 수출 지향).",
+"cat": "경제지리",
+"distractors": [
+"수출 지향 산업화",
+"신자유주의",
+"종속 이론"
+],
+"exam": []
+},
+{
+"term": "녹색 혁명",
+"en": "Green Revolution",
+"def": "1960년대 이후 개발도상국에서 다수확 품종 보급·비료·관개로 곡물 생산량이 크게 증가한 현상.",
+"cat": "경제지리",
+"distractors": [
+"기업적 농업",
+"농업의 세계화",
+"푸드 마일리지"
+],
+"exam": []
+},
+{
+"term": "푸드 마일리지",
+"en": "Food miles",
+"def": "식품이 생산지에서 소비자까지 이동한 거리(×중량). 클수록 탄소 배출 증가.",
+"cat": "경제지리",
+"distractors": [
+"로컬 푸드",
+"가상수",
+"탄소 발자국"
+],
+"exam": []
+},
+{
+"term": "가상수",
+"en": "Virtual water",
+"def": "제품 생산 과정에 사용된 물의 양.",
+"cat": "경제지리",
+"distractors": [
+"푸드 마일리지",
+"물 발자국",
+"생태 발자국"
+],
+"exam": []
+},
+{
+"term": "공정 무역",
+"en": "Fair trade",
+"def": "개발도상국 생산자에게 정당한 대가를 지불하는 윤리적 무역.",
+"cat": "경제지리",
+"distractors": [
+"자유 무역",
+"보호 무역",
+"비교 우위"
+],
+"exam": []
+},
+{
+"term": "문화 경관",
+"en": "Cultural landscape",
+"def": "사우어: 문화 집단이 자연 경관에 작용해 만든 경관. 문화=작인, 자연=매개체.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"자연 경관",
+"초유기체",
+"보는 방식"
+],
+"exam": [
+"2026 A5",
+"2023 A",
+"2011-1차36*",
+"2009-1차39*",
+"2007-15*",
+"2005-27·28*"
+]
+},
+{
+"term": "초유기체",
+"en": "Superorganic",
+"def": "문화를 개인을 넘어선 독자적 실체로 보는 관점(사우어 버클리학파 비판 대상, 던컨).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"문화 경관",
+"문화 생태학",
+"텍스트로서 경관"
+],
+"exam": [
+"2025 B"
+]
+},
+{
+"term": "신문화지리학",
+"en": "New cultural geography",
+"def": "1980년대 이후 경관을 재현·텍스트·권력·의미로 해석(코스그로브·던컨·잭슨).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"버클리학파",
+"인문주의 지리학",
+"계량 혁명"
+],
+"exam": [
+"2025 B",
+"2022 B",
+"2020 B"
+]
+},
+{
+"term": "텍스트로서의 경관",
+"en": "Landscape as text",
+"def": "던컨: 경관을 읽고 해석될 수 있는 기호 체계·담론으로 보는 관점.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"보는 방식",
+"초유기체",
+"문화 경관"
+],
+"exam": [
+"2025 B1",
+"2012-2차2*"
+]
+},
+{
+"term": "문화 생태학",
+"en": "Cultural ecology",
+"def": "스튜어드 등: 문화를 환경 적응 체계로 보는 관점(예: 힌두교 소 금기의 생태적 해석).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"정치 생태학",
+"환경 결정론",
+"가능론"
+],
+"exam": [
+"2012-2차2*"
+]
+},
+{
+"term": "크레올",
+"en": "Creole",
+"def": "식민지에서 유럽어와 현지·아프리카 언어가 섞여 모국어화된 언어.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"피진",
+"링구아 프랑카",
+"방언"
+],
+"exam": [
+"2013-2차 (태그)*",
+"2013-1차38*"
+]
+},
+{
+"term": "장소감",
+"en": "Sense of place",
+"def": "장소에 대해 개인·집단이 갖는 정서적 애착과 의미(투안 '공간→장소').",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"무장소성",
+"장소애",
+"공간"
+],
+"exam": [
+"2026 A",
+"2025 B",
+"2023 A",
+"2020 B",
+"2017 B"
+]
+},
+{
+"term": "종족촌",
+"en": "Clan village",
+"def": "동성(同姓) 집단이 모여 사는 촌락. 예: 안동 하회마을.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"각성촌",
+"산촌",
+"집촌"
+],
+"exam": [
+"2022 A"
+]
+},
+{
+"term": "집촌과 산촌",
+"en": "Nucleated vs dispersed",
+"def": "집촌은 가옥 밀집(경지 이동 거리 큼), 산촌은 가옥 분산(경지와 가까움). 산촌 예: 태안반도.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"괴촌",
+"열촌",
+"환촌"
+],
+"exam": [
+"2024 B"
+]
+},
+{
+"term": "천하도",
+"en": "Cheonhado",
+"def": "조선 후기 원형 세계지도. 중국 중심, 『산해경』의 가상 지명 포함.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"혼일강리역대국도지도",
+"TO 지도",
+"곤여만국전도"
+],
+"exam": [
+"2011-1차32*"
+]
+},
+{
+"term": "완충 지대",
+"en": "Buffer zone",
+"def": "강대국 사이에서 충돌을 막는 중간 지대. 예: 와칸 회랑(영·러 그레이트 게임).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"점이 지대",
+"회랑",
+"비무장 지대"
+],
+"exam": [
+"2014 A4*"
+]
+},
+{
+"term": "문화 전파",
+"en": "Cultural diffusion",
+"def": "문화 요소가 다른 지역으로 퍼져 나가는 현상. 이전 전파·확산 전파(전염·계층·자극) 등.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"문화 변용",
+"문화 동화",
+"문화 접변"
+],
+"exam": [
+"2023 A12",
+"2009-1차29*",
+"2008-9*",
+"2003-11*"
+]
+},
+{
+"term": "문화 지역",
+"en": "Culture region",
+"def": "문화적 특성이 비슷하게 나타나는 공간 범위. 핵심부-주변부-점이 지대 구조.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"기능 지역",
+"동질 지역",
+"결절 지역"
+],
+"exam": [
+"2017 A",
+"2011-1차36*",
+"2009-1차39*",
+"2007-15*",
+"2005-27·28*"
+]
+},
+{
+"term": "점이 지대",
+"en": "Transition zone",
+"def": "두 지역의 특성이 함께 나타나는 경계 지역.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"핵심 지역",
+"기능 지역",
+"완충 지대"
+],
+"exam": [
+"2019 A",
+"2014 B 논술1*",
+"2005-27·28*"
+]
+},
+{
+"term": "민족 종교",
+"en": "Ethnic religion",
+"def": "특정 민족·지역에 한정되는 종교. 힌두교·유대교 등.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"보편 종교",
+"불교",
+"이슬람교"
+],
+"exam": [
+"2021 B6"
+]
+},
+{
+"term": "지정학",
+"en": "Geopolitics",
+"def": "국가의 지리적 위치·조건과 국제 정치·권력의 관계를 연구하는 분야.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"정치 지리",
+"지경학",
+"영역성"
+],
+"exam": [
+"2022 B",
+"2018 B",
+"2015 B4*",
+"2014 A4*",
+"2010-1차27*",
+"2008-10*",
+"2006-15*",
+"2004-16*"
+]
+},
+{
+"term": "환경 결정론",
+"en": "Environmental determinism",
+"def": "자연환경이 인간 생활·문화를 결정한다는 관점(라첼, 셈플).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"가능론",
+"문화 생태학",
+"생태주의"
+],
+"exam": [
+"2023 A",
+"2020 B",
+"2012-2차2*"
+]
+},
+{
+"term": "가능론",
+"en": "Possibilism",
+"def": "자연환경은 가능성만 제공하고 인간이 선택한다는 관점(비달 드 라 블라슈, 생활 양식).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"환경 결정론",
+"문화 결정론",
+"생태주의"
+],
+"exam": [
+"2023 A12"
+]
+},
+{
+"term": "무장소성",
+"en": "Placelessness",
+"def": "장소의 고유한 정체성이 사라지고 획일화되는 현상(렐프).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"장소애",
+"장소 마케팅",
+"세계화"
+],
+"exam": [
+"2011-1차31*"
+]
+},
+{
+"term": "대동여지도",
+"en": "Daedong yeojido",
+"def": "1861년 김정호가 제작한 22첩 분첩절첩식 목판 지도. 10리마다 방점, 산줄기는 굵기로 표현.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"청구도",
+"동국지도",
+"천하도"
+],
+"exam": [
+"2024 B",
+"2014 (노트 표기 ‘A 논술3’)*",
+"2013-1차36*",
+"2011-2차2*"
+]
+},
+{
+"term": "택리지",
+"en": "Taengniji",
+"def": "이중환이 저술한 인문 지리서. 가거지 조건으로 지리·생리·인심·산수를 제시.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"신증동국여지승람",
+"대동지지",
+"동국여지지"
+],
+"exam": [
+"2026 A5",
+"2024 B3",
+"2010-1차26*"
+]
+},
+{
+"term": "혼일강리역대국도지도",
+"en": "Honil gangni yeokdae gukdo jido",
+"def": "1402년 조선 태종 때 제작된 현존 동양 최고(最古)의 세계 지도 중 하나.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"천하도",
+"곤여만국전도",
+"대동여지도"
+],
+"exam": [
+"2016 A11*"
+]
+},
+{
+"term": "보는 방식",
+"en": "Way of seeing",
+"def": "코스그로브: 경관은 특정 계급의 시선으로 세계를 보는 방식이자 재현.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"텍스트로서 경관",
+"문화 경관",
+"장소감"
+],
+"exam": []
+},
+{
+"term": "정치 생태학",
+"en": "Political ecology",
+"def": "환경 문제를 권력·정치경제 관계 속에서 분석하는 접근.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"문화 생태학",
+"환경 결정론",
+"생태주의"
+],
+"exam": []
+},
+{
+"term": "괴촌",
+"en": "Irregular clustered village",
+"def": "가옥이 불규칙하게 덩어리 모양으로 모인 집촌.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"열촌",
+"환촌",
+"가촌"
+],
+"exam": []
+},
+{
+"term": "열촌",
+"en": "Linear village",
+"def": "가옥이 도로·제방·하천 등을 따라 줄지어 늘어선 촌락(임지촌 등).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"가촌",
+"괴촌",
+"환촌"
+],
+"exam": []
+},
+{
+"term": "TO 지도",
+"en": "T-O map",
+"def": "중세 유럽 세계지도. 동쪽(에덴)이 위, 중심은 예루살렘, 아시아·유럽·아프리카 3대륙.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"천하도",
+"이드리시 지도",
+"프톨레마이오스 지도"
+],
+"exam": []
+},
+{
+"term": "동질 지역",
+"en": "Formal region",
+"def": "특정 지리적 현상이 동질적으로 나타나는 지역. 예: 기후 지역, 농업 지역.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"기능 지역",
+"점이 지대",
+"문화권"
+],
+"exam": []
+},
+{
+"term": "기능 지역",
+"en": "Functional region",
+"def": "중심지와 그 영향을 받는 배후지가 기능적으로 결합된 지역(결절 지역). 예: 통근권.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"동질 지역",
+"점이 지대",
+"문화 지역"
+],
+"exam": []
+},
+{
+"term": "종교 지리 - 보편 종교",
+"en": "Universalizing religion",
+"def": "민족·지역을 넘어 전파되는 종교. 크리스트교·이슬람교·불교.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"민족 종교",
+"토착 종교",
+"힌두교"
+],
+"exam": []
+},
+{
+"term": "세계 체제론",
+"en": "World-systems theory",
+"def": "월러스틴이 제시. 세계를 핵심-반주변-주변으로 구분해 불평등한 분업 구조를 설명.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"종속 이론",
+"근대화 이론",
+"중심지 이론"
+],
+"exam": []
+},
+{
+"term": "계량 혁명",
+"en": "Quantitative revolution",
+"def": "1950~60년대 통계·수학 기법과 법칙 정립을 강조한 실증주의 공간 과학 지리학의 등장.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"인문주의 지리학",
+"급진주의 지리학",
+"환경 결정론"
+],
+"exam": []
+},
+{
+"term": "인문주의 지리학",
+"en": "Humanistic geography",
+"def": "인간의 경험·가치·의미를 중시하는 지리학(투안의 장소애, 렐프의 무장소성).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"계량 혁명",
+"급진주의 지리학",
+"행태주의 지리학"
+],
+"exam": []
+},
+{
+"term": "장소애",
+"en": "Topophilia",
+"def": "인간과 장소 간의 정서적 유대(투안).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"무장소성",
+"장소감",
+"영역성"
+],
+"exam": []
+},
+{
+"term": "행태주의 지리학",
+"en": "Behavioral geography",
+"def": "인간의 인지·의사 결정 과정과 공간 행동을 연구. 인지 지도·심상 지도.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"인문주의 지리학",
+"계량 혁명",
+"환경 결정론"
+],
+"exam": []
+},
+{
+"term": "신증동국여지승람",
+"en": "Sinjeung dongguk yeoji seungnam",
+"def": "조선 중종 때 편찬된 관찬 지리지(동국여지승람을 증보).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"택리지",
+"세종실록지리지",
+"대동지지"
+],
+"exam": []
+},
+{
+"term": "게리맨더링",
+"en": "Gerrymandering",
+"def": "특정 정당·후보에게 유리하게 선거구를 자의적으로 획정하는 것.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"선거 지리",
+"분리 투표",
+"비례 대표제"
+],
+"exam": []
+},
+{
+"term": "재입지 전파",
+"en": "Relocation diffusion",
+"def": "사람의 이주와 함께 문화가 새로운 지역으로 옮겨가는 전파(이전 전파).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"확산 전파",
+"계층 전파",
+"자극 전파"
+],
+"exam": []
+},
+{
+"term": "혼성성",
+"en": "Hybridity",
+"def": "바바: 서로 다른 문화가 만나 새로운 혼종 문화가 생성되는 성질. 예: 크레올.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"동화",
+"문화 접변",
+"진정성"
+],
+"exam": []
+},
+{
+"term": "심장 지역론",
+"en": "Heartland theory",
+"def": "매킨더: 유라시아 내륙 추축 지역을 지배하는 자가 세계를 지배. 하천이 북극해·내륙으로 흘러 해양 세력 접근 곤란.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"주변 지역론",
+"세계 체제론",
+"해양 세력론"
+],
+"exam": []
+},
+{
+"term": "자극 전파",
+"en": "Stimulus diffusion",
+"def": "문화의 원리·아이디어만 전파되어 새로운 문화가 만들어지는 전파. 예: 한글 창제에 영향 준 문자 개념.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"계층 전파",
+"전염 전파",
+"이전 전파"
+],
+"exam": []
+},
+{
+"term": "계층 전파",
+"en": "Hierarchical diffusion",
+"def": "대도시 등 상위 계층에서 하위 계층으로 문화가 전파되는 현상.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"전염 전파",
+"자극 전파",
+"이전 전파"
+],
+"exam": []
+},
+{
+"term": "배타적 경제 수역",
+"en": "EEZ",
+"def": "기선으로부터 200해리 이내에서 영해를 제외한 수역. 연안국이 자원에 대한 주권적 권리를 가짐.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"영해",
+"접속 수역",
+"공해"
+],
+"exam": []
+},
+{
+"term": "영해",
+"en": "Territorial sea",
+"def": "기선으로부터 12해리 이내의 바다(대한해협 일부는 3해리). 연안국 주권이 미침.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"배타적 경제 수역",
+"접속 수역",
+"내수"
+],
+"exam": []
+},
+{
+"term": "직선 기선",
+"en": "Straight baseline",
+"def": "섬이 많고 해안선이 복잡한 곳에서 가장 바깥 섬들을 직선으로 연결한 기선. 한국 서·남해안.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"통상 기선",
+"영해선",
+"중간선"
+],
+"exam": []
+},
+{
+"term": "통상 기선",
+"en": "Normal baseline",
+"def": "해안의 최저 조위선을 기준으로 한 기선. 한국 동해안 대부분과 제주도·울릉도·독도.",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"직선 기선",
+"영해선",
+"만조선"
+],
+"exam": []
+},
+{
+"term": "지역지리",
+"en": "Regional geography",
+"def": "특정 지역의 자연·인문 현상을 종합적으로 이해하는 지리학 분야(하트숀, 지역 차의 연구).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"계통지리",
+"인문주의 지리학",
+"계량 혁명"
+],
+"exam": []
+},
+{
+"term": "급진주의 지리학",
+"en": "Radical geography",
+"def": "마르크스주의 관점에서 공간 불평등과 자본주의 구조를 비판하는 지리학(하비).",
+"cat": "문화·역사·정치지리",
+"distractors": [
+"인문주의 지리학",
+"계량 혁명",
+"행태주의 지리학"
+],
+"exam": []
+},
+{
+"term": "침식 분지",
+"en": "Erosional basin",
+"def": "화강암이 주변 변성암보다 빠르게 차별 침식되어 형성된 분지. 예: 춘천·대구.",
+"cat": "지역지리",
+"distractors": [
+"구조 분지",
+"칼데라",
+"돌리네"
+],
+"exam": [
+"2026 A",
+"2020 A",
+"2019 B"
+]
+},
+{
+"term": "고랭지 농업",
+"en": "Highland farming",
+"def": "여름철 서늘한 고위 평탄면 등에서 배추·무 등을 재배하는 농업. 대관령 일대.",
+"cat": "지역지리",
+"distractors": [
+"근교 농업",
+"원교 농업",
+"시설 원예"
+],
+"exam": [
+"2017 B"
+]
+},
+{
+"term": "사헬 지대",
+"en": "Sahel",
+"def": "사하라 사막 남쪽 가장자리의 반건조 지대. 사막화가 심각.",
+"cat": "지역지리",
+"distractors": [
+"마그레브",
+"사바나",
+"칼라하리"
+],
+"exam": [
+"2018 B"
+]
+},
+{
+"term": "블루 바나나",
+"en": "Blue Banana",
+"def": "영국 남부~이탈리아 북부까지 이어지는 유럽의 핵심 경제·인구 축.",
+"cat": "지역지리",
+"distractors": [
+"선벨트",
+"제3이탈리아",
+"러스트 벨트"
+],
+"exam": [
+"2010-1차39*"
+]
+},
+{
+"term": "라티푼디오",
+"en": "Latifundio",
+"def": "라틴아메리카의 식민지 기원 대토지 소유제(아시엔다·파젠다).",
+"cat": "지역지리",
+"distractors": [
+"미니푼디오",
+"플랜테이션",
+"에스탄시아"
+],
+"exam": []
+},
+{
+"term": "판 구조론",
+"en": "Plate tectonics",
+"def": "지구 표면이 여러 판으로 이루어져 이동하며 경계에서 지진·화산·조산 운동이 일어난다는 이론.",
+"cat": "지역지리",
+"distractors": [
+"대륙 이동설",
+"해저 확장설",
+"지구 수축설"
+],
+"exam": []
+},
+{
+"term": "외래 하천",
+"en": "Exotic river",
+"def": "습윤 지역에서 발원해 건조 지역을 관통하여 흐르는 하천. 예: 나일강·티그리스강.",
+"cat": "지역지리",
+"distractors": [
+"와디",
+"내륙 하천",
+"감입 곡류 하천"
+],
+"exam": []
+},
+{
+"term": "마그레브",
+"en": "Maghreb",
+"def": "아프리카 북서부(모로코·알제리·튀니지)를 가리키는 말. '해가 지는 곳'.",
+"cat": "지역지리",
+"distractors": [
+"사헬",
+"레반트",
+"마슈리크"
+],
+"exam": []
+},
+{
+"term": "러스트 벨트",
+"en": "Rust Belt",
+"def": "미국 북동부·오대호 연안의 쇠퇴한 전통 제조업 지대.",
+"cat": "지역지리",
+"distractors": [
+"선벨트",
+"실리콘밸리",
+"메갈로폴리스"
+],
+"exam": []
+},
+{
+"term": "선벨트",
+"en": "Sun Belt",
+"def": "미국 북위 37° 이남의 남부·남서부 지역. 첨단 산업과 인구 증가.",
+"cat": "지역지리",
+"distractors": [
+"러스트 벨트",
+"콘 벨트",
+"프레리"
+],
+"exam": []
+},
+{
+"term": "고기 습곡 산지",
+"en": "Old fold mountains",
+"def": "고생대에 형성되어 오랜 침식으로 해발 고도가 낮고 완만한 산지. 석탄 매장. 예: 애팔래치아·우랄.",
+"cat": "지역지리",
+"distractors": [
+"신기 습곡 산지",
+"안정육괴",
+"해령"
+],
+"exam": []
+},
+{
+"term": "신기 습곡 산지",
+"en": "Young fold mountains",
+"def": "중생대 말~신생대에 형성된 높고 험준한 산지. 예: 알프스·히말라야·안데스.",
+"cat": "지역지리",
+"distractors": [
+"고기 습곡 산지",
+"안정육괴",
+"단층 산지"
+],
+"exam": []
+},
+{
+"term": "발산 경계",
+"en": "Divergent boundary",
+"def": "두 판이 서로 멀어지는 경계. 해령·열곡대(동아프리카 지구대).",
+"cat": "지역지리",
+"distractors": [
+"수렴 경계",
+"보존 경계",
+"섭입대"
+],
+"exam": []
+},
+{
+"term": "보존 경계",
+"en": "Transform boundary",
+"def": "두 판이 어긋나는 경계. 변환 단층 형성, 예: 산안드레아스 단층.",
+"cat": "지역지리",
+"distractors": [
+"발산 경계",
+"수렴 경계",
+"열곡"
+],
+"exam": []
+},
+{
+"term": "오아시스",
+"en": "Oasis",
+"def": "사막에서 지하수가 솟거나 외래 하천이 흘러 물을 얻을 수 있는 곳. 대추야자 재배.",
+"cat": "지역지리",
+"distractors": [
+"와디",
+"플라야",
+"카나트"
+],
+"exam": []
+},
+{
+"term": "메갈로폴리스",
+"en": "Megalopolis",
+"def": "여러 거대 도시가 연담화되어 띠 모양으로 이어진 지역. 예: 보스워시(보스턴~워싱턴).",
+"cat": "지역지리",
+"distractors": [
+"메트로폴리스",
+"종주 도시",
+"세계 도시"
+],
+"exam": []
+},
+{
+"term": "쿠르드족",
+"en": "Kurds",
+"def": "튀르키예·이라크·이란·시리아에 걸쳐 사는 국가 없는 최대 민족.",
+"cat": "지역지리",
+"distractors": [
+"팔레스타인",
+"베르베르족",
+"바스크족"
+],
+"exam": []
+},
+{
+"term": "카탈루냐",
+"en": "Catalonia",
+"def": "스페인 북동부, 독자 언어·높은 경제력으로 분리 독립 요구가 있는 지역.",
+"cat": "지역지리",
+"distractors": [
+"바스크",
+"플랑드르",
+"스코틀랜드"
+],
+"exam": []
+},
+{
+"term": "북아일랜드 분쟁",
+"en": "Northern Ireland conflict",
+"def": "영국령 북아일랜드의 신교(연합주의)·구교(공화주의) 간 종교·정치 갈등.",
+"cat": "지역지리",
+"distractors": [
+"벨기에 언어 갈등",
+"카탈루냐",
+"키프로스"
+],
+"exam": []
+},
+{
+"term": "다르푸르",
+"en": "Darfur",
+"def": "수단 서부, 아랍계 정부·민병대와 비아랍계 주민 간 분쟁 지역.",
+"cat": "지역지리",
+"distractors": [
+"남수단",
+"카슈미르",
+"소말리아"
+],
+"exam": []
+},
+{
+"term": "남중국해 분쟁",
+"en": "South China Sea dispute",
+"def": "난사(스프래틀리)·시사 군도 등을 둘러싼 중국·베트남·필리핀 등의 영유권·자원 분쟁.",
+"cat": "지역지리",
+"distractors": [
+"센카쿠 분쟁",
+"쿠릴 분쟁",
+"카스피해 분쟁"
+],
+"exam": []
+},
+{
+"term": "민다나오",
+"en": "Mindanao",
+"def": "필리핀 남부 섬. 가톨릭 다수 국가(에스파냐 식민) 속 이슬람(모로족) 분리 운동 지역.",
+"cat": "지역지리",
+"distractors": [
+"아체",
+"파타니",
+"동티모르"
+],
+"exam": []
+},
+{
+"term": "한반도의 지체 구조",
+"en": "Geologic structure of Korea",
+"def": "시·원생대 변성암(편마암)이 넓게 분포하며 고생대 조선 누층군(석회암)·평안 누층군(무연탄)이 분포.",
+"cat": "지역지리",
+"distractors": [
+"중생대 경상 누층군",
+"신생대 제3기층",
+"화강암"
+],
+"exam": []
+},
+{
+"term": "조선 누층군",
+"en": "Joseon Supergroup",
+"def": "고생대 초기 얕은 바다에서 형성된 해성층. 석회암 매장(시멘트 공업).",
+"cat": "지역지리",
+"distractors": [
+"평안 누층군",
+"경상 누층군",
+"대보 화강암"
+],
+"exam": []
+},
+{
+"term": "평안 누층군",
+"en": "Pyeongan Supergroup",
+"def": "고생대 말~중생대 초 육성층 중심 지층. 무연탄 매장.",
+"cat": "지역지리",
+"distractors": [
+"조선 누층군",
+"경상 누층군",
+"제3기층"
+],
+"exam": []
+},
+{
+"term": "경상 누층군",
+"en": "Gyeongsang Supergroup",
+"def": "중생대 백악기 경상 분지의 호수 퇴적층. 공룡 발자국 화석.",
+"cat": "지역지리",
+"distractors": [
+"평안 누층군",
+"조선 누층군",
+"대동 누층군"
+],
+"exam": []
+},
+{
+"term": "대보 조산 운동",
+"en": "Daebo orogeny",
+"def": "중생대 쥐라기 지각 변동. 중국 방향(북동-남서) 산맥, 대보 화강암 관입.",
+"cat": "지역지리",
+"distractors": [
+"송림 변동",
+"불국사 변동",
+"경동성 요곡 운동"
+],
+"exam": []
+},
+{
+"term": "경동성 요곡 운동",
+"en": "Tilted warping",
+"def": "신생대 제3기 동해안 쪽이 크게 융기한 비대칭 융기 운동. 함경·태백산맥 형성, 동고서저 지형.",
+"cat": "지역지리",
+"distractors": [
+"대보 조산 운동",
+"송림 변동",
+"불국사 변동"
+],
+"exam": []
+},
+{
+"term": "1차 산맥",
+"en": "Primary mountain range",
+"def": "경동성 요곡 운동 등 융기로 형성된 높고 연속적인 산맥. 예: 낭림·함경·태백산맥.",
+"cat": "지역지리",
+"distractors": [
+"2차 산맥",
+"습곡 산맥",
+"해안 산맥"
+],
+"exam": []
+},
+{
+"term": "2차 산맥",
+"en": "Secondary mountain range",
+"def": "지질 구조선을 따라 차별 침식되어 형성된 상대적으로 낮고 불연속적인 산맥. 예: 차령·소백산맥 일부.",
+"cat": "지역지리",
+"distractors": [
+"1차 산맥",
+"단층 산맥",
+"조산대"
+],
+"exam": []
+},
+{
+"term": "독도",
+"en": "Dokdo",
+"def": "우리나라 최동단, 신생대 화산 활동으로 형성. 통상 기선 적용, 동도·서도와 부속 도서로 구성.",
+"cat": "지역지리",
+"distractors": [
+"울릉도",
+"마라도",
+"백령도"
+],
+"exam": []
+},
+{
+"term": "마라도",
+"en": "Marado",
+"def": "우리나라 최남단 섬. 제주특별자치도 서귀포시.",
+"cat": "지역지리",
+"distractors": [
+"이어도",
+"우도",
+"가거도"
+],
+"exam": []
+},
+{
+"term": "이어도",
+"en": "Ieodo",
+"def": "마라도 남서쪽의 수중 암초. 영토가 아니며 해양 과학 기지가 있음.",
+"cat": "지역지리",
+"distractors": [
+"마라도",
+"독도",
+"가거도"
+],
+"exam": []
+},
+{
+"term": "환태평양 조산대",
+"en": "Circum-Pacific belt",
+"def": "태평양 주변을 둘러싼 신기 조산대. 지진·화산 활동 활발('불의 고리').",
+"cat": "지역지리",
+"distractors": [
+"알프스-히말라야 조산대",
+"고기 습곡 산지",
+"안정육괴"
+],
+"exam": []
+},
+{
+"term": "안정육괴",
+"en": "Shield",
+"def": "선캄브리아기 이후 큰 지각 변동이 없어 오랜 침식으로 평탄해진 지역. 철광석 매장.",
+"cat": "지역지리",
+"distractors": [
+"고기 습곡 산지",
+"신기 습곡 산지",
+"순상 화산"
+],
+"exam": []
+},
+{
+"term": "카나트",
+"en": "Qanat",
+"def": "건조 지역에서 산록의 지하수를 지하 수로로 끌어오는 관개 시설(이란). 포가라·카레즈라고도 함.",
+"cat": "지역지리",
+"distractors": [
+"와디",
+"오아시스",
+"외래 하천"
+],
+"exam": []
+},
+{
+"term": "암묵적 지식",
+"en": "Tacit knowledge",
+"def": "폴라니: 말로 다 표현할 수 없는 개인적 앎.",
+"cat": "지리교육론",
+"distractors": [
+"명제적 지식",
+"공적 지리",
+"방법적 지식"
+],
+"exam": [
+"2026 A",
+"2019 A",
+"2007-5*"
+]
+},
+{
+"term": "교수학적 변환",
+"en": "Didactic transposition",
+"def": "쉐바야르: 학문적 지식이 가르칠 지식으로 변환되는 과정(탈맥락화·탈인격화 등).",
+"cat": "지리교육론",
+"distractors": [
+"PCK",
+"극단적 교수 현상",
+"선행 조직자"
+],
+"exam": [
+"2026 B",
+"2024 A7",
+"2019 B",
+"2008-1*"
+]
+},
+{
+"term": "극단적 교수 현상",
+"en": "Extreme didactic phenomena",
+"def": "브루소: 토파즈 효과, 주르댕 효과, 메타인지적 이동, 형식적 고착 등 교수 활동의 왜곡.",
+"cat": "지리교육론",
+"distractors": [
+"교수학적 변환",
+"PCK",
+"인지적 갈등"
+],
+"exam": [
+"2025 A12",
+"2019 B"
+]
+},
+{
+"term": "교수 내용 지식",
+"en": "PCK",
+"def": "슐만: 특정 내용을 학생이 이해하기 쉽게 표현·가르치는 교사의 전문 지식.",
+"cat": "지리교육론",
+"distractors": [
+"내용 지식",
+"교육학 지식",
+"실천적 지식"
+],
+"exam": [
+"2022 B",
+"2008-1*"
+]
+},
+{
+"term": "실천적 지식",
+"en": "Practical knowledge",
+"def": "엘바즈: 교사가 경험으로 형성한 지식(내용·정향·구조).",
+"cat": "지리교육론",
+"distractors": [
+"PCK",
+"명제적 지식",
+"암묵적 지식"
+],
+"exam": [
+"2022 B",
+"2009-1차6*",
+"2008-1*"
+]
+},
+{
+"term": "선행 조직자",
+"en": "Advance organizer",
+"def": "오수벨: 새 학습 전에 제시하는 포괄적 개념 틀(설명/비교 조직자). 유의미 수용 학습.",
+"cat": "지리교육론",
+"distractors": [
+"발견 학습",
+"인지적 갈등",
+"비계"
+],
+"exam": [
+"2015 B1*",
+"2012-1차6*",
+"2012-1차3*",
+"2011-2차1*",
+"2011-1차5*",
+"2010-1차7*",
+"2009-1차7*",
+"2006-2*"
+]
+},
+{
+"term": "공간 인지 발달(하트·무어)",
+"en": "Hart & Moore",
+"def": "준거 체계: 자기 중심적→고정적→협응적 준거 체계.",
+"cat": "지리교육론",
+"distractors": [
+"피아제 위상-투영-유클리드",
+"환경 확대법",
+"심상 지도"
+],
+"exam": [
+"2024 B10",
+"2022 A"
+]
+},
+{
+"term": "전통적 대륙 중심 방법",
+"en": "Regional(continental) approach",
+"def": "교과 내용을 대륙·국가 단위 지역 순서로 구성하는 지역적 방법(↔ 지역-주제, 계통적 방법).",
+"cat": "지리교육론",
+"distractors": [
+"지역-주제 방법",
+"주제-화제 방법",
+"개념 중심 방법"
+],
+"exam": [
+"2004-3*",
+"2003-1*"
+]
+},
+{
+"term": "지역-주제 방법",
+"en": "Region-theme approach",
+"def": "각 지역에서 특징적인 주제를 중심으로 내용을 구성하는 방법.",
+"cat": "지리교육론",
+"distractors": [
+"전통적 대륙 중심 방법",
+"계통적 방법",
+"개념 중심 방법"
+],
+"exam": [
+"2013-1차9*",
+"2011-1차4*",
+"2010-2차1*",
+"2003-1*"
+]
+},
+{
+"term": "매력도",
+"en": "Attractiveness of distractor",
+"def": "오답지가 하위 집단에게 선택되는 정도(오답지 기능).",
+"cat": "지리교육론",
+"distractors": [
+"변별도",
+"난이도",
+"타당도"
+],
+"exam": [
+"2011-1차12*"
+]
+},
+{
+"term": "봉 효과",
+"en": "Sucker effect",
+"def": "협동 학습에서 무임승차자 때문에 성실한 구성원이 노력을 줄이는 현상(↔ 무임승차 효과).",
+"cat": "지리교육론",
+"distractors": [
+"무임승차 효과",
+"부익부 현상",
+"집단 사고"
+],
+"exam": [
+"2021 B"
+]
+},
+{
+"term": "심상 지도",
+"en": "Mental map",
+"def": "개인이 머릿속에 가진 공간에 대한 주관적 이미지를 그린 지도.",
+"cat": "지리교육론",
+"distractors": [
+"인지 지도",
+"주제도",
+"통계 지도"
+],
+"exam": [
+"2015 A3*"
+]
+},
+{
+"term": "환경 확대법",
+"en": "Expanding environments",
+"def": "학생과 가까운 지역(가정·학교·고장)에서 먼 지역으로 학습 범위를 확대하는 구성 방식.",
+"cat": "지리교육론",
+"distractors": [
+"나선형 교육과정",
+"주제 중심 구성",
+"지역 중심 구성"
+],
+"exam": [
+"2009-1차9*",
+"2005-2*"
+]
+},
+{
+"term": "야외 조사",
+"en": "Fieldwork",
+"def": "현장에서 직접 관찰·측정·면담하며 지리 정보를 수집하는 학습·연구 방법.",
+"cat": "지리교육론",
+"distractors": [
+"문헌 조사",
+"원격 탐사",
+"실내 조사"
+],
+"exam": [
+"2026 A6",
+"2022 B",
+"2012-1차5*"
+]
+},
+{
+"term": "사적 지리와 공적 지리",
+"en": "Private vs public geography",
+"def": "피엔: 학생의 일상 경험에서 형성된 개인적 지리(사적)와 학문·교과의 지리(공적).",
+"cat": "지리교육론",
+"distractors": [
+"명시적 지식과 암묵적 지식",
+"내재적 목적",
+"환경 확대법"
+],
+"exam": []
+},
+{
+"term": "명제적 지식",
+"en": "Propositional knowledge",
+"def": "라일: '무엇을 안다(knowing that)'. ↔ 방법적 지식(knowing how).",
+"cat": "지리교육론",
+"distractors": [
+"방법적 지식",
+"암묵적 지식",
+"실천적 지식"
+],
+"exam": []
+},
+{
+"term": "반성적 실천가",
+"en": "Reflective practitioner",
+"def": "쇤: 행위 중 반성·행위 후 반성으로 전문성을 키우는 교사.",
+"cat": "지리교육론",
+"distractors": [
+"교사 역할",
+"PCK",
+"교수학적 변환"
+],
+"exam": []
+},
+{
+"term": "비계",
+"en": "Scaffolding",
+"def": "비고츠키 근접 발달 영역(ZPD)에서 교사·동료가 제공하는 일시적 도움.",
+"cat": "지리교육론",
+"distractors": [
+"선행 조직자",
+"근접 발달 영역",
+"인지적 도제"
+],
+"exam": []
+},
+{
+"term": "변별도",
+"en": "Discrimination index",
+"def": "문항이 상위·하위 집단을 구별하는 정도.",
+"cat": "지리교육론",
+"distractors": [
+"난이도",
+"매력도",
+"신뢰도"
+],
+"exam": []
+},
+{
+"term": "나선형 교육과정",
+"en": "Spiral curriculum",
+"def": "브루너가 제시. 학문의 기본 구조를 학년에 따라 점점 심화·확대하여 반복 학습하는 교육과정.",
+"cat": "지리교육론",
+"distractors": [
+"환경 확대법",
+"동심원 확대법",
+"백워드 설계"
+],
+"exam": []
+},
+{
+"term": "하버마스의 지식 관심",
+"en": "Knowledge-constitutive interests",
+"def": "기술적 관심(경험·분석 지식), 실천적 관심(해석학적 지식), 해방적 관심(비판적 지식).",
+"cat": "지리교육론",
+"distractors": [
+"브루너 표상 양식",
+"라일의 지식 구분",
+"블룸 분류"
+],
+"exam": []
+},
+{
+"term": "이중 부호화 이론",
+"en": "Dual coding theory",
+"def": "페이비오: 언어·심상 두 체계로 동시에 부호화하면 기억이 향상된다.",
+"cat": "지리교육론",
+"distractors": [
+"표상 양식",
+"인지 부하 이론",
+"정보 처리 이론"
+],
+"exam": []
+},
+{
+"term": "표상 양식",
+"en": "Modes of representation",
+"def": "브루너: 행동적→영상적→상징적 표상.",
+"cat": "지리교육론",
+"distractors": [
+"이중 부호화",
+"피아제 인지 발달",
+"나선형 교육과정"
+],
+"exam": []
+},
+{
+"term": "속성 모형과 원형 모형",
+"en": "Attribute vs prototype model",
+"def": "개념 학습: 결정적 속성으로 정의(속성 모형) vs 가장 전형적 사례로 학습(원형 모형).",
+"cat": "지리교육론",
+"distractors": [
+"개념 분석",
+"관찰 개념",
+"정의 개념"
+],
+"exam": []
+},
+{
+"term": "표현적 결과",
+"en": "Expressive outcomes",
+"def": "아이즈너: 활동 후 사전에 정해지지 않은 다양한 결과를 목표로 함(↔ 행동 목표).",
+"cat": "지리교육론",
+"distractors": [
+"행동 목표",
+"문제 해결 목표",
+"성취기준"
+],
+"exam": []
+},
+{
+"term": "준거 참조 평가",
+"en": "Criterion-referenced assessment",
+"def": "미리 설정된 성취 기준 도달 여부로 판단(↔ 규준 참조: 상대적 위치).",
+"cat": "지리교육론",
+"distractors": [
+"규준 참조 평가",
+"형성 평가",
+"총괄 평가"
+],
+"exam": []
+},
+{
+"term": "지리 도해력",
+"en": "Graphicacy",
+"def": "발친: 지도·그래프·사진 등 비언어적 공간 정보를 이해·표현하는 능력.",
+"cat": "지리교육론",
+"distractors": [
+"공간 능력",
+"지리적 상상력",
+"문해력"
+],
+"exam": []
+},
+{
+"term": "생태 시민성",
+"en": "Ecological citizenship",
+"def": "돕슨: 시공간을 넘어 생태 발자국에 대한 비호혜적 책임을 강조하는 시민성.",
+"cat": "지리교육론",
+"distractors": [
+"세계 시민성",
+"다중 시민성",
+"환경 시민성"
+],
+"exam": []
+},
+{
+"term": "환경을 위한 교육",
+"en": "Education for the environment",
+"def": "환경 보전 행동·가치를 목표로 하는 교육(↔ 환경에 관한, 환경 속에서의 교육).",
+"cat": "지리교육론",
+"distractors": [
+"환경에 관한 교육",
+"환경 속에서의 교육",
+"ESD"
+],
+"exam": []
+}
+]</script>
+<script type="application/json" id="mcqs">[{"src": "2024 A1", "q": "용암의 성질에 대한 설명으로 옳은 것은?", "a": "규산(SiO2) 함량이 많을수록 점성이 크고 폭발적 분화가 잘 일어난다.", "wrong": ["규산 함량이 많을수록 유동성이 커 순상 화산을 만든다.", "현무암질 용암은 규산 함량이 66% 이상이다.", "주상 절리는 용암이 급격히 팽창하며 형성된다.", "유문암질 용암은 가장 어두운 색을 띤다."], "exp": "규산 함량↑ → 점성↑(유문암질, 밝은 색, 종상 화산). 현무암질은 45~52%로 유동성이 크다. 주상 절리는 냉각·수축으로 형성."}, {"src": "2025 B6", "q": "카르스트 지형에 대한 설명으로 옳은 것은?", "a": "여러 돌리네가 합쳐진 것을 우발라라 한다.", "wrong": ["폴리에는 돌리네보다 규모가 작은 와지이다.", "맹곡은 지하수가 솟아나는 샘이다.", "테라로사는 화강암의 풍화로 형성된다.", "석회동굴은 주로 기계적 풍화로 형성된다."], "exp": "돌리네 < 우발라 < 폴리에. 맹곡은 하천이 지하로 스며드는 막힌 골짜기. 테라로사는 석회암 풍화토, 동굴은 용식(화학적 풍화)."}, {"src": "2025 B9", "q": "하천 쟁탈에 대한 설명으로 옳은 것은?", "a": "쟁탈 지점 부근에 물이 흐르지 않는 풍극이 남는다.", "wrong": ["쟁탈하는 하천은 침식력이 더 약하다.", "쟁탈당한 하천의 유량은 증가한다.", "천이점은 시간이 지나면 하류로 이동한다.", "하천 쟁탈은 유역 면적과 무관하다."], "exp": "침식력 강한 하천이 이웃 하천 상류를 빼앗음 → 쟁탈당한 하천 유량 감소, 풍극 형성. 천이점은 상류로 후퇴."}, {"src": "2026 B7", "q": "침식 기준면과 지각 평형에 대한 설명으로 옳은 것은?", "a": "빙상이 녹아 하중이 제거되면 지각이 반발 융기한다.", "wrong": ["궁극적 침식 기준면은 지하수면이다.", "해수면이 하강하면 하천의 하방 침식은 약해진다.", "해안 단구는 지반 침강으로 형성된다.", "지각 평형은 판의 수평 이동을 설명하는 개념이다."], "exp": "궁극적 기준면=해수면. 해수면 하강 → 하방 침식 강화. 해안 단구는 융기로 형성. 지각 평형은 수직적 균형."}, {"src": "2023 B1", "q": "빙하 퇴적 지형에 대한 설명으로 옳은 것은?", "a": "에스커는 빙하 밑 융빙수 하천 퇴적물로 분급이 비교적 양호하다.", "wrong": ["에스커는 빙하가 직접 퇴적해 분급이 불량하다.", "드럼린은 빙하 침식으로 형성된 암반 언덕이다.", "양배암의 급경사 쪽은 빙하 상류 방향이다.", "모레인은 분급이 양호한 층리를 가진다."], "exp": "에스커·케임=융빙수 퇴적(분급 양호). 모레인=빙하 직접 퇴적(분급 불량). 양배암은 하류 쪽이 굴식으로 급경사."}, {"src": "2024 B9", "q": "영구동토 지역에 대한 설명으로 옳은 것은?", "a": "활동층이 두꺼워지면 지반이 불안정해지고 열카르스트가 발달할 수 있다.", "wrong": ["활동층은 연중 얼어 있는 층이다.", "열카르스트는 석회암 용식으로 형성된다.", "지하빙이 녹으면 지표가 융기한다.", "영구동토층 위에서는 매스무브먼트가 일어나지 않는다."], "exp": "활동층=여름에 녹는 층. 지하빙 융해 → 지표 함몰(열카르스트). 솔리플럭션 등 매스무브먼트가 활발."}, {"src": "2024 B6", "q": "매스무브먼트와 관련 지형에 대한 설명으로 옳은 것은?", "a": "애추는 낙하한 암설이 쌓여 아래쪽에 큰 암설이 분포하는 낙하 분급을 보인다.", "wrong": ["애추에서는 위쪽에 큰 암설이 분포한다.", "포행은 매우 빠른 이동이다.", "활동(slide)은 물질 내부가 뒤섞이며 흐르는 이동이다.", "솔리플럭션은 건조 지역에서 주로 발생한다."], "exp": "낙하 시 큰 암설이 더 멀리(아래로) 굴러감. 포행은 매우 느림. 활동은 미끄럼면을 따라 덩어리째, 유동은 내부가 흐름. 솔리플럭션은 주빙하."}, {"src": "2023 A10", "q": "건조 지형에 대한 설명으로 옳은 것은?", "a": "사막 포도는 바람이 세립질을 날려 보내 자갈만 남은 지표이다.", "wrong": ["야르당은 하천 침식으로 형성된다.", "바르한의 뿔은 바람이 불어오는 쪽을 향한다.", "플라야는 산지 사면의 침식면이다.", "와디는 연중 물이 흐르는 하천이다."], "exp": "디플레이션 → 사막 포도. 야르당은 풍식. 바르한의 뿔은 바람 불어가는 쪽. 플라야=분지 바닥 염호 흔적, 와디=건천."}, {"src": "2022 A12", "q": "건조 지역 산록 지형에 대한 설명으로 옳은 것은?", "a": "페디먼트는 기반암이 깎인 침식면으로 얇은 퇴적층에 덮여 있다.", "wrong": ["페디먼트는 두꺼운 충적층으로 이루어진 퇴적 지형이다.", "바하다는 하나의 선상지를 말한다.", "플라야는 바하다보다 고도가 높다.", "선상지의 선앙은 지표수가 풍부하다."], "exp": "페디먼트=침식면, 바하다=복합 선상지(퇴적), 플라야는 분지 최저부. 선앙은 복류로 건천."}, {"src": "2023 B4", "q": "하도 유형에 대한 설명으로 옳은 것은?", "a": "망류 하도는 하중 공급이 많고 유량 변동이 큰 곳에서 발달한다.", "wrong": ["망류 하도는 하중 공급이 적은 곳에서 발달한다.", "망류 하도는 하나의 깊은 수로로 흐른다.", "곡류 하도는 사력 하중이 압도적으로 많다.", "망류 하도는 하안 식생이 조밀할수록 잘 발달한다."], "exp": "많은 조립 하중·유량 변동·약한 하안 → 망류. 곡류는 부유 하중·점착성 하안."}, {"src": "2025 A4", "q": "동해안 석호와 사주에 대한 설명으로 옳은 것은?", "a": "석호는 후빙기 해수면 상승으로 형성된 만이 사주로 막혀 만들어졌다.", "wrong": ["석호는 빙기에 해수면이 낮을 때 형성되었다.", "사주는 주로 조류에 의해 형성된다.", "석호는 하천 퇴적으로 점차 확대된다.", "석호의 물은 항상 담수이다."], "exp": "후빙기 해수면 상승 → 만 → 연안류가 사주 형성 → 석호. 하천 퇴적으로 축소. 기수(염분 혼합)인 경우가 많음."}, {"src": "2026 A3", "q": "안개에 대한 설명으로 옳은 것은?", "a": "이류 안개는 따뜻하고 습한 공기가 찬 수면 위로 이동하며 냉각되어 생긴다.", "wrong": ["이류 안개는 맑고 바람 없는 밤 지표 복사 냉각으로 생긴다.", "이슬점이 기온보다 높을수록 상대 습도가 낮다.", "복사 안개는 주로 해상에서 넓게 발생한다.", "이류 안개는 기온이 이슬점보다 높아질 때 발생한다."], "exp": "이류무=수평 이동 냉각(해무). 복사무=야간 복사 냉각(분지·내륙). 이슬점 이하로 냉각되면 포화."}, {"src": "2019 A11", "q": "푄과 단열 변화에 대한 설명으로 옳은 것은?", "a": "바람그늘 사면에서는 건조 단열 감률로 하강해 같은 고도의 바람받이 쪽보다 고온 건조하다.", "wrong": ["바람받이 사면에서 공기는 하강하며 승온된다.", "습윤 단열 감률은 건조 단열 감률보다 크다.", "치누크는 알프스 북사면의 바람이다.", "푄은 상대 습도를 높인다."], "exp": "상승(포화) 시 습윤 단열(~5℃/km), 하강 시 건조 단열(~10℃/km). 치누크=로키 동사면, 알프스=푄."}, {"src": "2024 B2", "q": "대기 대순환에 대한 설명으로 옳은 것은?", "a": "남반구 무역풍은 전향력에 의해 남동풍으로 분다.", "wrong": ["전향력은 적도에서 가장 크다.", "북반구에서 전향력은 운동 방향의 왼쪽으로 작용한다.", "무역풍은 고위도 저압대로 분다.", "전향력은 풍속과 무관하다."], "exp": "전향력은 적도 0, 극 최대. 북반구 오른쪽·남반구 왼쪽. 풍속에 비례."}, {"src": "2024 A12", "q": "엘니뇨 시기에 대한 설명으로 옳은 것은?", "a": "적도 동태평양의 용승이 약화되어 해수면 온도가 평년보다 높다.", "wrong": ["무역풍이 강화된다.", "페루 연안 용승이 강해져 어획량이 증가한다.", "서태평양 인도네시아의 강수가 증가한다.", "동태평양 해면 기압이 평년보다 높아진다."], "exp": "엘니뇨: 무역풍 약화 → 용승 약화 → 동태평양 고수온·저기압·강수 증가, 서태평양 가뭄."}, {"src": "2025 A11", "q": "기온과 대기 순환 분포에 대한 설명으로 옳은 것은?", "a": "열대 수렴대는 북반구 여름에 북쪽으로 이동한다.", "wrong": ["열대 수렴대는 계절과 관계없이 적도에 고정된다.", "열적도는 연중 지리적 적도와 일치한다.", "해양은 육지보다 비열이 작아 빨리 가열된다.", "아열대 고압대는 북반구 여름에 남하한다."], "exp": "태양 회귀에 따라 ITCZ·고압대 모두 여름 반구 쪽으로 이동. 열적도는 대륙이 많은 북반구 쪽으로 치우침. 육지 비열이 작다."}, {"src": "2025 B2", "q": "오존홀에 대한 설명으로 옳은 것은?", "a": "남극 오존홀은 남반구 봄철(9~10월)에 가장 크게 나타난다.", "wrong": ["오존홀은 남극 여름(1월)에 최대이다.", "오존층은 대류권 하부에 있다.", "오존층 파괴의 주원인은 메탄이다.", "오존은 적외선을 주로 흡수한다."], "exp": "극소용돌이 속 극성층운 → 봄철 햇빛과 CFC 염소 반응 → 오존 파괴. 성층권 오존은 자외선 흡수."}, {"src": "2025 B10", "q": "남극 기후에 대한 설명으로 옳은 것은?", "a": "냉각된 무거운 공기가 빙상 사면을 따라 내려가는 활강풍이 강하다.", "wrong": ["남극 빙상 위에서는 상승 기류가 우세하다.", "남극 지표 부근에서는 기온 역전이 드물다.", "남극은 연 강수량이 매우 많은 습윤 지역이다.", "남극 주변 해상은 아열대 고압대에 속한다."], "exp": "빙상 위 복사 냉각 → 안정층(역전), 활강풍. 남극은 극사막. 주변 해상은 아극 저압대."}, {"src": "2026 B9", "q": "서안 해양성 기후(Cfb)에 대한 설명으로 옳은 것은?", "a": "편서풍과 북대서양 난류 영향으로 고위도에 비해 겨울이 온화하다.", "wrong": ["연교차가 대륙 동안보다 크다.", "여름 강수가 집중되는 우기가 뚜렷하다.", "아열대 고압대의 영향으로 여름이 건조하다.", "최한월 평균 기온이 −3℃ 미만이다."], "exp": "Cfb: 연교차 작고 연중 고른 강수. 여름 건조는 Cs. 최한월 −3℃ 이상 18℃ 미만(C기후)."}, {"src": "2026 A12", "q": "아극(냉대) 기후의 분포에 대한 설명으로 옳은 것은?", "a": "대륙 동안은 연교차가 커서 냉대 기후가 서안보다 더 저위도까지 나타난다.", "wrong": ["냉대 기후는 남반구에 넓게 분포한다.", "아극 기후의 대표 토양은 라테라이트이다.", "아극 기후 식생은 경엽수림이다.", "대륙 서안이 동안보다 겨울이 더 춥다."], "exp": "D기후는 남반구에 거의 없음(대륙 부족). 타이가·포드졸. 대륙 동안이 겨울 한랭 → 냉대 남하."}, {"src": "2026 B3", "q": "TM 투영과 축척 계수에 대한 설명으로 옳은 것은?", "a": "중앙 경선에서 멀어질수록 축척 계수는 1보다 커진다.", "wrong": ["중앙 경선에서 축척 계수가 가장 크다.", "TM은 원통을 적도에 접하게 한 투영이다.", "축척 계수는 항상 1이다.", "TM은 정적 도법이다."], "exp": "TM=횡축(경선 접) 정각 원통. 중앙 경선 1(또는 0.9996 할선), 멀어질수록 증가."}, {"src": "2024 A4", "q": "우리나라 평면 직각 좌표에 대한 설명으로 옳은 것은?", "a": "좌표가 음수가 되지 않도록 원점에 X(N) 600,000m를 가산한다.", "wrong": ["원점 가산값은 X(N) 200,000m이다.", "평면 직각 좌표는 정적 원추 도법에 기초한다.", "원점은 모두 북위 38°, 동경 135°이다.", "좌표 원점은 하나만 사용한다."], "exp": "TM 기반. 원점 가산값 X(N) 600,000m, Y(E) 200,000m. 서부·중부·동부·동해 원점(북위 38°, 동경 125·127·129·131°)."}, {"src": "2023 B3", "q": "통계 지도 계급 구분에 대한 설명으로 옳은 것은?", "a": "분위수 분류는 각 계급에 포함되는 단위 지역 수가 같다.", "wrong": ["등간격 분류는 각 계급의 지역 수가 같다.", "분위수 분류는 계급 간격이 항상 같다.", "단계 구분도는 절대값 표현에 가장 적합하다.", "등간격 분류는 치우친 분포 자료에서 계급별 개수가 고르다."], "exp": "분위수=개수 동일, 간격 불균등. 등간격=간격 동일, 치우친 분포에서 빈 계급 발생. 단계 구분도는 비율 자료에 적합."}, {"src": "2024 B4", "q": "원격 탐사 영상에 대한 설명으로 옳은 것은?", "a": "건강한 식생은 근적외선 반사가 커서 NDVI 값이 높다.", "wrong": ["NDVI는 열적외선과 가시광선으로 계산한다.", "식생은 적색광을 강하게 반사한다.", "열적외선 영상은 지표 반사광을 기록한다.", "공간 해상도 값이 클수록 세밀한 영상이다."], "exp": "NDVI=(NIR−R)/(NIR+R). 엽록소는 적색광 흡수. 열적외선은 방출 에너지. 화소 크기 작을수록 고해상도."}, {"src": "2026 B11", "q": "공간 데이터 모델에 대한 설명으로 옳은 것은?", "a": "래스터 데이터는 격자 셀로 연속 현상을 표현하는 데 유리하다.", "wrong": ["벡터 데이터는 셀 단위로 공간을 표현한다.", "지오이드는 지구를 근사한 수학적 타원체이다.", "보간은 좌표를 주소로 바꾸는 작업이다.", "래스터는 위상 관계 표현이 벡터보다 유리하다."], "exp": "래스터=격자, 벡터=점·선·면(위상 유리). 지오이드=평균 해수면 등중력면, 타원체는 수학적 모델. 보간=미관측 값 추정."}, {"src": "2026 A2", "q": "출산력 지표에 대한 설명으로 옳은 것은?", "a": "합계 출산율이 대체 출산율(약 2.1)보다 낮게 지속되면 장기적으로 인구가 감소한다.", "wrong": ["대체 출산율은 약 1.0이다.", "합계 출산율은 인구 1,000명당 출생아 수이다.", "총재생산율은 남아 수를 기준으로 한다.", "합계 출산율은 연령 구조의 영향을 크게 받는다."], "exp": "인구 1,000명당 출생아 수는 조출생률. 합계 출산율은 연령별 출산율 합으로 연령 구조 영향이 작음. 총재생산율은 여아 기준."}, {"src": "2025 B4", "q": "인구 지표에 대한 설명으로 옳은 것은?", "a": "노령화 지수는 유소년 인구 100명당 노년 인구이다.", "wrong": ["노령화 지수는 생산 가능 인구 100명당 노년 인구이다.", "총부양비는 노년 인구만으로 계산한다.", "현주주의는 평소 거주지 기준으로 집계한다.", "노년 부양비는 유소년 인구를 분모로 한다."], "exp": "노년 부양비=노년/생산가능×100, 노령화 지수=노년/유소년×100. 상주주의=평소 거주지, 현주주의=조사 시점 소재지."}, {"src": "2023 A7", "q": "젠트리피케이션(닐 스미스)에 대한 설명으로 옳은 것은?", "a": "잠재적 지대와 실제 지대의 차이인 지대 격차가 커지면 재투자가 일어난다.", "wrong": ["지대 격차는 교외 신규 개발지에서 가장 크다.", "젠트리피케이션은 저소득층이 도심으로 유입되는 현상이다.", "지대 격차가 작을수록 재개발 압력이 크다.", "닐 스미스는 소비자 선호만으로 설명했다."], "exp": "스미스는 생산(자본) 측면 설명: 투자 철수 → 실제 지대 하락 → 지대 격차 확대 → 재투자. 소비 측면은 레이(Ley)."}, {"src": "2023 A5", "q": "사회 지역 분석에 대한 설명으로 옳은 것은?", "a": "경제적 지위는 선형, 가족적 지위는 동심원 패턴으로 나타나는 경향이 있다.", "wrong": ["경제적 지위는 동심원 패턴이다.", "가족적 지위는 다핵 패턴이다.", "민족적 지위는 선형 패턴이다.", "사회 지역 분석은 입찰 지대만으로 도시 구조를 설명한다."], "exp": "셰브키·벨, 머디: 경제=선형(호이트), 가족=동심원(버제스), 민족=군집(다핵)."}, {"src": "2024 A2", "q": "북미 주택 시장 관행에 대한 설명으로 옳은 것은?", "a": "레드라이닝은 금융 기관이 특정 지역에 대출을 거부하는 관행이다.", "wrong": ["블록버스팅은 금융 기관의 대출 거부이다.", "레드라이닝은 부동산 업자가 공포를 조장해 집을 싸게 사는 것이다.", "스티어링은 공공 임대 주택 공급 정책이다.", "여과 과정은 고소득층이 노후 주택으로 이동하는 현상이다."], "exp": "레드라이닝=금융 기관 대출 차별, 블록버스팅=부동산 업자 공포 조장, 스티어링=특정 지역으로 유도. 여과=주택이 하위 계층으로 이전."}, {"src": "2024 B5", "q": "도시 순위-규모 분포에 대한 설명으로 옳은 것은?", "a": "종주 도시 체계에서는 1위 도시 인구가 2위 도시보다 지나치게 크다.", "wrong": ["순위-규모 법칙에서 2위 도시 인구는 1위 도시의 2배이다.", "종주 도시 체계는 순위-규모 법칙에 정확히 부합한다.", "종주성은 선진국 대도시권에서만 나타난다.", "순위-규모 법칙은 크리스탈러가 제시했다."], "exp": "Pn=P1/n (지프). 종주 도시 체계(제퍼슨)는 개발도상국에서 흔함."}, {"src": "2025 A10", "q": "시카고학파와 호이트 모형에 대한 설명으로 옳은 것은?", "a": "호이트는 고급 주거지가 교통축을 따라 부채꼴로 확장된다고 보았다.", "wrong": ["호이트는 동심원 구조를 제시했다.", "버제스는 다핵심 모형을 제시했다.", "침입과 천이는 행태주의 지리학의 개념이다.", "여과 과정에서 주택은 고소득층으로 이동한다."], "exp": "버제스=동심원(생태학적 침입·천이), 호이트=선형, 해리스·울만=다핵심."}, {"src": "2023 A1", "q": "도시 계획 사상에 대한 설명으로 옳은 것은?", "a": "하워드의 전원도시는 도시와 농촌의 장점을 결합한 자족적 계획 도시이다.", "wrong": ["전원도시는 고층 고밀도 도심 개발을 지향한다.", "메갈로폴리스는 하나의 거대 단일 도시를 말한다.", "뉴어바니즘은 자동차 중심 교외 개발을 지향한다.", "전원도시는 르코르뷔지에가 제안했다."], "exp": "전원도시=하워드(그린벨트). 메갈로폴리스=여러 대도시 연담(고트만). 뉴어바니즘=보행·복합 용도."}, {"src": "2026 A4", "q": "진화경제지리에 대한 설명으로 옳은 것은?", "a": "과거의 선택이 이후 경로를 제약하는 경로 의존성이 고착(lock-in)으로 이어질 수 있다.", "wrong": ["경로 의존성은 지역 발전이 과거와 무관함을 뜻한다.", "고착은 항상 지역 혁신을 촉진한다.", "진화경제지리는 최소 비용 입지만으로 설명한다.", "경로 의존성은 베버 입지론의 핵심 개념이다."], "exp": "진화경제지리: 경로 의존·고착·경로 창출. 고착은 쇠퇴 원인이 될 수 있음."}, {"src": "2026 A11", "q": "제도와 착근성에 대한 설명으로 옳은 것은?", "a": "제도적 밀집은 지역 내 제도·조직의 밀도와 상호작용이 발전을 뒷받침함을 뜻한다.", "wrong": ["착근성은 경제 활동이 사회와 분리됨을 뜻한다.", "제도적 밀집은 크루그먼의 개념이다.", "관계적 지역은 경계가 고정된 지역을 뜻한다.", "착근성은 운송비 최소화 원리이다."], "exp": "애쉬·스리프트=제도적 밀집. 착근성(그라노베터). 매시의 관계적 지역=열린 관계의 산물."}, {"src": "2025 B8", "q": "글로벌 상품 사슬에 대한 설명으로 옳은 것은?", "a": "의류·신발은 대형 유통·브랜드 기업이 주도하는 구매자 주도형 사슬이다.", "wrong": ["자동차 산업은 구매자 주도형의 전형이다.", "생산자 주도형은 노동 집약적 소비재에서 주로 나타난다.", "GPN은 착근성을 고려하지 않는다.", "구매자 주도형은 제조 기술이 진입 장벽의 핵심이다."], "exp": "생산자 주도=자본·기술 집약(자동차·항공), 구매자 주도=노동 집약 소비재(의류). GPN은 가치·권력·착근성."}, {"src": "2022 A11", "q": "기반·비기반 활동에 대한 설명으로 옳은 것은?", "a": "입지 계수가 1보다 크면 해당 산업이 그 지역에 특화되어 있다.", "wrong": ["입지 계수가 1보다 작으면 기반 활동으로 본다.", "비기반 활동은 지역 외부로 판매해 소득을 들여온다.", "입지 계수는 원료 중량/제품 중량이다.", "기반 활동이 증가해도 지역 고용은 변하지 않는다."], "exp": "LQ>1 특화(기반). 기반 활동이 외부 소득 유입 → 승수 효과. 원료 지수와 혼동 주의."}, {"src": "2020 B6", "q": "사우어의 문화 경관론에 대한 설명으로 옳은 것은?", "a": "문화는 작인, 자연은 매개체, 문화 경관은 그 결과물이다.", "wrong": ["자연이 작인이고 문화가 결과물이다.", "사우어는 신문화지리학의 대표 학자이다.", "사우어는 경관을 텍스트로 해석했다.", "문화 경관론은 환경 결정론을 계승한다."], "exp": "사우어(버클리학파). 텍스트 경관은 던컨, 보는 방식은 코스그로브(신문화지리)."}, {"src": "2023 A12", "q": "문화 전파에 대한 설명으로 옳은 것은?", "a": "이주민과 함께 문화가 새로운 곳으로 옮겨가는 것은 재입지(이전) 전파이다.", "wrong": ["계층 전파는 인접 지역으로 퍼지는 것이다.", "자극 전파는 문화 요소가 그대로 수용되는 것이다.", "재입지 전파는 원 지역에서 문화가 강화된다.", "전염 전파는 대도시에서 대도시로 건너뛴다."], "exp": "확산 전파: 전염(인접)·계층(도시 위계)·자극(원리만). 이전(재입지)은 사람 이동과 함께."}, {"src": "2024 A7", "q": "교수학적 변환에 대한 설명으로 옳은 것은?", "a": "학문적 지식이 가르칠 지식으로 변환되며 탈맥락화가 일어난다.", "wrong": ["교수학적 변환은 학생이 지식을 암기하는 과정이다.", "교수학적 변환은 슐만이 제시했다.", "토파즈 효과는 교사가 정답을 직접 말하지 않는 바람직한 현상이다.", "PCK는 교과 내용 지식만을 뜻한다."], "exp": "쉐바야르(변환), 브루소(극단적 교수 현상: 토파즈 등은 왜곡), 슐만(PCK: 내용+교수 지식)."}, {"src": "2024 B10", "q": "공간 인지 발달(하트·무어)에 대한 설명으로 옳은 것은?", "a": "준거 체계는 자기 중심적 → 고정적 → 협응적 순으로 발달한다.", "wrong": ["고정적 → 자기 중심적 → 협응적 순이다.", "협응적 준거 체계가 가장 먼저 나타난다.", "하트·무어는 위상-투영-유클리드 단계를 제시했다.", "이중 부호화는 하트·무어의 이론이다."], "exp": "위상→투영→유클리드는 피아제. 이중 부호화는 페이비오."}, {"src": "2023 A6", "q": "피엔의 사적·공적 지리에 대한 설명으로 옳은 것은?", "a": "사적 지리는 학생이 일상 경험으로 형성한 개인적 지리이다.", "wrong": ["공적 지리는 학생 개인의 경험 지식이다.", "사적 지리는 교과서에 체계화된 지식이다.", "피엔은 목표 모형을 강조했다.", "공적 지리는 학교 교육에서 배제해야 한다."], "exp": "피엔=과정 모형, 사적(개인 경험) ↔ 공적(학문·교과) 지리의 연결."}, {"src": "2026 B10", "q": "문항 분석에 대한 설명으로 옳은 것은?", "a": "매력도는 오답지가 하위 집단에게 선택되는 정도로 오답지 기능을 나타낸다.", "wrong": ["변별도가 음수이면 좋은 문항이다.", "매력도는 정답지 선택 비율이다.", "준거 참조 평가는 상대적 서열로 판단한다.", "타당도는 측정의 일관성이다."], "exp": "변별도 음수=하위 집단이 더 맞힘(불량). 준거 참조=절대 기준. 일관성은 신뢰도."}, {"src": "2025 B11", "q": "협동 학습과 평가에 대한 설명으로 옳은 것은?", "a": "봉 효과는 무임승차자 때문에 성실한 구성원이 노력을 줄이는 현상이다.", "wrong": ["봉 효과는 능력 낮은 학생이 노력하지 않는 현상이다.", "포트폴리오 평가는 일회성 지필 평가이다.", "루브릭은 정답만 제시하는 채점표이다.", "동료 평가는 교사만 평가하는 방식이다."], "exp": "무임승차 효과(능력 낮은 학생) vs 봉 효과(성실한 학생의 노력 감소). 루브릭=수행 수준별 기준."}, {"src": "2024 A5", "q": "하버마스의 지식 관심에 대한 설명으로 옳은 것은?", "a": "해방적 관심은 비판적 지식과 연결된다.", "wrong": ["기술적 관심은 해석학적 지식과 연결된다.", "실천적 관심은 경험·분석적 지식과 연결된다.", "해방적 관심은 실증주의와 연결된다.", "하버마스는 지식을 하나의 관심으로만 설명했다."], "exp": "기술적=경험·분석(실증), 실천적=해석학(인간주의), 해방적=비판(구조주의·급진)."}, {"src": "2024 B10", "q": "아이즈너의 표현적 결과에 대한 설명으로 옳은 것은?", "a": "활동 후 사전에 정해지지 않은 다양한 결과를 목표로 한다.", "wrong": ["관찰 가능한 행동 동사로 목표를 진술한다.", "타일러의 행동 목표와 같은 개념이다.", "모든 학생이 동일한 결과에 도달해야 한다.", "표현적 결과는 규준 참조 평가에만 쓰인다."], "exp": "아이즈너: 행동 목표 비판, 문제 해결 목표·표현적 결과 제시."}]</script>
+<script>
+const $=s=>document.querySelector(s);
+const BASE=JSON.parse($('#terms').textContent),MCQ=JSON.parse($('#mcqs').textContent);
+const CATS=['지형학','기후학','토양·식생·수문','지도학·GIS','인구지리','도시지리','경제지리','문화·역사·정치지리','지역지리','지리교육론'];
+const GROUPS={'자연지리':['지형학','기후학','토양·식생·수문','지도학·GIS'],'인문지리':['인구지리','도시지리','경제지리','문화·역사·정치지리'],'지리교육론':['지리교육론'],'지역지리 및 기타':['지역지리']};
+const grpOf=c=>Object.keys(GROUPS).find(g=>GROUPS[g].includes(c))||'지역지리 및 기타';let sub='전체';
+let user=JSON.parse(localStorage.getItem('gv_user')||'[]');
+let marks=JSON.parse(localStorage.getItem('gv_marks')||'{}');
+function all(){const m=new Map();BASE.concat(user).forEach(t=>m.set(t.term.replace(/\s/g,''),t));return [...m.values()]}
+let T=all(),cat='전체',mode='card',idx=0,order=null;
+const save=()=>localStorage.setItem('gv_marks',JSON.stringify(marks));
+function catsUI(){const c=['전체',...Object.keys(GROUPS)];
+$('#cats').innerHTML=c.map(x=>`<button class="${x==cat?'on':''}" data-c="${x}">${x} <span class="mut">${x=='전체'?T.length:T.filter(t=>grpOf(t.cat)==x).length}</span></button>`).join('');
+const subs=cat=='전체'?[]:[...new Set(T.filter(t=>grpOf(t.cat)==cat).map(t=>t.cat))];
+$('#subs').innerHTML=subs.length>1?['전체',...subs].map(x=>`<button style="font-size:12px;padding:3px 9px" class="${x==sub?'on':''}" data-s="${x}">${x}</button>`).join(''):'';}
+$('#cats').onclick=e=>{const b=e.target.closest('button');if(!b)return;cat=b.dataset.c;document.body.dataset.g=cat;sub='전체';idx=0;order=null;catsUI();render()};
+$('#subs').onclick=e=>{const b=e.target.closest('button');if(!b)return;sub=b.dataset.s;idx=0;catsUI();render()};
+function pool(){const q=$('#q').value.trim().toLowerCase(),f=$('#filt').value;
+let p=T.filter(t=>(cat=='전체'||grpOf(t.cat)==cat)&&(sub=='전체'||t.cat==sub)&&(!q||(t.term+' '+(t.en||'')+' '+t.def).toLowerCase().includes(q))&&(f=='all'||(f=='hard'&&marks[t.term]=='bad')||(f=='ok'&&marks[t.term]=='ok')||(f=='new'&&!marks[t.term])));
+if(order){const r=new Map(order.map((k,i)=>[k,i]));p.sort((a,b)=>(r.get(a.term)??1e9)-(r.get(b.term)??1e9))}return p}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const ex=t=>(t.exam&&t.exam.length)?'기출 '+t.exam.slice(0,3).join(', ')+(t.exam.length>3?' 외':''):'';
+const mk=t=>marks[t.term]=='ok'?'✅ 외웠어요':marks[t.term]=='bad'?'🤔 헷갈려요':'';
+function renderCard(){const p=pool();if(!p.length){$('#pos').textContent='해당 카드가 없습니다.';$('#ft').textContent='—';$('#fe').textContent='';$('#bd').textContent='';return}
+idx=(idx+p.length)%p.length;const t=p[idx];$('#card').classList.remove('flip');
+$('#pos').textContent=`${idx+1} / ${p.length}`;$('#pbar').style.width=((idx+1)/p.length*100)+'%';$('#stat').textContent=`✅${p.filter(x=>marks[x.term]=='ok').length} 🤔${p.filter(x=>marks[x.term]=='bad').length}`;$('#card').style.setProperty('--g',({'자연지리':'#12b886','인문지리':'#7048e8','지리교육론':'#f59f00'})[grpOf(t.cat)]||'#1c7ed6');$('#fc').textContent=grpOf(t.cat)+' · '+t.cat;$('#bc').textContent=grpOf(t.cat)+' · '+t.cat;$('#fx').innerHTML=ex(t)?`<span class="tag">${esc(ex(t))}</span>`:'';
+$('#ft').textContent=t.term;$('#fe').textContent=t.en||'';$('#bd').textContent=t.def;$('#bm').textContent=mk(t);
+$('#bx').textContent=t.distractors&&t.distractors.length?'⚠️ 혼동 주의: '+t.distractors.join(' · '):'';$('#bx').style.display=$('#bx').textContent?'':'none'}
+$('#card').onclick=()=>$('#card').classList.toggle('flip');
+$('#prev').onclick=()=>{idx--;renderCard()};$('#next').onclick=()=>{idx++;renderCard()};
+function markCur(v){const p=pool();if(!p.length)return;const t=p[idx];marks[t.term]=marks[t.term]==v?undefined:v;if(!marks[t.term])delete marks[t.term];save();idx++;renderCard()}
+$('#ok').onclick=()=>markCur('ok');$('#bad').onclick=()=>markCur('bad');
+let sx=null;$('#card').addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+$('#card').addEventListener('touchend',e=>{if(sx==null)return;const d=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(d)>50){e.preventDefault();d<0?idx++:idx--;renderCard()}});
+document.addEventListener('keydown',e=>{if(mode!='card'||e.target.tagName=='INPUT'||e.target.tagName=='TEXTAREA')return;if(e.key=='ArrowRight')$('#next').click();if(e.key=='ArrowLeft')$('#prev').click();if(e.key==' '){e.preventDefault();$('#card').click()}});
+// term quiz
+let qs={n:0,c:0};
+function findT(name){const k=name.replace(/\s/g,'');return T.find(t=>t.term.replace(/\s/g,'')==k)}
+function renderQuiz(){const p=pool();if(p.length<1){$('#qbox').textContent='해당 카드가 없습니다.';return}
+const t=p[Math.random()*p.length|0],dir=$('#qdir').value;
+let ds=(t.distractors||[]).slice(0,3);let opts;
+if(dir=='d2t'){const same=shuffle(T.filter(x=>x.cat==t.cat&&x.term!=t.term&&!ds.includes(x.term))).map(x=>x.term);while(ds.length<3&&same.length)ds.push(same.shift());opts=shuffle([t.term,...ds]).map(o=>({txt:o,ok:o==t.term}))}
+else{let dd=ds.map(findT).filter(Boolean).map(x=>x.def);const same=shuffle(T.filter(x=>x.cat==t.cat&&x.term!=t.term&&!dd.includes(x.def))).map(x=>x.def);while(dd.length<3&&same.length)dd.push(same.shift());opts=shuffle([t.def,...dd.slice(0,3)]).map(o=>({txt:o,ok:o==t.def}))}
+$('#qbox').innerHTML=`<div class="qmeta">${esc(grpOf(t.cat))} · ${esc(t.cat)} ${ex(t)?'<span class=tag>'+esc(ex(t))+'</span>':''}</div><div class="qq" style="${dir=='t2d'?'font-size:28px':''}">${dir=='t2d'?esc(t.term)+' <span class="mut">'+esc(t.en)+'</span>':esc(t.def)}</div>`+opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class=n>${i+1}</span><span>${esc(o.txt)}</span></button>`).join('')+`<div id="qfb"></div>`;
+$('#qbox').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if($('#qbox').dataset.done)return;$('#qbox').dataset.done=1;const o=opts[b.dataset.i];qs.n++;if(o.ok)qs.c++;else{marks[t.term]='bad';save()}
+$('#qbox').querySelectorAll('.opt').forEach((x,i)=>{if(opts[i].ok)x.classList.add('right');else if(x==b)x.classList.add('wrong')});
+$('#qfb').innerHTML=`<div class="exp ${o.ok?'okx':'badx'}"><b>${o.ok?'🎉 정답이에요':'😥 아쉬워요'} — ${esc(t.term)}</b>${esc(t.def)}${o.ok?'':'<div class="mut" style="margin-top:6px">헷갈려요 목록에 추가했어요</div>'}</div><button class="nextb" id="qn">다음 문제</button>`;$('#qscore').textContent=`정답 ${qs.c}/${qs.n}`;$('#qn').onclick=()=>{delete $('#qbox').dataset.done;renderQuiz()}})}
+$('#qdir').onchange=renderQuiz;
+// concept mcq
+let mi=0,mo=shuffle(MCQ.map((_,i)=>i)),ms={n:0,c:0};
+function renderMcq(){const list=MCQ.filter((q,i)=>true);const q=MCQ[mo[mi%mo.length]];const opts=shuffle([{t:q.a,ok:1},...q.wrong.map(w=>({t:w,ok:0}))]);
+$('#mbox').innerHTML=`<div class="qmeta">${(mi%mo.length)+1} / ${MCQ.length} <span class=tag>관련 기출 ${esc(q.src)}</span></div><div class="qq">${esc(q.q)}</div>`+opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class=n>${i+1}</span><span>${esc(o.t)}</span></button>`).join('')+'<div id="mfb"></div>';
+$('#mbox').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if($('#mbox').dataset.done)return;$('#mbox').dataset.done=1;const o=opts[b.dataset.i];ms.n++;if(o.ok)ms.c++;
+$('#mbox').querySelectorAll('.opt').forEach((x,i)=>{if(opts[i].ok)x.classList.add('right');else if(x==b)x.classList.add('wrong')});
+$('#mfb').innerHTML=`<div class="exp ${o.ok?'okx':'badx'}"><b>${o.ok?'🎉 정답이에요':'😥 오답이에요'} · 해설</b>${esc(q.exp)}</div><button class="nextb" id="mn">다음 문제</button>`;$('#mscore').textContent=`정답 ${ms.c}/${ms.n}`;$('#mn').onclick=()=>{delete $('#mbox').dataset.done;mi++;renderMcq()}})}
+function renderList(){const p=pool();$('#v-list').innerHTML=`<div class="mut">${p.length}개</div>`+p.map(t=>`<div class="it"><b>${esc(t.term)}</b> <span class="mut">${esc(t.en)}</span> ${ex(t)?`<span class="tag">${esc(ex(t))}</span>`:''} <span>${mk(t)}</span><div>${esc(t.def)}</div><div class="mut">${esc(t.cat)}${t.distractors&&t.distractors.length?' · 혼동: '+esc(t.distractors.join(', ')):''}</div></div>`).join('')}
+function render(){['card','quiz','mcq','list','data'].forEach(m=>$('#v-'+m).classList.toggle('hide',m!=mode));$('#cats').style.display=$('#subs').style.display=(mode=='mcq'||mode=='data')?'none':'';
+$('#tools').style.display=(mode=='mcq'||mode=='data')?'none':'';
+({card:renderCard,quiz:renderQuiz,mcq:renderMcq,list:renderList,data:()=>{}})[mode]()}
+document.querySelector('nav').onclick=e=>{const b=e.target.closest('button');if(!b)return;mode=b.dataset.m;document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x==b));render()};
+$('#q').oninput=()=>{idx=0;render()};$('#filt').onchange=()=>{idx=0;render()};
+$('#shuf').onclick=()=>{order=shuffle(T.map(t=>t.term));idx=0;render()};
+$('#impb').onclick=()=>{try{const a=JSON.parse($('#imp').value);if(!Array.isArray(a))throw 0;const ok=a.filter(x=>x.term&&x.def).map(x=>({term:x.term,en:x.en||'',def:x.def,cat:x.cat||'내 단어',distractors:x.distractors||[],exam:x.exam||[]}));
+const m=new Map(user.map(t=>[t.term.replace(/\s/g,''),t]));ok.forEach(t=>m.set(t.term.replace(/\s/g,''),t));user=[...m.values()];localStorage.setItem('gv_user',JSON.stringify(user));T=all();catsUI();$('#dmsg').textContent=ok.length+'개 추가됨'}catch(e){$('#dmsg').textContent='JSON 형식 오류'}};
+$('#expb').onclick=()=>{const b=new Blob([JSON.stringify(T,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='geo-terms.json';a.click()};
+$('#clr').onclick=()=>{if(confirm('추가한 단어를 삭제할까요?')){user=[];localStorage.removeItem('gv_user');T=all();catsUI();$('#dmsg').textContent='삭제됨'}};
+$('#rst').onclick=()=>{if(confirm('외웠어요/헷갈려요 기록을 초기화할까요?')){marks={};save();$('#dmsg').textContent='초기화됨'}};
+const th=localStorage.getItem('gv_theme');if(th)document.documentElement.dataset.theme=th;
+$('#theme').onclick=()=>{const d=document.documentElement.dataset.theme=='dark'?'light':'dark';document.documentElement.dataset.theme=d;localStorage.setItem('gv_theme',d);$('#theme').textContent=d=='dark'?'☀️':'🌙'};if(th=='dark')$('#theme').textContent='☀️';
+catsUI();render();
+</script></body></html>
