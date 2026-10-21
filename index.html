@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r17">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r18">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/favicon-32.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -10855,8 +10855,8 @@ html[data-ui=pc] .s2grid{grid-template-columns:repeat(3,1fr)}
 "cat": "도시지리",
 "distractors": [
 "도시 체계",
-"도시외파 현상",
-"생태 도시"
+"중심지 체계",
+"네트워크 도시 체계"
 ],
 "core": false,
 "keys": "촌락+도시, 정주 공간 전체, 도시 체계",
@@ -25147,7 +25147,7 @@ function lsMenu(){const c=lsCfg();
  <div class="row small"><label><input type="checkbox" id="lpk" ${c.parts.keys?'checked':''}> 키워드</label><label><input type="checkbox" id="lpd" ${c.parts.def?'checked':''}> 정의</label><label><input type="checkbox" id="lpv" ${c.parts.vs?'checked':''}> 비교쌍</label></div>
  <div class="box" id="lsnow"></div>
  <div class="row"><button class="sbtn" id="lsprev">⏮</button><button class="sbtn ok" id="lspp">▶ 재생</button><button class="sbtn" id="lsnext">⏭</button><button class="sbtn bad" id="lsbad">헷갈려요</button></div>
- <p class="small mut">ⓘ 화면이 꺼지면 iOS·일부 안드로이드는 음성 재생을 멈출 수 있어요. 출퇴근 때는 화면을 켜 둔 채 쓰는 게 가장 확실해요. 지원 기기에서는 이어폰·잠금화면 ⏯⏭ 버튼으로 조작돼요.</p>`);
+ <p class="small mut">ⓘ AI 음성은 화면이 꺼져도 대부분 이어서 재생돼요. 기기 음성은 화면이 꺼지면 iOS·일부 안드로이드에서 멈출 수 있으니 화면을 켜 두세요. 지원 기기에서는 이어폰·잠금화면 ⏯⏭ 버튼으로 조작돼요.</p>`);
  const load=()=>{const L=lsPool(c.src);LSN.L=L.slice(0,c.n);LSN.i=0;lsUI()};
  o.querySelector('#lssrc').onclick=e=>{const b=e.target.closest('button');if(!b)return;c.src=b.dataset.s;lsSave();o.querySelectorAll('#lssrc button').forEach(x=>x.classList.toggle('on',x==b));lsStop();load();if(!LSN.L.length)toast('이 범위엔 항목이 없어요')};
  const sel=(id,k)=>o.querySelector(id).onchange=e=>{c[k]=+e.target.value;lsSave();if(k=='n'){lsStop();load()}};sel('#lsgap','gap');sel('#lsrate','rate');sel('#lsn','n');
@@ -25195,7 +25195,7 @@ function s2CardDue(){const s=s2Srs(),c=s2().cards||[],now=Date.now();return c.fi
 function s2Cards(){const all=s2().cards||[];let L=s2CardDue();if(!L.length)L=all.slice().sort(()=>Math.random()-.5).slice(0,10);let i=0,ok=0;const ty=!isTouch();
  const next=()=>{if(i>=L.length){ov(`${s2Back()}<h2>🗂 끝!</h2><p>${ok}/${L.length} 기억함. 놓친 카드는 내일 다시 나와요.</p>`);return}
   const c=L[i];const kws=c.keywords||[];
-  const o=ov(`${s2Back()}<div class="plhd"><b>🗂 정책 카드</b><span>${i+1}/${L.length}</span></div><div class="plq"><div class="pltag">${esc(c.scope||'')} ${c.verified===false?'<span class="s2b warn">재확인 필요</span>':''}</div><div class="plterm">${esc(c.term)}</div><div class="mut">핵심 키워드 ${kws.length}개 + 지리 수업 적용을 떠올려 보세요</div>${ty?'<input id="plin" placeholder="키워드를 쉼표로 입력 후 Enter">':''}
+  const o=ov(`${s2Back()}<div class="plhd"><b>🗂 정책 카드</b><span>${i+1}/${L.length}</span></div><div class="plq"><div class="pltag">${esc(c.scope||'')} ${c.verified===false?'<span class="s2b warn">재확인 필요</span>':''}</div><div class="plterm">${esc(c.term)} <button class="sbtn s2say" data-t="${esc(c.term)}" title="AI 음성으로 듣기">🔊</button></div><div class="mut">핵심 키워드 ${kws.length}개 + 지리 수업 적용을 떠올려 보세요</div>${ty?'<input id="plin" placeholder="키워드를 쉼표로 입력 후 Enter">':''}
   <div id="plans" class="hide"><div class="plkeys">${kws.map(k=>`<span class="kwk" data-k="${esc(k)}">${esc(k)}</span>`).join('')}</div><div class="pldef">${esc(c.def||c.purpose||'')}</div>${c.purpose&&c.def?`<div class="small">목적: ${esc(c.purpose)}</div>`:''}<div class="small">📍 지리 수업: ${esc(c.practice_geo||'')}</div><div class="small">🏫 담임: ${esc(c.practice_homeroom||'')}</div><div class="small mut">출처 ${esc(c.date||'')} ${(c.source||[]).map((u,j)=>`<a href="${esc(u)}" target="_blank" rel="noopener">[${j+1}]</a>`).join(' ')}</div><div id="kwsc"></div></div>
   <div id="plbtn" class="row"><button class="sbtn" id="plrev">${ty?'확인 (Space)':'탭해서 보기'}</button></div></div>`);
   const A=o.querySelector('#plans'),B=o.querySelector('#plbtn'),I=o.querySelector('#plin');let shown=false;
@@ -25256,6 +25256,66 @@ function s2Lp(){const d=s2(),lp=d.lp;const frame=(lp.practice_frame_NOT_exam||[]
 (function(){const c0=ovClose;ovClose=function(){s2Stop();return c0.apply(this,arguments)};
  const g0=go;go=function(m){if(m=='s2'){$$('#nav button').forEach(x=>x.classList.toggle('on',x.dataset.m=='s2'));s2Menu();return}return g0.apply(this,arguments)};
  const _rh=renderHome;renderHome=function(){_rh.apply(this,arguments);const v=$('#v-home');if(!v||v.querySelector('#s2btn'))return;const a=v.querySelector('#lsbtn');const h='<button class="sbtn" id="s2btn" style="width:100%;margin:0 0 6px">🎤 서울 2차 연습 (면접·실연·지도안·정책)</button>';if(a)a.insertAdjacentHTML('afterend',h);else v.insertAdjacentHTML('afterbegin',h);v.querySelector('#s2btn').onclick=s2Menu}})();
+// ---- 🔊 AI 음성(neural TTS mp3) 레이어: 듣기 모드·정책 카드 ----
+var AUD_BASE='audio/',AUD_CACHE='geo-audio-v1',AM=null,ttsA=null;
+function audManifest(){return AM||(AM=fetch(AUD_BASE+'manifest.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{terms:{},policy:{}}).catch(()=>({terms:{},policy:{}})))}
+function audUrl(f){return AUD_BASE+f.src+'?h='+f.hash}
+function audEl(){if(!ttsA){ttsA=document.createElement('audio');ttsA.id='ttsA';ttsA.preload='none';document.body.appendChild(ttsA)}return ttsA}
+function audMode(){return (lsCfg().voice||'ai')}
+function audPlayUrl(url,rate){return new Promise((res,rej)=>{const a=audEl();a.onended=()=>res();a.onerror=()=>rej(new Error('audio'));a.src=url;a.playbackRate=rate||1;try{a.preservesPitch=true}catch(e){}const p=a.play();if(p&&p.catch)p.catch(rej)})}
+function audSynth(text){return new Promise(r=>lsSay(text,r))}
+async function audPart(text,file,tok){if(tok!==LSN.tok)return;if(file&&audMode()=='ai'){try{await audPlayUrl(audUrl(file),lsCfg().rate);return}catch(e){if(tok!==LSN.tok)return}}if('speechSynthesis'in window)await audSynth(text)}
+async function audGap(sec,tok){const n=Math.max(1,Math.round(sec));for(let i=0;i<n;i++){if(tok!==LSN.tok)return;if(audMode()=='ai'){try{await audPlayUrl(AUD_BASE+'s/gap1.mp3',1);continue}catch(e){}}await new Promise(r=>{clearTimeout(LSN.tmo);LSN.tmo=setTimeout(r,1000)})}}
+// 듣기 모드 재생 루프 교체
+lsPlay=async function(){if(!LSN.on)return;if(LSN.i>=LSN.L.length){LSN.on=false;lsUI();if('speechSynthesis'in window)lsSay('끝났어요. 수고했어요.');return}
+ const t=LSN.L[LSN.i];lsUI();lsMeta(t);const tok=LSN.tok=Math.random();const c=lsCfg();
+ const m=audMode()=='ai'?((await audManifest()).terms[t.term]||{}).files||{}:{};
+ await audPart(t.term,m.term,tok);await audGap(c.gap,tok);
+ if(m.body&&audMode()=='ai'){const nx=LSN.L[LSN.i+1],nm=nx&&AM&&AM.then?null:null;audManifest().then(M=>{const f=nx&&M.terms[nx.term];if(f&&f.files.term)fetch(audUrl(f.files.term)).catch(()=>{})});await audPart('',m.body,tok)}
+ else{const body=[c.parts.keys&&t.keys?'키워드. '+t.keys:'',c.parts.def?t.def:'',c.parts.vs&&t.vs?'비교. '+t.vs:''].filter(Boolean).join(' ');await audPart(body,null,tok)}
+ await audGap(1,tok);if(!LSN.on||tok!==LSN.tok)return;LSN.i++;lsPlay()};
+(function(){const _s=lsStop;lsStop=function(){_s.apply(this,arguments);if(ttsA){try{ttsA.pause()}catch(e){}}}})();
+// 오프라인 저장(과목별)
+async function audFilesFor(pred,pol){const M=await audManifest();const L=[];for(const[k,e]of Object.entries(M.terms||{})){const t=TM.get(k);if(pred(e,t))Object.values(e.files).forEach(f=>L.push(audUrl(f)))}if(pol)Object.values(M.policy||{}).forEach(e=>Object.values(e.files).forEach(f=>L.push(audUrl(f))));return L}
+async function audCachedCount(urls){if(!('caches'in window))return 0;const c=await caches.open(AUD_CACHE);let n=0;for(const u of urls)if(await c.match(u))n++;return n}
+const AUD_MB={'지형학':20.0,'기후학':10.6,'경제지리':10.5,'지리교육론':8.9,'도시지리':8.3,'문화·역사·정치지리':8.1,'지도학·GIS':4.8,'지역지리':4.8,'인구지리':3.1,'토양·식생·수문':2.9};
+async function audOffline(){if(!('caches'in window)){toast('이 브라우저는 오프라인 저장을 지원하지 않아요');return}
+ const cats=Object.keys(AUD_MB);
+ const o=ov(`${typeof s2Back=='function'?'':''}<h2>💾 AI 음성 오프라인 저장</h2><p class="mut small">과목별로 음성 파일을 이 기기에 저장해 두면 비행기 모드·지하철에서도 AI 음성으로 들을 수 있어요. 저장하지 않은 항목은 온라인이면 바로 받아 재생하고, 오프라인이면 기기 음성으로 읽어요.</p>
+ <label class="small"><input type="checkbox" id="aucore"> ⭐기출 핵심만(용량 약 1/3)</label>
+ <div id="aulist">${cats.map(k=>`<div class="row small" data-c="${esc(k)}" style="justify-content:space-between;border-bottom:1px solid var(--line,#ddd);padding:6px 0"><span><b>${esc(k)}</b> <span class="mut">${AUD_MB[k]}MB</span> <span class="aust mut"></span></span><span><button class="sbtn ausv">저장</button> <button class="sbtn audl">삭제</button></span></div>`).join('')}
+ <div class="row small" data-c="__pol" style="justify-content:space-between;padding:6px 0"><span><b>서울 2차 정책 카드</b> <span class="mut">1.6MB</span> <span class="aust mut"></span></span><span><button class="sbtn ausv">저장</button> <button class="sbtn audl">삭제</button></span></div></div>
+ <div class="row"><button class="sbtn" id="auall">전체 저장(약 83MB)</button><button class="sbtn bad" id="auclr">전체 삭제</button></div><p class="small mut" id="auq"></p>`);
+ const core=()=>o.querySelector('#aucore').checked;
+ const urls=k=>k=='__pol'?audFilesFor(()=>false,true):audFilesFor((e,t)=>e.cat==k&&(!core()||(t&&t.core)),false);
+ const refresh=async()=>{for(const r of o.querySelectorAll('#aulist [data-c]')){const u=await urls(r.dataset.c);const n=await audCachedCount(u);r.querySelector('.aust').textContent=u.length?(n>=u.length?'✅ 저장됨':n?`${Math.round(n/u.length*100)}% 저장`:''):''}
+  if(navigator.storage&&navigator.storage.estimate){const e=await navigator.storage.estimate();o.querySelector('#auq').textContent=`이 사이트 사용량 ${(e.usage/1048576).toFixed(1)}MB / 가능 ${(e.quota/1048576/1024).toFixed(1)}GB`}};
+ const save1=async(r)=>{const u=await urls(r.dataset.c);const c=await caches.open(AUD_CACHE);const st=r.querySelector('.aust');let d=0,fail=0;
+  if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+  const todo=[];for(const x of u)if(!(await c.match(x)))todo.push(x);d=u.length-todo.length;
+  const work=async()=>{while(todo.length){const x=todo.shift();try{await c.add(x)}catch(e){fail++}d++;st.textContent=`⬇ ${Math.round(d/u.length*100)}% (${d}/${u.length})`}};
+  await Promise.all([work(),work(),work(),work()]);st.textContent=fail?`⚠ ${fail}개 실패 — 다시 저장을 눌러 주세요`:'✅ 저장됨'};
+ const del1=async(r)=>{const u=await urls(r.dataset.c);const c=await caches.open(AUD_CACHE);for(const x of u)await c.delete(x);r.querySelector('.aust').textContent='삭제됨'};
+ o.querySelector('#aulist').onclick=e=>{const b=e.target.closest('button');if(!b)return;const r=b.closest('[data-c]');b.disabled=true;(b.classList.contains('ausv')?save1(r):del1(r)).finally(()=>{b.disabled=false;refresh()})};
+ o.querySelector('#auall').onclick=async()=>{for(const r of o.querySelectorAll('#aulist [data-c]'))await save1(r);refresh()};
+ o.querySelector('#auclr').onclick=async()=>{if(!confirm('저장한 AI 음성을 모두 지울까요?'))return;await caches.delete(AUD_CACHE);refresh()};
+ o.querySelector('#aucore').onchange=refresh;refresh()}
+// 듣기 메뉴에 음성 토글 + 오프라인 저장 버튼
+(function(){const _m=lsMenu;lsMenu=function(){const c=lsCfg();if(!c.voice)c.voice='ai';
+ if(!('speechSynthesis'in window))c.voice='ai';
+ const r=_m.apply(this,arguments);const o=document.querySelector('#lsnow')&&document.querySelector('#lsnow').closest('.ovc,.ov,div');const host=document.getElementById('lssrc');if(!host)return r;
+ host.insertAdjacentHTML('beforebegin',`<div class="seg" id="lsvoice"><button data-v="ai" class="${c.voice=='ai'?'on':''}">🤖 AI 음성</button><button data-v="dev" class="${c.voice=='dev'?'on':''}">📱 기기 음성</button></div><p class="small mut" id="lsvnote">${c.voice=='ai'?'AI 음성: 화면이 꺼져도 대체로 계속 재생돼요. 키워드·정의·비교쌍을 모두 읽어요(부분 선택은 기기 음성에서만). 받지 못한 항목은 기기 음성으로 대신 읽어요.':'기기 음성: 완전 오프라인, 화면이 꺼지면 멈출 수 있어요.'}</p>`);
+ document.getElementById('lsvoice').onclick=e=>{const b=e.target.closest('button');if(!b)return;c.voice=b.dataset.v;lsSave();lsStop();lsUI();document.querySelectorAll('#lsvoice button').forEach(x=>x.classList.toggle('on',x==b));document.getElementById('lsvnote').textContent=c.voice=='ai'?'AI 음성: 화면이 꺼져도 대체로 계속 재생돼요. 받지 못한 항목은 기기 음성으로 대신 읽어요.':'기기 음성: 완전 오프라인, 화면이 꺼지면 멈출 수 있어요.'};
+ const pp=document.getElementById('lspp');if(pp)pp.parentElement.insertAdjacentHTML('afterend','<button class="sbtn" id="lsoff" style="width:100%">💾 AI 음성 오프라인 저장 (과목별)</button>');const off=document.getElementById('lsoff');if(off)off.onclick=()=>{lsStop();audOffline()};
+ audManifest();return r}})();
+// 정책 카드 🔊
+async function audPolicy(term){const M=await audManifest();const e=(M.policy||{})[term];LSN.tok=Math.random();const tok=LSN.tok;
+ const c=(s2().cards||[]).find(x=>x.term==term)||{};const body=[c.purpose,(c.keywords||[]).join(', '),c.practice_geo,c.practice_homeroom].filter(Boolean).join('. ');
+ if(ttsA&&!ttsA.paused){ttsA.pause();return}
+ await audPart(term,e&&e.files.term,tok);await audGap(1,tok);await audPart(body,e&&e.files.body,tok)}
+document.addEventListener('click',e=>{const b=e.target.closest('.s2say');if(b){e.preventDefault();audPolicy(b.dataset.t)}});
+// 설정 화면 진입점
+(function(){if(typeof renderData!='function')return;const _r=renderData;renderData=function(){_r.apply(this,arguments);const v=$('#v-data');if(!v||v.querySelector('#auset'))return;const bx=v.querySelector('.box');if(bx)bx.insertAdjacentHTML('beforeend','<div class="row"><button class="sbtn" id="auset">🎧 듣기 · 💾 AI 음성 오프라인 저장</button></div>');const b=v.querySelector('#auset');if(b)b.onclick=audOffline}})();
 // ---- settings & sync
 const PKEYS=['gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
