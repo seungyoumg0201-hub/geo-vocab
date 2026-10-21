@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>지리 임용 핵심 단어장</title><meta name="theme-color" content="#111827">
+<title>지리 임용 핵심 단어장</title><meta name="app-version" content="v3-mark-toggle"><meta name="theme-color" content="#111827">
 <style>
 :root{--bg:#f6f7f9;--card:#fff;--fg:#191f28;--mut:#6b7684;--bd:#e5e8eb;--acc:#3182f6;--accs:#e8f3ff;--ok:#0f9d58;--oks:#e6f6ec;--bad:#e5484d;--bads:#fdecec;--sh:0 4px 20px rgba(0,0,0,.06);--g:#3182f6}
 [data-theme=dark]{--bg:#101318;--card:#1b1f27;--fg:#eef1f5;--mut:#9aa4b2;--bd:#2c323d;--accs:#1c2b45;--oks:#123322;--bads:#3a1a1c;--sh:0 4px 20px rgba(0,0,0,.4)}
@@ -42,7 +42,7 @@ main{max-width:820px;margin:0 auto;padding:16px}
 .conf{margin-top:18px;padding:12px 14px;background:var(--bg);border-radius:12px;font-size:15px;color:var(--mut)}
 .ctl{display:grid;grid-template-columns:56px 1fr 1fr 56px;gap:10px}
 .ctl button{min-height:56px;border-radius:16px;font-weight:700;font-size:16px;background:var(--card);border:1px solid var(--bd)}
-#ok{background:var(--oks);color:var(--ok);border-color:transparent}#bad{background:var(--bads);color:var(--bad);border-color:transparent}
+#ok{color:var(--ok);border:2px solid var(--ok);background:var(--card)}#bad{color:var(--bad);border:2px solid var(--bad);background:var(--card)}#ok.act{background:var(--ok);color:#fff}#bad.act{background:var(--bad);color:#fff}.mhint{text-align:center;font-size:13px;color:var(--mut);margin-top:8px;min-height:20px}.mk{border:1px solid var(--bd);background:var(--bg);border-radius:999px;padding:4px 12px;min-height:34px;font-size:14px;font-weight:600}.mk.ok{background:var(--oks);color:var(--ok);border-color:var(--ok)}.mk.bad{background:var(--bads);color:var(--bad);border-color:var(--bad)}.it .top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
 .box{background:var(--card);border:1px solid var(--bd);border-radius:24px;padding:24px;box-shadow:var(--sh)}
 .qmeta{font-size:14px;color:var(--mut);font-weight:600}.qq{font-size:21px;font-weight:700;line-height:1.55;margin:10px 0 18px;letter-spacing:-.2px}
 .opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;margin:10px 0;padding:16px 18px;border-radius:16px;border:2px solid var(--bd);background:var(--card);font-size:17px;line-height:1.6;transition:border-color .15s,background .15s}
@@ -73,14 +73,14 @@ code{background:var(--bg);padding:1px 6px;border-radius:6px;font-size:14px}
 <div id="v-card"><div class="prog"><span id="pos"></span><div class="bar"><i id="pbar"></i></div><span id="stat"></span></div>
 <div class="card" id="card"><div class="inner"><div class="face front"><div class="meta"><span class="sj" id="fc"></span><span id="fx"></span></div><div class="term" id="ft"></div><div class="en" id="fe"></div><div class="hint">탭하여 뜻 보기 · 좌우로 밀어 넘기기</div></div>
 <div class="face back"><div class="meta"><span class="sj" id="bc"></span><span id="bm"></span></div><div class="def" id="bd"></div><div class="conf" id="bx"></div></div></div></div>
-<div class="ctl"><button id="prev" aria-label="이전">◀</button><button id="bad">🤔 헷갈려요</button><button id="ok">✅ 외웠어요</button><button id="next" aria-label="다음">▶</button></div></div>
+<div class="ctl"><button id="prev" aria-label="이전">◀</button><button id="bad">🤔 헷갈려요</button><button id="ok">✅ 외웠어요</button><button id="next" aria-label="다음">▶</button></div><div class="mhint" id="mhint"></div></div>
 <div id="v-quiz" class="hide"><div class="qtop"><div class="seg"><select id="qdir"><option value="t2d">용어 → 정의</option><option value="d2t">정의 → 용어</option></select></div><span class="score" id="qscore"></span></div><div class="box" id="qbox"></div></div>
 <div id="v-mcq" class="hide"><div class="qtop"><span class="qmeta">임용 기출 개념 확인</span><span class="score" id="mscore"></span></div><div class="box" id="mbox"></div></div>
 <div id="v-list" class="hide list"></div>
 <div id="v-data" class="hide box"><h2 style="margin-top:0;font-size:20px">데이터 · 설정</h2><p>단어 데이터는 이 파일 안 <code>&lt;script id="terms"&gt;</code> JSON 배열입니다. 필드: <code>term, en, def, cat, distractors[3], exam[]</code>.</p>
 <p>내 서브노트 단어 추가: 같은 형식의 JSON 배열을 붙여넣고 [추가]를 누르면 이 기기에 저장되어 함께 학습됩니다(같은 용어는 덮어씀).</p>
 <textarea id="imp" placeholder='[{"term":"용어","en":"","def":"정의","cat":"지형학","distractors":["a","b","c"]}]'></textarea>
-<div class="row"><button id="impb">추가</button><button id="expb">전체 JSON 내보내기</button><button id="clr">추가 단어 삭제</button><button id="rst">학습 기록 초기화</button></div><p class="mut" id="dmsg"></p>
+<div class="row"><button id="impb">추가</button><button id="expb">전체 JSON 내보내기</button><button id="clr">추가 단어 삭제</button><button id="clrbad">🤔 헷갈려요 전체 해제</button><button id="clrok">✅ 외웠어요 전체 해제</button><button id="rst">모든 표시 초기화</button></div><p class="mut" id="dmsg"></p>
 <p class="mut">기출 표기(예: 2024 A1)는 KICE 공개 문제지(2017~2026학년도)와 사용자 기출 분석 자료를 대조한 것이며, * 표시는 2016학년도 이전으로 사용자 기출 분석 노트 기준입니다.</p></div>
 </main>
 <script type="application/json" id="terms">[
@@ -4930,11 +4930,11 @@ const mk=t=>marks[t.term]=='ok'?'✅ 외웠어요':marks[t.term]=='bad'?'🤔 �
 function renderCard(){const p=pool();if(!p.length){$('#pos').textContent='해당 카드가 없습니다.';$('#ft').textContent='—';$('#fe').textContent='';$('#bd').textContent='';return}
 idx=(idx+p.length)%p.length;const t=p[idx];$('#card').classList.remove('flip');
 $('#pos').textContent=`${idx+1} / ${p.length}`;$('#pbar').style.width=((idx+1)/p.length*100)+'%';$('#stat').textContent=`✅${p.filter(x=>marks[x.term]=='ok').length} 🤔${p.filter(x=>marks[x.term]=='bad').length}`;$('#card').style.setProperty('--g',({'자연지리':'#12b886','인문지리':'#7048e8','지리교육론':'#f59f00'})[grpOf(t.cat)]||'#1c7ed6');$('#fc').textContent=grpOf(t.cat)+' · '+t.cat;$('#bc').textContent=grpOf(t.cat)+' · '+t.cat;$('#fx').innerHTML=ex(t)?`<span class="tag">${esc(ex(t))}</span>`:'';
-$('#ft').textContent=t.term;$('#fe').textContent=t.en||'';$('#bd').textContent=t.def;$('#bm').textContent=mk(t);
+$('#ft').textContent=t.term;$('#fe').textContent=t.en||'';$('#bd').textContent=t.def;$('#bm').innerHTML=marks[t.term]?`<button class="mk ${marks[t.term]}" id="bclr">${mk(t)} ✕ 해제</button>`:'';const bc=$('#bclr');if(bc)bc.onclick=e=>{e.stopPropagation();delete marks[t.term];save();renderCard()};$('#ok').classList.toggle('act',marks[t.term]=='ok');$('#bad').classList.toggle('act',marks[t.term]=='bad');$('#ok').setAttribute('aria-pressed',marks[t.term]=='ok');$('#bad').setAttribute('aria-pressed',marks[t.term]=='bad');$('#mhint').textContent=marks[t.term]?'같은 버튼을 다시 누르면 표시 해제':'';
 $('#bx').textContent=t.distractors&&t.distractors.length?'⚠️ 혼동 주의: '+t.distractors.join(' · '):'';$('#bx').style.display=$('#bx').textContent?'':'none'}
 $('#card').onclick=()=>$('#card').classList.toggle('flip');
 $('#prev').onclick=()=>{idx--;renderCard()};$('#next').onclick=()=>{idx++;renderCard()};
-function markCur(v){const p=pool();if(!p.length)return;const t=p[idx];marks[t.term]=marks[t.term]==v?undefined:v;if(!marks[t.term])delete marks[t.term];save();idx++;renderCard()}
+function markCur(v){const p=pool();if(!p.length)return;const t=p[idx];if(marks[t.term]==v){delete marks[t.term];save();renderCard();if($('#filt').value!='all'){}return}marks[t.term]=v;save();idx++;renderCard()}
 $('#ok').onclick=()=>markCur('ok');$('#bad').onclick=()=>markCur('bad');
 let sx=null;$('#card').addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
 $('#card').addEventListener('touchend',e=>{if(sx==null)return;const d=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(d)>50){e.preventDefault();d<0?idx++:idx--;renderCard()}});
@@ -4950,7 +4950,7 @@ else{let dd=ds.map(findT).filter(Boolean).map(x=>x.def);const same=shuffle(T.fil
 $('#qbox').innerHTML=`<div class="qmeta">${esc(grpOf(t.cat))} · ${esc(t.cat)} ${ex(t)?'<span class=tag>'+esc(ex(t))+'</span>':''}</div><div class="qq" style="${dir=='t2d'?'font-size:28px':''}">${dir=='t2d'?esc(t.term)+' <span class="mut">'+esc(t.en)+'</span>':esc(t.def)}</div>`+opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class=n>${i+1}</span><span>${esc(o.txt)}</span></button>`).join('')+`<div id="qfb"></div>`;
 $('#qbox').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if($('#qbox').dataset.done)return;$('#qbox').dataset.done=1;const o=opts[b.dataset.i];qs.n++;if(o.ok)qs.c++;else{marks[t.term]='bad';save()}
 $('#qbox').querySelectorAll('.opt').forEach((x,i)=>{if(opts[i].ok)x.classList.add('right');else if(x==b)x.classList.add('wrong')});
-$('#qfb').innerHTML=`<div class="exp ${o.ok?'okx':'badx'}"><b>${o.ok?'🎉 정답이에요':'😥 아쉬워요'} — ${esc(t.term)}</b>${esc(t.def)}${o.ok?'':'<div class="mut" style="margin-top:6px">헷갈려요 목록에 추가했어요</div>'}</div><button class="nextb" id="qn">다음 문제</button>`;$('#qscore').textContent=`정답 ${qs.c}/${qs.n}`;$('#qn').onclick=()=>{delete $('#qbox').dataset.done;renderQuiz()}})}
+$('#qfb').innerHTML=`<div class="exp ${o.ok?'okx':'badx'}"><b>${o.ok?'🎉 정답이에요':'😥 아쉬워요'} — ${esc(t.term)}</b>${esc(t.def)}${o.ok?'':'<div class="mut" style="margin-top:6px">헷갈려요에 추가했어요 <button class="mk bad" id="qundo">✕ 해제</button></div>'}</div><button class="nextb" id="qn">다음 문제</button>`;$('#qscore').textContent=`정답 ${qs.c}/${qs.n}`;$('#qn').onclick=()=>{delete $('#qbox').dataset.done;renderQuiz()};const u=$('#qundo');if(u)u.onclick=()=>{delete marks[t.term];save();u.parentNode.textContent='헷갈려요 표시를 해제했어요'}})}
 $('#qdir').onchange=renderQuiz;
 // concept mcq
 let mi=0,mo=shuffle(MCQ.map((_,i)=>i)),ms={n:0,c:0};
@@ -4959,7 +4959,7 @@ $('#mbox').innerHTML=`<div class="qmeta">${(mi%mo.length)+1} / ${MCQ.length} <sp
 $('#mbox').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if($('#mbox').dataset.done)return;$('#mbox').dataset.done=1;const o=opts[b.dataset.i];ms.n++;if(o.ok)ms.c++;
 $('#mbox').querySelectorAll('.opt').forEach((x,i)=>{if(opts[i].ok)x.classList.add('right');else if(x==b)x.classList.add('wrong')});
 $('#mfb').innerHTML=`<div class="exp ${o.ok?'okx':'badx'}"><b>${o.ok?'🎉 정답이에요':'😥 오답이에요'} · 해설</b>${esc(q.exp)}</div><button class="nextb" id="mn">다음 문제</button>`;$('#mscore').textContent=`정답 ${ms.c}/${ms.n}`;$('#mn').onclick=()=>{delete $('#mbox').dataset.done;mi++;renderMcq()}})}
-function renderList(){const p=pool();$('#v-list').innerHTML=`<div class="mut">${p.length}개</div>`+p.map(t=>`<div class="it"><b>${esc(t.term)}</b> <span class="mut">${esc(t.en)}</span> ${ex(t)?`<span class="tag">${esc(ex(t))}</span>`:''} <span>${mk(t)}</span><div>${esc(t.def)}</div><div class="mut">${esc(t.cat)}${t.distractors&&t.distractors.length?' · 혼동: '+esc(t.distractors.join(', ')):''}</div></div>`).join('')}
+function renderList(){const p=pool();$('#v-list').innerHTML=`<div class="mut">${p.length}개</div>`+p.map(t=>`<div class="it"><b>${esc(t.term)}</b> <span class="mut">${esc(t.en)}</span> ${ex(t)?`<span class="tag">${esc(ex(t))}</span>`:''} <div class="top"><span></span><button class="mk ${marks[t.term]||''}" data-t="${esc(t.term)}" title="탭: 미표시→외웠어요→헷갈려요→해제">${mk(t)||'○ 표시 없음'}</button></div><div>${esc(t.def)}</div><div class="mut">${esc(t.cat)}${t.distractors&&t.distractors.length?' · 혼동: '+esc(t.distractors.join(', ')):''}</div></div>`).join('')}
 function render(){['card','quiz','mcq','list','data'].forEach(m=>$('#v-'+m).classList.toggle('hide',m!=mode));$('#cats').style.display=$('#subs').style.display=(mode=='mcq'||mode=='data')?'none':'';
 $('#tools').style.display=(mode=='mcq'||mode=='data')?'none':'';
 ({card:renderCard,quiz:renderQuiz,mcq:renderMcq,list:renderList,data:()=>{}})[mode]()}
@@ -4970,7 +4970,10 @@ $('#impb').onclick=()=>{try{const a=JSON.parse($('#imp').value);if(!Array.isArra
 const m=new Map(user.map(t=>[t.term.replace(/\s/g,''),t]));ok.forEach(t=>m.set(t.term.replace(/\s/g,''),t));user=[...m.values()];localStorage.setItem('gv_user',JSON.stringify(user));T=all();catsUI();$('#dmsg').textContent=ok.length+'개 추가됨'}catch(e){$('#dmsg').textContent='JSON 형식 오류'}};
 $('#expb').onclick=()=>{const b=new Blob([JSON.stringify(T,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='geo-terms.json';a.click()};
 $('#clr').onclick=()=>{if(confirm('추가한 단어를 삭제할까요?')){user=[];localStorage.removeItem('gv_user');T=all();catsUI();$('#dmsg').textContent='삭제됨'}};
-$('#rst').onclick=()=>{if(confirm('외웠어요/헷갈려요 기록을 초기화할까요?')){marks={};save();$('#dmsg').textContent='초기화됨'}};
+$('#rst').onclick=()=>{if(confirm('외웠어요/헷갈려요 표시를 모두 지울까요?')){marks={};save();$('#dmsg').textContent='모든 표시를 초기화했어요'}};
+function clrM(v,l){const n=Object.values(marks).filter(x=>x==v).length;if(!n){$('#dmsg').textContent=l+' 표시가 없어요';return}if(confirm(l+' '+n+'개를 모두 해제할까요?')){for(const k in marks)if(marks[k]==v)delete marks[k];save();$('#dmsg').textContent=l+' '+n+'개 해제됨'}}
+$('#clrbad').onclick=()=>clrM('bad','헷갈려요');$('#clrok').onclick=()=>clrM('ok','외웠어요');
+$('#v-list').onclick=e=>{const b=e.target.closest('.mk');if(!b)return;const k=b.dataset.t,c=marks[k],n=!c?'ok':c=='ok'?'bad':null;if(n)marks[k]=n;else delete marks[k];save();b.className='mk '+(n||'');b.textContent=n=='ok'?'✅ 외웠어요':n=='bad'?'🤔 헷갈려요':'○ 표시 없음'};
 const th=localStorage.getItem('gv_theme');if(th)document.documentElement.dataset.theme=th;
 $('#theme').onclick=()=>{const d=document.documentElement.dataset.theme=='dark'?'light':'dark';document.documentElement.dataset.theme=d;localStorage.setItem('gv_theme',d);$('#theme').textContent=d=='dark'?'☀️':'🌙'};if(th=='dark')$('#theme').textContent='☀️';
 catsUI();render();
