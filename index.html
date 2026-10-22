@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r51">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r52">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon.svg?v=2" type="image/svg+xml"><link rel="icon" href="icons/favicon-32.png?v=2" sizes="32x32"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=2">
@@ -424,8 +424,13 @@ details.fold[open]>summary::after{transform:rotate(-135deg)}
 #amnx{border-radius:99px}
 .flrow>span:first-child{flex:initial}.flrow>span:not(.small):not(.mut){flex:1;text-align:left}
 #dkam,#dkin{border-radius:99px!important}.rescard+.cta+.sbtn,#amx{width:100%;min-height:48px;border-radius:99px;margin-top:8px}
+#v-review .mhint{display:none}#v-review .rvt{margin:4px 0 8px}#rvopt #filters{margin-top:8px}
+#v-stats>.box:first-child{background:none;box-shadow:none;padding:0}
+#v-stats>.box:first-of-type button,#v-stats .box:first-of-type .cta{background:var(--accs)!important;color:var(--acc)!important;box-shadow:none!important;min-height:52px;border-radius:99px}
+.rvt{margin:4px 0 12px}
+#v-stats>.box:first-of-type{background:none!important;box-shadow:none!important;border:0!important;padding:0!important}
 </style></head><body>
-<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r51</span></h1>
+<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r52</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -5803,6 +5808,12 @@ renderHome=function(){const v=$('#v-home');if(!v)return;let st=null;try{st=passS
  <details class="fold"><summary>옵션</summary><div class="optr"><span class="small">범위</span>${scopeSeg()}</div><div class="optr"><span class="small">7일 코스</span><div class="seg"><button data-course="A" class="${passCourse()=='A'?'on':''}">A 암기</button><button data-course="B" class="${passCourse()=='B'?'on':''}">B 암기+인출</button></div></div>${passCourse()=='B'?'<div class="optr"><button class="sbtn" id="ingo2">오늘 인출</button></div>':''}<div class="optr"><button class="sbtn" id="passreset">7일 진도 다시 시작</button></div></details></div>`;
  const ag=v.querySelector('#amgo');ag&&(ag.onclick=homeAm);const hd=v.querySelector('#hdeck');hd&&(hd.onclick=()=>go('deck'));const r=v.querySelector('#hres');r&&(r.onclick=resumeLast);const i2=v.querySelector('#ingo2');i2&&(i2.onclick=homeIn);
  v.querySelectorAll('[data-course]').forEach(b=>b.onclick=()=>{LS.set('gv_course',b.dataset.course);renderHome()});try{passBind(v)}catch(e){}};
+// r52: 복습 화면도 평평하게. 범위·과목 칩은 접힌 '옵션' 안으로 옮기고, 설명 문구는 숨김. 다른 화면으로 가면 원래 자리로 돌려놓음
+{const _r=render;let home=null;render=function(){const r=_r.apply(this,arguments);try{const f=$('#filters');if(!f)return r;if(!home)home={p:f.parentNode,n:f.nextSibling};const v=$('#v-review');
+ if(mode=='review'&&v){let d=v.querySelector('#rvopt');if(!d){d=document.createElement('details');d.id='rvopt';d.className='fold';d.innerHTML='<summary>옵션</summary>';v.appendChild(d)}if(f.parentNode!==d)d.appendChild(f);
+  if(!v.querySelector('.rvt')){v.insertAdjacentHTML('afterbegin','<h2 class="rvt">복습</h2>')}}
+ else if(f.parentNode!==home.p)home.p.insertBefore(f,home.n&&home.n.parentNode===home.p?home.n:null)}catch(e){}return r}}
+{const _r=render;render=function(){const r=_r.apply(this,arguments);try{[['stats','통계'],['data','설정']].forEach(([m,t])=>{const v=$('#v-'+m);if(mode==m&&v&&!v.querySelector(':scope>.rvt'))v.insertAdjacentHTML('afterbegin',`<h2 class="rvt">${t}</h2>`);if(m=='stats'&&v){const b=v.querySelector('.box button');b&&/취약 분석/.test(b.textContent)&&(b.textContent='취약 분석 열기')}})}catch(e){}return r}}
 // ---- settings & sync
 const PKEYS=['gv_passA','gv_passAc','gv_passc','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
