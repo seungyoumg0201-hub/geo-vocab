@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r43">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r44">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/favicon-32.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -329,8 +329,13 @@ h2{font-size:22px;line-height:1.3;font-weight:700}
 .cfmb h3{margin:0 0 8px;font-size:18px}.cfml{margin:0 0 16px;color:var(--mut);line-height:1.5}
 .cfmr{display:flex;gap:8px}.cfmr button{flex:1;min-height:48px;border-radius:12px;font-size:16px;font-weight:700;border:0}
 .cfmc{background:var(--acc,#3182f6);color:#fff}.cfmo{background:#d92d20;color:#fff}
+.fllist{display:flex;flex-direction:column;gap:0;border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin-top:12px}
+.flrow{display:flex;justify-content:space-between;align-items:center;min-height:52px;padding:0 16px;background:var(--card);border:0;border-bottom:1px solid var(--bd);color:var(--fg);font-size:16px;text-align:left}
+.flrow:last-child{border-bottom:0}.flback{border:0;background:none;color:var(--acc);font-size:16px;min-height:44px;padding:0;margin-bottom:4px}
+.optr{display:flex;flex-direction:column;gap:6px;margin:10px 0}.cta.big2{background:var(--card);color:var(--fg);border:1px solid var(--bd)}
+.flhome{display:flex;flex-direction:column;gap:12px}
 </style></head><body>
-<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b><span class="verchip">v6-r43</span></h1>
+<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b><span class="verchip">v6-r44</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -5422,6 +5427,69 @@ function askConfirm(title,lose,okLabel){return new Promise(res=>{const d=documen
  d.querySelector('.cfmc').onclick=()=>done(false);d.querySelector('.cfmo').onclick=()=>done(true);d.onclick=e=>{if(e.target===d)done(false)};document.addEventListener('keydown',kd,true);
  document.body.appendChild(d);d.querySelector('.cfmc').focus()})}
 {const _rl=resumeLast;resumeLast=function(){const l=S.lastStart||{};if(l.m=='icdeck')return icDeck(l.id);if(l.m=='am'&&l.id)return amDeck(l.id);return _rl.apply(this,arguments)}}
+// ---- r44 평평한 IA: 메인 → 단어장 → (범위) 과목 → 과목 화면(암기 주 · 인출 보조, 유형·수량은 옵션) ----
+// 원칙: analysis/design_principles.md. 한 화면 = 제목 · 진행 한 줄 · 큰 주 버튼 1 · 작은 보조 버튼 ≤1 · 접힌 옵션.
+const ISUBJ=DSUBJ;// 모든 화면 공통 10과목(같은 이름·순서)
+function scopeOk(t){return amScope()!='core'||t.core}
+function amBase2(id){return (id=='all'?T:T.filter(t=>t.cat==id)).filter(scopeOk)}
+amTerms=function(id){return amBase2(id)};
+function amUn(L){const sn=kwSeen();return L.filter(t=>!sn['T:'+t.term]).length}
+function ecItems(sj){let E=[];try{E=ecd()}catch(e){}return E.filter(e=>e.cat==sj).map(e=>({k:'Q',q:{id:'ec:'+e.id,q:'단서어: '+e.clue+' → 떠오르는 이론·개념은?',a:e.answer,cat:e.cat}}))}
+// 인출 문항: 과목·유형별 단일 함수(모든 화면이 이 값만 사용)
+function inPool(id,fmt){fmt=fmt||icSel();const S2=id=='all'?ISUBJ:[id],m=new Map();
+ S2.forEach(sj=>fmt.forEach(c=>{let L=icPool(c,sj);if(c=='kw')L=L.concat(ecItems(sj));if(amScope()=='core')L=L.filter(x=>!x.t||x.t.core);L.forEach(x=>{const k=kwKey(x);if(!m.has(k))m.set(k,x)})}));return [...m.values()]}
+function inUn(L){const sn=kwSeen();return L.filter(x=>!sn[kwKey(x)]&&!sn[seenKey(x)]).length}
+icUnion=function(id){return inPool(id||'all')};
+icDeck=function(id){id=id||'all';if(id=='exam'||id=='core')id='all';S.lastStart={m:'icdeck',id};try{save()}catch(e){}icRun(inPool(id),'✏️ 인출 · '+dkName(id))};
+dkName=function(id){return (id=='all'||id=='exam'||id=='core'?'전체 과목':id)+(amScope()=='core'?' · ⭐ 기출 핵심':'')};
+const amN=()=>S.amN===0?0:(S.amN||20);
+amDeck=function(id){_amNext=()=>amDeck(id);S.lastStart={m:'am',id};try{save()}catch(e){}const L=amOrder(amTerms(id));amRun(amN()?L.slice(0,amN()):L,'📚 '+dkName(id))};
+function fmtLbl(){const a=icSel();return a.length==3?'전체 유형':a.map(k=>ICAT.find(x=>x[0]==k)[1]).join('·')}
+function back(fn){return `<button class="flback" aria-label="뒤로">‹ 뒤로</button>`}
+function bindBack(o,fn){const b=o.querySelector('.flback');b&&(b.onclick=()=>{ovClose();fn()})}
+// 1단계: 단어장 = 범위 + 과목 목록 (이름 + 안 본 수 하나)
+dkDeckMenu=function(){const L=[['all','전체 과목'],...ISUBJ.map(c=>[c,c])];
+ const o=ov(`<h2>단어장</h2>${scopeSeg()}<div class="fllist">${L.map(([id,n])=>{const A=amTerms(id);return `<button class="flrow" data-c="${esc(id)}"><span>${esc(n)}</span><span class="small mut">안 본 ${amUn(A)}</span></button>`}).join('')}</div>`);
+ o.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{ovClose();dkSheet(b.dataset.c)})};
+dkSubjList=dkDeckMenu;
+// 2단계: 과목 화면
+dkSheet=function(id){if(id=='exam'||id=='core'){S.amScope='core';id='all'}const A=amTerms(id),P=inPool(id),sn=kwSeen(),seen=A.length-amUn(A),pct=A.length?Math.round(seen/A.length*100):0,sel=icSel();
+ const o=ov(`${back()}<h2>${esc(dkName(id))}</h2><div class="pbar"><i style="width:${pct}%"></i></div><div class="small mut">${seen}/${A.length}장 (${pct}%)</div>
+ <button class="cta" id="dkam">▶ 단어장 암기<small>안 본 카드부터 ${amN()||'전부'}장</small></button>
+ <button class="sbtn sub2" id="dkin">✏️ 인출 · ${fmtLbl()} ${P.length}문항</button>
+ <details class="fold" id="dkopt"><summary>옵션</summary>
+ <div class="optr"><span class="small">단어장 장 수</span><div class="seg" id="amn">${[20,40,0].map(n=>`<button data-n="${n}" class="${amN()==n?'on':''}">${n||'전부'}</button>`).join('')}</div></div>
+ <div class="optr"><span class="small">인출 유형</span><div class="icchips">${ICAT.map(([k,l])=>{const on=k=='all'?sel.length==3:sel.length<3&&sel.includes(k);const n=k=='all'?P.length:inPool(id,[k]).length;return `<button class="icchip ${on?'on':''}" aria-pressed="${on}" data-icc="${k}">${l}<small>${n}</small></button>`}).join('')}</div></div>
+ <div class="optr"><span class="small">인출 문항 수</span><div class="seg" id="kwn">${[10,20,30,50].map(n=>`<button data-n="${n}" class="${(S.kwN||20)==n?'on':''}">${n}</button>`).join('')}</div></div>
+ <div class="optr"><button class="sbtn" id="dklist">🔍 용어 목록·검색</button></div></details>`);
+ bindBack(o,dkDeckMenu);const reopen=()=>{ovClose();dkSheet(id);const d=document.querySelector('#dkopt');d&&(d.open=true)};
+ o.querySelector('#dkam').onclick=()=>{ovClose();amDeck(id)};o.querySelector('#dkin').onclick=()=>{ovClose();icDeck(id)};
+ o.querySelectorAll('#amn [data-n]').forEach(b=>b.onclick=()=>{S.amN=+b.dataset.n;save();reopen()});
+ o.querySelectorAll('#kwn [data-n]').forEach(b=>b.onclick=()=>{S.kwN=+b.dataset.n;save();reopen()});
+ o.querySelectorAll('[data-icc]').forEach(b=>b.onclick=()=>{const k=b.dataset.icc;let a=icSel().slice();if(k=='all')a=['bl','kw','sq'];else{a=a.length==3?[k]:a.includes(k)?a.filter(x=>x!=k):[...a,k]}S.icCats=a.length?a:['bl','kw','sq'];save();reopen()});
+ o.querySelector('#dklist').onclick=()=>{ovClose();deck=amScope()=='core'?'core':'all';cat=id=='all'?'전체':id;sub='전체';try{save()}catch(e){}listView=true;goRaw('card')}};
+// 옛 인출 화면·중복 진입점 → 단어장 과목 목록으로
+inMenu=dkDeckMenu;try{kwMenu=dkDeckMenu}catch(e){}try{sqMenu=()=>dkDeckMenu()}catch(e){}try{ecMenu=dkDeckMenu}catch(e){}try{ftMenu=dkDeckMenu}catch(e){}
+// 하단 탭: 홈 · 단어장 · 복습 · 더보기 (M3: 3~5개)
+(function(){const n=$('#nav');if(n)n.innerHTML='<button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="deck"><span class="ic">📚</span>단어장</button><button data-m="review"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="more"><span class="ic">☰</span>더보기</button>';
+ const g=go;go=function(m){if(m=='inch'||m=='write'||m=='mem'){m='deck'}return g.call(this,m)}})();
+// 홈: 제목 · 진행 한 줄 · 큰 단어장 버튼 · (진행 중이면) 이어하기 · 접힌 옵션
+function lastLbl(){const l=S.lastStart||{};if(l.m=='am'&&l.id)return '📚 '+dkName(l.id)+' 암기';if(l.m=='icdeck'&&l.id)return '✏️ '+dkName(l.id)+' 인출';return ''}
+renderHome=function(){const v=$('#v-home');if(!v)return;let st=null;try{st=passStat()}catch(e){}const pct=st&&st.tot?Math.round(st.done/st.tot*100):0,ll=lastLbl();
+ v.innerHTML=`<div class="flhome"><div class="tline"><b>📅 오늘 학습</b><span class="small mut">${st?`7일 완주 ${st.done}/${st.tot} (${pct}%) · D-${st.dday} · 오늘 ${st.today}/${st.quota}`:''}</span></div><div class="pbar"><i style="width:${pct}%"></i></div>
+ <button class="cta" id="hdeck">📚 단어장<small>범위 → 과목 선택</small></button>
+ ${ll?`<button class="sbtn sub2" id="hres">↩ 이어하기 · ${esc(ll)}</button>`:`<button class="sbtn sub2" id="amgo">▶ 오늘 분량 암기 ${st?Math.max(0,st.quota-st.today):''}장</button>`}
+ <details class="fold"><summary>옵션</summary><div class="optr"><span class="small">범위</span>${scopeSeg()}</div><div class="optr"><span class="small">7일 코스</span><div class="seg"><button data-course="A" class="${passCourse()=='A'?'on':''}">A 암기</button><button data-course="B" class="${passCourse()=='B'?'on':''}">B 암기+인출</button></div></div>${passCourse()=='B'?'<div class="optr"><button class="sbtn" id="ingo2">✏️ 오늘 인출</button></div>':''}<div class="optr"><button class="sbtn" id="passreset">7일 진도 다시 시작</button></div></details></div>`;
+ const ag=v.querySelector('#amgo');ag&&(ag.onclick=homeAm);v.querySelector('#hdeck').onclick=()=>go('deck');const r=v.querySelector('#hres');r&&(r.onclick=resumeLast);const i2=v.querySelector('#ingo2');i2&&(i2.onclick=homeIn);
+ v.querySelectorAll('[data-course]').forEach(b=>b.onclick=()=>{LS.set('gv_course',b.dataset.course);renderHome()});try{passBind(v)}catch(e){}};
+// 더보기: 이름만 있는 목록(같은 기능 중복 진입 없음)
+moreMenu=function(){const it=[['stats','📊 통계'],['mock','⏱️ 모의고사'],['ls','🎧 듣기 모드'],['data','⚙️ 설정']];
+ const o=ov(`<h2>더보기</h2><div class="fllist">${it.map(([k,l])=>`<button class="flrow" data-mm="${k}"><span>${l}</span><span class="mut">›</span></button>`).join('')}</div>`);
+ o.querySelectorAll('[data-mm]').forEach(b=>b.onclick=()=>{ovClose();const k=b.dataset.mm;k=='ls'?lsMenu():goRaw(k)})};
+// 설정·통계 화면: 첫 섹션만 펼치고 나머지는 접힌 옵션으로
+(function(){const fold=id=>{const v=$('#v-'+id);if(!v)return;[...v.querySelectorAll(':scope > .box, :scope .box.sec')].forEach((b,i)=>{if(i==0||b.closest('details.flsec'))return;const h=b.querySelector('h2,h3');const d=document.createElement('details');d.className='fold flsec';d.innerHTML=`<summary>${h?esc(h.textContent):'옵션'}</summary>`;b.replaceWith(d);d.appendChild(b);h&&h.remove()})};
+ const _rd=renderData;renderData=function(){const r=_rd.apply(this,arguments);try{fold('data')}catch(e){}return r};
+ try{const _rs=renderStats;renderStats=function(){const r=_rs.apply(this,arguments);try{fold('stats')}catch(e){}return r}}catch(e){}})();
 // ---- settings & sync
 const PKEYS=['gv_passA','gv_passAc','gv_passc','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
