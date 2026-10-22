@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r49">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r50">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon.svg?v=2" type="image/svg+xml"><link rel="icon" href="icons/favicon-32.png?v=2" sizes="32x32"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=2">
@@ -390,8 +390,16 @@ h1 .lg{border-radius:7px;vertical-align:-5px;margin-right:8px}
 @media (min-width:1024px){#plov{left:256px!important;top:48px!important;width:auto!important;right:0!important}}
 #am .ambtn #amn{background:var(--bads)!important;color:var(--bad)!important;border:0!important}#am .ambtn #amy{background:var(--oks)!important;color:var(--ok)!important;border:0!important}
 @media (min-width:1024px){#plov>*{max-width:720px;margin-left:32px}}
+.flhome .hblk{background:var(--card);border-radius:var(--r3);padding:var(--s5) var(--s4) var(--s4);box-shadow:var(--sh);margin-bottom:var(--s3)}
+.flhome .hblk .tline{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--s2)}
+.hrow{width:100%;background:var(--card);border-radius:var(--r2)!important;box-shadow:var(--sh);border:0!important}
+details.fold{margin-top:var(--s4);border-top:1px solid var(--bd)}
+details.fold>summary{list-style:none;cursor:pointer;justify-content:space-between;padding:0 var(--s1);color:var(--fg)!important;font-weight:600}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::after{content:"";width:8px;height:8px;border:solid var(--mut);border-width:0 2px 2px 0;transform:rotate(45deg);transition:transform .2s;margin-right:6px}
+details.fold[open]>summary::after{transform:rotate(-135deg)}
 </style></head><body>
-<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r49</span></h1>
+<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r50</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -4917,6 +4925,7 @@ function kwMenu(){const sc=T.filter(inDeck);const n={keys:kwPool('keys',sc).leng
 function kwRun(L,title,res){let i=res?res.i:0,c=0;const miss=[],missX=[],conf=[];L=L.slice();
  const KST=[]; function next(){if(res){res.i=i;LS.set('gv_kwres',res)}if(i>=L.length){if(res)localStorage.removeItem('gv_kwres');return fin()}const x=L[i],ty=!isTouch();let q,ans,keys,t;
   if(x.k=='K'){t=x.t;keys=kwList(t);q=`<div class="pltag">${esc(t.cl||t.cat)}${t.exam&&t.exam.length?' · <span class="ex">'+esc(exTag(t))+'</span>':''}</div><div class="plterm">${esc(t.term)}</div><div class="mut">채점 키워드 ${keys.length}개를 쓰세요</div>`;ans=`<div class="plkeys">${keys.map(k=>`<span class="kwk" data-k="${esc(k)}">${esc(k)}</span>`).join('')}</div><div class="pldef2">${esc(t.def)}</div>${t.vs?`<div class="small mut">↔ ${esc(t.vs)}</div>`:''}${t.kx?`<div class="kx small"><b>기출 자료</b><br>${t.kx.map(k=>`${esc(k.id)} · ${esc(k.sub)}${k.st?' · '+esc(k.st):''}`).join('<br>')}</div>`:''}`}
+  else if(x.k=='E'){const e=x.q;keys=[e.answer];q=`<div class="pltag">${esc(e.cat)}${e.kice&&e.kice.length?' · <span class="ex">'+esc(e.kice.join('·'))+'</span>':''}</div><div class="plterm">${esc(e.clue)}</div><div class="mut">이 단서가 가리키는 이론·개념은?</div>`;ans=`<div class="plterm">${esc(e.answer)}</div>${e.term&&e.term!=e.answer?`<div class="mut">관련 용어: ${esc(e.term)}</div>`:''}`}
   else if(x.k=='V'){t=x.t;const v=vsKey(t);keys=kwList(t);q=`<div class="pltag">${esc(t.cat)}</div><div class="plterm">${esc(t.term)} <span class="mut">vs</span> ${esc(v.other)}</div><div class="mut">${esc(t.term)}를 ${esc(v.other)}와 구별하는 키워드는?</div>`;ans=`<div class="plkeys">${keys.map(k=>`<span class="kwk" data-k="${esc(k)}">${esc(k)}</span>`).join('')}</div><div class="plvs">↔ ${esc(v.other)}: ${esc(v.diff)}</div>`}
   else if(x.k=='W'||x.k=='B'||(x.k=='Q'&&qBl(x))){const BL=blOf(x),p=x.p||x.q;x.g=x.g||{};x.u=x.u||{};const b=BL[x.i];t=findT(b.t||b.a[0]);keys=b.a;q=blRender(x,BL)+`<div class="mut">( ${esc(b.l)} )에 들어갈 말은?${BL.length>1?' <span class="small">(다른 빈칸을 탭하면 그 빈칸으로 이동)</span>':''}</div>`;ans=`<div class="plterm">${esc(b.a[0])}</div>${b.x?`<div class="mut small">함께: ${esc(b.x)}</div>`:''}${t?`<div class="plkeys">🔑 ${esc(t.keys||'')}</div>`:''}${x.k=='W'&&p.ex?`<details class="small mut"><summary>해설</summary>${esc(p.ex)}</details>`:''}${x.k=='Q'?`<details class="small mut"><summary>원 답안·출처</summary>${esc(p.a)}</details>`:''}`}
   else if(x.k=='S'){const z=x.q;const an=z.ans||z.con;keys=[...new Set([an,...(z.acc||[])])];t=findT(an)||null;q=`<div class="pltag">${esc(z.cat||'')}${z.kice?' · <span class="ex">기출 '+esc(z.kice)+'</span>':''}</div><div class="pldef psgtxt">${esc(z.q)}</div><div class="mut">${z.f=='classify_3moments'?'르페브르의 세 계기 중 무엇?':z.f=='who_criticizes'?'누구(어떤 관점)의 비판/주장인가?':'학자·개념을 쓰세요'}</div>`;ans=`<div class="plterm">${esc(an)}${z.sch&&z.sch.length?' <span class="mut">('+esc(z.sch.join(', '))+')</span>':''}</div><div class="mut small">${esc(z.exp||'')}</div>${(z.conf||[]).length?`<div class="small">⚠ 헷갈리는 보기: ${z.conf.map(c=>`<b>${esc(c.n)}</b> — ${esc(c.why)}`).join(' · ')}</div>`:''}<p class="small mut provn">ℹ️ 출처: ${esc(z.lab||'')}${z.cite?' · '+esc(z.cite):''}</p>`}
@@ -5740,13 +5749,32 @@ moreMenu=function(){const it=[['stats','📊 통계'],['mock','⏱️ 모의고�
 // r45 거시 유형(analysis/item_taxonomy.md): 저장 문항은 fmt 필드(bl·kw·sq), 단어장 파생 K·V는 kw
 function itFmt(x){if(x.k=='K'||x.k=='V')return 'kw';const o=x.p||x.q||{};return o.fmt||(x.k=='S'?'bl':'bl')}
 icPool=function(c,id){id=id||'exam';const sj=DSUBJ.includes(id);const ok=x=>{const s=itSubj(x);return sj?s==id:(s&&sfOk({cat:s}))};
- const A=[...dkPool(id),...icQ()].filter(ok);if(c=='all'||!c)return A;return A.filter(x=>itFmt(x)==c)};
+ const A=[...dkPool(id).filter(x=>x.k!='K'),...icQ(),...ecd().map(q=>({k:'E',q}))].filter(ok);if(c=='all'||!c)return A;return A.filter(x=>itFmt(x)==c)};
 // r46: 과목 필터 UI가 과목 화면으로 통합되어, 남아 있던 전역 과목 필터(gv_sf)가 몰래 범위를 줄이지 않도록 비움
 try{if(localStorage.gv_sf&&localStorage.gv_sf!='[]')localStorage.gv_sf='[]'}catch(e){}
 ;(function(){const P={home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',word:'M4 6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM19 7v12a3 3 0 0 1-3 3H8',review:'M4 12a8 8 0 0 1 14-5.3M20 4v4h-4M20 12a8 8 0 0 1-14 5.3M4 20v-4h4',more:'M5 12h.01M12 12h.01M19 12h.01'};
 const sv=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
 const go=()=>document.querySelectorAll('#nav button').forEach(b=>{const m=b.dataset.m,k=m=='more'||m=='set'?'more':m=='deck'||m=='word'?'word':m;const i=b.querySelector('.ic');if(P[k]&&i&&!i.querySelector('svg'))i.innerHTML=sv(P[k]).replace('stroke-width="2"',k=='more'?'stroke-width="3"':'stroke-width="2"')});
 go();new MutationObserver(go).observe(document.getElementById('nav'),{childList:true,subtree:true})})();
+// r50: 7일 코스와 자유 학습 분리. 코스 진도는 코스 세션(homeAm·homeIn)에서 본 카드만 gv_pseen에 기록
+var _inCourse=false;
+function passSeen(){let p=LS.get('gv_pseen',null);if(!p){p=Object.assign({},LS.get('gv_kwseen',{}));LS.set('gv_pseen',p);LS.set('gv_pseen_seed',{date:kstYMD(),n:Object.keys(p).length})}return p}
+{const _ks=kwSeen;kwSeen=function(){const o=_ks.apply(this,arguments);if(!_inCourse||!o)return o;return new Proxy(o,{set(t,k,v){t[k]=v;const p=passSeen();if(!p[k]){p[k]=1;LS.set('gv_pseen',p)}return true}})}}
+{const _ps=passStat;passStat=function(){const k=kwSeen;passSeen();kwSeen=()=>LS.get('gv_pseen',{});try{return _ps.apply(this,arguments)}finally{kwSeen=k}}}
+{const keep=f=>function(){const l=S.lastStart;f.apply(this,arguments);_inCourse=true;if(l&&l.m!='amhome'){S.lastStart=l;try{save()}catch(e){}}};const a=homeAm;homeAm=keep(a);const b=homeIn;homeIn=keep(b);
+ const c=amDeck;amDeck=function(){_inCourse=false;return c.apply(this,arguments)};const d=icDeck;icDeck=function(){_inCourse=false;return d.apply(this,arguments)};
+ const e=ovClose;ovClose=function(){_inCourse=false;return e.apply(this,arguments)}}
+lastLbl=function(){const l=S.lastStart||{};const nm=id=>String(dkName(id)).replace(/^[^\p{L}\p{N}]+/u,'').replace(/\s*\d+$/,'');const sc=amScope()=='core'?' 기출 핵심':'';if(l.m=='am'&&l.id)return nm(l.id)+sc+' 암기';if(l.m=='icdeck'&&l.id)return nm(l.id)+' 인출';return ''};
+renderHome=function(){const v=$('#v-home');if(!v)return;let st=null;try{st=passStat()}catch(e){}const ll=lastLbl(),on=st&&st.tot&&st.done<st.tot,pct=on?Math.round(st.done/st.tot*100):0;
+ const left=on?Math.max(0,st.quota-st.today):0;
+ const top=on?`<div class="hblk"><div class="tline"><b>7일 코스 ${passCourse()}</b><span class="small mut">D-${st.dday} · 전체 ${st.done}/${st.tot}</span></div><div class="pbar"><i style="width:${pct}%"></i></div>
+ <button class="cta" id="amgo">▶ 오늘 분량${left?'':' 복습'}<small>오늘 ${st.today}/${st.quota}장</small></button></div>
+ ${ll?`<button class="flrow hrow" id="hres"><span>이어서 하기 · ${esc(ll)}</span><span class="small">자유 학습</span></button>`:`<button class="flrow hrow" id="hdeck"><span>단어장 · 과목 선택</span><span class="small">자유 학습</span></button>`}`
+ :`${ll?`<button class="cta" id="hres">▶ 이어서 하기<small>${esc(ll)}</small></button><button class="sbtn sub2" id="hdeck">단어장 · 과목 선택</button>`:`<button class="cta" id="hdeck">단어장<small>범위 → 과목 선택</small></button>`}`;
+ v.innerHTML=`<div class="flhome">${top}
+ <details class="fold"><summary>옵션</summary><div class="optr"><span class="small">범위</span>${scopeSeg()}</div><div class="optr"><span class="small">7일 코스</span><div class="seg"><button data-course="A" class="${passCourse()=='A'?'on':''}">A 암기</button><button data-course="B" class="${passCourse()=='B'?'on':''}">B 암기+인출</button></div></div>${passCourse()=='B'?'<div class="optr"><button class="sbtn" id="ingo2">오늘 인출</button></div>':''}<div class="optr"><button class="sbtn" id="passreset">7일 진도 다시 시작</button></div></details></div>`;
+ const ag=v.querySelector('#amgo');ag&&(ag.onclick=homeAm);const hd=v.querySelector('#hdeck');hd&&(hd.onclick=()=>go('deck'));const r=v.querySelector('#hres');r&&(r.onclick=resumeLast);const i2=v.querySelector('#ingo2');i2&&(i2.onclick=homeIn);
+ v.querySelectorAll('[data-course]').forEach(b=>b.onclick=()=>{LS.set('gv_course',b.dataset.course);renderHome()});try{passBind(v)}catch(e){}};
 // ---- settings & sync
 const PKEYS=['gv_passA','gv_passAc','gv_passc','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
