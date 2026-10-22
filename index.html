@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r45">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r46">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/favicon-32.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -334,8 +334,9 @@ h2{font-size:22px;line-height:1.3;font-weight:700}
 .flrow:last-child{border-bottom:0}.flback{border:0;background:none;color:var(--acc);font-size:16px;min-height:44px;padding:0;margin-bottom:4px}
 .optr{display:flex;flex-direction:column;gap:6px;margin:10px 0}.cta.big2{background:var(--card);color:var(--fg);border:1px solid var(--bd)}
 .flhome{display:flex;flex-direction:column;gap:12px}
+.optr .seg button,.flhome .seg button{min-height:44px}
 </style></head><body>
-<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b><span class="verchip">v6-r45</span></h1>
+<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b><span class="verchip">v6-r46</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -5563,7 +5564,7 @@ function amRun(L,title){if(!L.length){toast('외울 카드가 없어요');return
   <div class="amb hide"><div class="small amcat">${esc(grpOf(t.cat))} · ${esc(t.cat)}</div><div class="amterm2">${esc(t.term)}</div><div class="amdef">${esc(t.def)}</div>${t.keys?`<div class="ambx"><b>서술 키워드</b> ${esc(t.keys)}</div>`:''}${t.vs?`<div class="ambx"><b>비교</b> ${esc(t.vs)}</div>`:''}${t.ex?`<div class="ambx"><b>사례</b> ${esc(t.ex)}</div>`:''}${t.distractors&&t.distractors.length?`<div class="ambx mut">⚠️ 혼동 주의: ${esc(t.distractors.join(' · '))}</div>`:''}</div></div>
   <div class="ambtn"><button class="sbtn bad" id="amn">✗ 몰라요</button><button class="sbtn ok" id="amy">✓ 알아요</button></div>`;
   const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
-  const grade=g=>{const sn=kwSeen();sn['T:'+t.term]=1;LS.set('gv_kwseen',sn);if(!L[i].rq){record(t.term,g);done.add(t.term);g?ok++:bad++}if(!g){if(typeof wrong=='object')wrong[t.term]=(wrong[t.term]||0)+1;if(!L[i].rq)L.splice(Math.min(L.length,i+4),0,{t,rq:1})}try{save()}catch(e){}i++;show()};
+  const grade=g=>{const sn=kwSeen();sn['T:'+t.term]=1;LS.set('gv_kwseen',sn);if(!L[i].rq){record(t.term,g);done.add(t.term);g?ok++:bad++}if(!L[i].rq){try{srs[t.term]=sched(srs[t.term],g?3:1)}catch(e){}}if(!g){if(!L[i].rq)L.splice(Math.min(L.length,i+4),0,{t,rq:1})}try{save()}catch(e){}i++;show()};
   box.querySelector('#amy').onclick=()=>grade(1);box.querySelector('#amn').onclick=()=>grade(0);
   let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?1:0)}})};
  try{actStart&&actStart('amgi',title)}catch(e){}show()}
@@ -5685,6 +5686,8 @@ moreMenu=function(){const it=[['stats','📊 통계'],['mock','⏱️ 모의고�
 function itFmt(x){if(x.k=='K'||x.k=='V')return 'kw';const o=x.p||x.q||{};return o.fmt||(x.k=='S'?'bl':'bl')}
 icPool=function(c,id){id=id||'exam';const sj=DSUBJ.includes(id);const ok=x=>{const s=itSubj(x);return sj?s==id:(s&&sfOk({cat:s}))};
  const A=[...dkPool(id),...icQ()].filter(ok);if(c=='all'||!c)return A;return A.filter(x=>itFmt(x)==c)};
+// r46: 과목 필터 UI가 과목 화면으로 통합되어, 남아 있던 전역 과목 필터(gv_sf)가 몰래 범위를 줄이지 않도록 비움
+try{if(localStorage.gv_sf&&localStorage.gv_sf!='[]')localStorage.gv_sf='[]'}catch(e){}
 // ---- settings & sync
 const PKEYS=['gv_passA','gv_passAc','gv_passc','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
