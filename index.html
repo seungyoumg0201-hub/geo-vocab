@@ -335,8 +335,59 @@ h2{font-size:22px;line-height:1.3;font-weight:700}
 .optr{display:flex;flex-direction:column;gap:6px;margin:10px 0}.cta.big2{background:var(--card);color:var(--fg);border:1px solid var(--bd)}
 .flhome{display:flex;flex-direction:column;gap:12px}
 .optr .seg button,.flhome .seg button{min-height:44px}
+/* r48 visual polish — wwit.design refs (Toss·삼쩜삼·플랜핏·뤼이드) + Carbon tokens */
+:root{--s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--r1:10px;--r2:16px;--r3:20px;--onacc:#fff}
+body{font-family:"Pretendard Variable",Pretendard,"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+h2,.flt{font-size:26px;font-weight:800;letter-spacing:-.03em}
+.cta{min-height:60px;border-radius:var(--r2);font-weight:700;letter-spacing:-.02em;transition:transform .12s,filter .12s}
+.cta:active,.cta.big2:active,.flrow:active{transform:scale(.98);filter:brightness(.96)}
+.cta small{font-weight:500;opacity:.85;margin-top:2px}
+.cta.big2{min-height:52px;border-radius:var(--r2);background:var(--accs);color:var(--acc);border:0;font-weight:700}
+.fllist{border:0;border-radius:var(--r3);background:var(--card);overflow:hidden;box-shadow:var(--sh)}
+.flrow{min-height:56px;padding:0 var(--s4) 0 var(--s5);border-bottom:1px solid var(--bd);font-size:17px;font-weight:600;transition:background .12s}
+.flrow:last-child{border-bottom:0}
+.flrow small,.flrow .cnt{font-size:13px;font-weight:600;color:var(--mut);background:var(--bg);padding:3px 9px;border-radius:99px}
+.flrow::after{content:"";width:8px;height:8px;border:solid var(--mut);border-width:0 2px 2px 0;transform:rotate(-45deg);margin-left:10px;opacity:.6}
+.seg{background:var(--bg);border-radius:var(--r1);padding:3px}
+.seg button{border-radius:8px;font-weight:600}
+.seg button.on{background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.12);color:var(--fg)}
+details summary{min-height:44px;display:flex;align-items:center;font-weight:600;color:var(--mut)}
+#amc,.fc{border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.08);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+#amn,#amy{border-radius:var(--r2);min-height:56px;font-weight:700;box-shadow:none}
+#amn{background:var(--bads);color:var(--bad)}#amy{background:var(--oks);color:var(--ok)}
+nav{backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px);background:color-mix(in srgb,var(--card) 88%,transparent)}
+nav button{font-size:11px;font-weight:600;padding:6px 14px}
+nav button.on{background:none}
+nav button .ic svg{width:24px;height:24px;display:block}
+.toast{border-radius:var(--r1);font-weight:600}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.flrow{display:flex;align-items:center}.flrow small,.flrow .cnt{margin-left:auto}
+.optr .seg,.seg{background:color-mix(in srgb,var(--fg) 6%,var(--card))!important}
+h1 .lg{border-radius:7px;vertical-align:-5px;margin-right:8px}
+/* Carbon v11 UI shell — desktop ≥1024 (header 48px, side nav 256px, 2x grid, spacing-05/07) */
+@media (min-width:1024px){
+ body{--cb-ui:#161616}
+ header{position:fixed;top:0;left:0;right:0;height:48px;z-index:8;background:var(--card);border-bottom:1px solid var(--bd)}
+ header .hd{max-width:none!important;height:48px;padding:0 16px;display:flex;align-items:center}
+ header h1{font-size:16px;font-weight:600;letter-spacing:0}
+ nav#nav{position:fixed;top:48px;left:0;bottom:0;width:256px;flex-direction:column;justify-content:flex-start;gap:0;padding:16px 0;background:var(--card);border-right:1px solid var(--bd);border-top:0;backdrop-filter:none;z-index:7}
+ nav#nav button{flex-direction:row;justify-content:flex-start;gap:12px;width:100%;height:48px;padding:0 16px;border-radius:0;font-size:15px;color:var(--fg);border-left:3px solid transparent}
+ nav#nav button:hover{background:color-mix(in srgb,var(--fg) 6%,transparent)}
+ nav#nav button.on{border-left-color:var(--acc);background:color-mix(in srgb,var(--acc) 10%,transparent);color:var(--fg);font-weight:700}
+ nav#nav button .ic svg{width:20px;height:20px}
+ main{margin:0 0 0 256px!important;max-width:none!important;padding:80px 32px 48px!important}
+ main>*{max-width:720px}
+ .cta,.cta.big2,#amn,#amy{border-radius:4px}
+ .fllist{border-radius:0;box-shadow:none;border:1px solid var(--bd)}
+ .flrow{min-height:48px;font-size:15px}
+ .seg,.seg button{border-radius:0}
+ h2,.flt{font-size:32px;font-weight:400;letter-spacing:0}
+}
+.flrow>span:first-child{flex:1;text-align:left}.flrow>span.small{font-size:13px;font-weight:600;background:color-mix(in srgb,var(--fg) 6%,transparent);padding:3px 9px;border-radius:99px}
+.flrow:has(>span.mut:not(.small))::after{display:none}
 </style></head><body>
-<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b><span class="verchip">v6-r48</span></h1>
+<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r48</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -5688,6 +5739,10 @@ icPool=function(c,id){id=id||'exam';const sj=DSUBJ.includes(id);const ok=x=>{con
  const A=[...dkPool(id),...icQ()].filter(ok);if(c=='all'||!c)return A;return A.filter(x=>itFmt(x)==c)};
 // r46: 과목 필터 UI가 과목 화면으로 통합되어, 남아 있던 전역 과목 필터(gv_sf)가 몰래 범위를 줄이지 않도록 비움
 try{if(localStorage.gv_sf&&localStorage.gv_sf!='[]')localStorage.gv_sf='[]'}catch(e){}
+;(function(){const P={home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',word:'M4 6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM19 7v12a3 3 0 0 1-3 3H8',review:'M4 12a8 8 0 0 1 14-5.3M20 4v4h-4M20 12a8 8 0 0 1-14 5.3M4 20v-4h4',more:'M5 12h.01M12 12h.01M19 12h.01'};
+const sv=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+const go=()=>document.querySelectorAll('#nav button').forEach(b=>{const m=b.dataset.m,k=m=='more'||m=='set'?'more':m=='deck'||m=='word'?'word':m;const i=b.querySelector('.ic');if(P[k]&&i&&!i.querySelector('svg'))i.innerHTML=sv(P[k]).replace('stroke-width="2"',k=='more'?'stroke-width="3"':'stroke-width="2"')});
+go();new MutationObserver(go).observe(document.getElementById('nav'),{childList:true,subtree:true})})();
 // ---- settings & sync
 const PKEYS=['gv_passA','gv_passAc','gv_passc','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
