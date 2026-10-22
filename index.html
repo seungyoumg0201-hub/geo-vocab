@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r33">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r34">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/favicon-32.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -320,7 +320,7 @@ h2{font-size:22px;line-height:1.3;font-weight:700}
 .icchips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}.icchip{min-height:44px;padding:6px 12px;border-radius:999px;border:1px solid var(--line,#ccc);background:var(--card);color:var(--fg);font-size:14px}.icchip small{margin-left:6px;opacity:.7}.icchip.on{background:var(--acc);color:var(--onacc,#fff);border-color:var(--acc)}
 .amcat{color:var(--ok);font-weight:700}.ambx{margin-top:8px;padding:8px 12px;border-radius:10px;background:var(--bg);font-size:15px;line-height:1.6}.ambx b{color:var(--ok)}
 </style></head><body>
-<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b><span class="verchip">v6-r33</span></h1>
+<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b><span class="verchip">v6-r34</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -5393,8 +5393,16 @@ function homeAm(){const st=passStat(),n=S.kwN||20,ts=st.un.filter(x=>x.k=='K'&&s
 function homeIn(){const st=passStat(),n=S.kwN||20,L=st.un.filter(x=>x.k!='K');L.length?kwRun(L.slice(0,n),'📅 오늘 인출'):icDeck('exam')}
 (function(){const _rh=renderHome;renderHome=function(){_rh.apply(this,arguments);const v=$('#v-home');if(!v)return;const s=v.querySelector('.seg');if(s)s.innerHTML=`<button data-course="A" class="${passCourse()=='A'?'on':''}">A 암기</button><button data-course="B" class="${passCourse()=='B'?'on':''}">B 암기+인출</button>`;
  const b=v.querySelector('#passgo');if(b){const nb=b.cloneNode(false);nb.id='amgo';nb.textContent='▶ 단어장 암기 · 오늘 분량';b.replaceWith(nb);nb.onclick=homeAm;if(passCourse()=='B'){const s2=document.createElement('button');s2.className='sbtn sub2';s2.id='ingo2';s2.innerHTML='✏️ 오늘 인출';s2.onclick=homeIn;nb.after(s2)}}}})();
+// r34 단어장 범위: 초기 형식 '⭐ 기출 핵심 (364)' / '📚 전체 단어장 (n)'
+function amScope(){return S.amScope=='core'?'core':'all'}
+function scopeSeg(){const nc=T.filter(t=>t.core).length,na=T.length;return `<div class="seg scope" role="tablist"><button data-scope="core" class="${amScope()=='core'?'on':''}">⭐ 기출 핵심 (${nc})</button><button data-scope="all" class="${amScope()=='all'?'on':''}">📚 전체 단어장 (${na})</button></div>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-scope]');if(!b)return;S.amScope=b.dataset.scope;try{save()}catch(_){}if(document.querySelector('.ov'))ovClose();render()});
+(function(){const pa=passAll;passAll=function(){const U=pa.apply(this,arguments);if(amScope()!='core')return U;return U.filter(x=>x.k!='K'||(x.t&&x.t.core))};
+ const _rh=renderHome;renderHome=function(){_rh.apply(this,arguments);const v=$('#v-home');const t=v&&v.querySelector('.dktiles');if(t&&!v.querySelector('.scope'))t.insertAdjacentHTML('beforebegin',scopeSeg())}})();
+(function(){const dm=dkDeckMenu;dkDeckMenu=function(){dm.apply(this,arguments);const h=document.querySelector('.ov h2');h&&h.insertAdjacentHTML('afterend',scopeSeg())}})();
+(function(){const pk=passKey;passKey=function(){const k=pk();return amScope()=='core'?k+'c':k}})();
 // ---- settings & sync
-const PKEYS=['gv_passA','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
+const PKEYS=['gv_passA','gv_passAc','gv_passc','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
 async function toCode(obj){const txt=JSON.stringify(obj);try{if(window.CompressionStream){const s=new Blob([txt]).stream().pipeThrough(new CompressionStream('gzip'));const buf=new Uint8Array(await new Response(s).arrayBuffer());let b='';buf.forEach(x=>b+=String.fromCharCode(x));return 'GVZ1.'+btoa(b)}}catch(e){}return 'GVJ1.'+btoa(unescape(encodeURIComponent(txt)))}
 async function fromCode(code){code=code.trim();if(code.startsWith('{'))return JSON.parse(code);const [h,b]=code.split('.');const bin=atob(b.replace(/\s/g,''));if(h=='GVZ1'){const u=Uint8Array.from(bin,c=>c.charCodeAt(0));const s=new Blob([u]).stream().pipeThrough(new DecompressionStream('gzip'));return JSON.parse(await new Response(s).text())}return JSON.parse(decodeURIComponent(escape(bin)))}
@@ -5407,7 +5415,7 @@ function mergeIn(o){if(!o||o.app!='geo-vocab')throw new Error('형식');
  if(o.gv_user&&o.gv_user.length){const m=new Map(user.map(t=>[t.term,t]));o.gv_user.forEach(t=>m.set(t.term,t));user=[...m.values()];LS.set('gv_user',user);T=all();TM=new Map(T.map(t=>[t.term,t]))}
  {const a=LS.get('gv_kwseen',{});Object.assign(a,o.gv_kwseen||{});LS.set('gv_kwseen',a)}
  {const a=LS.get('gv_pass',null),b=o.gv_pass;if(b&&(!a||b.start<a.start))LS.set('gv_pass',{start:b.start,days:b.days||7})}
- {const a=LS.get('gv_passA',null),b=o.gv_passA;if(b&&(!a||b.start<a.start))LS.set('gv_passA',{start:b.start,days:b.days||7})}
+ {const a=LS.get('gv_passA','gv_passAc','gv_passc',null),b=o.gv_passA;if(b&&(!a||b.start<a.start))LS.set('gv_passA',{start:b.start,days:b.days||7})}
  {const a=LS.get('gv_miss',[]),k=new Set(a.map(m=>m.at+'|'+m.id));(o.gv_miss||[]).forEach(m=>{if(!k.has(m.at+'|'+m.id))a.push(m)});a.sort((x,y)=>x.at-y.at);LS.set('gv_miss',a.slice(-3000))}
  {const a=LS.get('gv_sq',{}),b=o.gv_sq||{};for(const k in b)if(!a[k]||b[k].n>a[k].n)a[k]=b[k];LS.set('gv_sq',a)}
  save();rq=null}
