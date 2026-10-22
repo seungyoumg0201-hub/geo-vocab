@@ -1,5 +1,5 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r29.1">
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r29.2">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/favicon-32.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -255,9 +255,37 @@ details.fold{margin:6px 0;font-size:.88em}details.fold>summary{cursor:pointer;op
 #v-home .modes3,#v-home .passcard,#v-home #oldhome{grid-column:1/-1}#oldhome>summary{display:block}
 
 .modes3 .sbtn.big{display:flex;flex-direction:column;align-items:flex-start;text-align:left;min-width:0}.modes3 .sbtn.big br{display:none}.modes3 .sbtn.big .small{display:block;white-space:normal;word-break:keep-all;writing-mode:horizontal-tb;margin-top:4px;line-height:1.4}.verchip{font-size:11px;opacity:.6;margin-left:6px}
+
+/* r29.1 mobile pass */
+nav .mox{display:none}
+@media(max-width:759px){
+nav .pcx{display:none!important}nav .mox{display:flex}nav .lf{display:none}
+nav button{min-height:52px;font-size:12px!important;white-space:nowrap}nav button .ic{font-size:22px}
+html,body{overflow-x:hidden}
+#v-home .passcard h2,#v-home .passcard>b:first-child{font-size:1em}
+#plin{position:sticky;bottom:72px;z-index:3;min-height:48px;font-size:16px;box-shadow:0 -6px 12px var(--bg)}
+#plbtn{position:sticky;bottom:0;z-index:3;background:var(--card);padding:8px 0 calc(8px + env(safe-area-inset-bottom));margin:0;display:flex;gap:8px}
+#plbtn .sbtn{flex:1;min-height:52px;font-size:1.05em;font-weight:700}
+.plq .psgtxt{max-height:42vh;overflow:auto;-webkit-overflow-scrolling:touch}
+.sbtn,button.cta{min-height:44px}
+}
+.moremenu .sbtn{width:100%;min-height:56px;justify-content:flex-start;font-size:1.05em;margin:6px 0;text-align:left}
+
+/* r29.1 r6-style home */
+.modes3.kpis{margin-top:12px}.modes3 .kpi{cursor:pointer;border:1px solid var(--bd);min-height:84px;font:inherit;color:inherit}.modes3 .kpi b{font-size:26px}.modes3 .kpi small{color:var(--mut);font-weight:400}
+.modes3 .kpi:active{transform:scale(.98)}.passcard .fold{margin-top:10px}
+@media(max-width:759px){.achip .tx{max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle}.verchip{display:none}}
+
+/* r30 deck IA */
+.dktiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}.dktile,.dkrow{display:flex;flex-direction:column;gap:4px;text-align:left;border:1px solid var(--bd);background:var(--bg);border-radius:16px;padding:14px;font:inherit;color:inherit;cursor:pointer;min-height:44px}
+.dktile b{font-size:1.1em}.dklist{display:grid;gap:8px}@media(min-width:760px){.dklist{grid-template-columns:1fr 1fr}}
+.today .tline{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;margin-bottom:8px}.today .cta{margin-top:10px}
+.sfwrap .sfbar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}.sfwrap .sfbar button{white-space:nowrap;flex:none}.sfwrap .sfsub{display:none}.sfwrap .sfbar:has(.part,.on:not([data-all])) .sfsub{display:contents}
+label.chk{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 8px}
+@media(max-width:420px){.dktiles{grid-template-columns:1fr}}
 </style></head><body>
-<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b><span class="verchip">v6-r29.1</span></h1>
-<nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어학습</button><button data-m="kw"><span class="ic">✍️</span>인출학습</button><button data-m="mem"><span class="ic">🧠</span>암기학습</button><button data-m="review"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats"><span class="ic">📊</span>통계</button><button data-m="data"><span class="ic">⚙️</span>설정</button></nav>
+<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b><span class="verchip">v6-r29.2</span></h1>
+<nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
 <div id="filters"><div class="deck" id="deck"><button data-d="core" class="on">⭐ 기출 핵심 <span id="dc1"></span></button><button data-d="all">📚 전체 단어장 <span id="dc2"></span></button></div><div class="chips" id="cats"></div><div class="chips" id="subs"></div></div>
@@ -4106,7 +4134,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const exTag=t=>(t.exam&&t.exam.length)?'기출 '+t.exam.slice(0,3).join(', ')+(t.exam.length>3?' 외':''):'';
 const inDeck=t=>deck=='all'||t.core;
 const mk=t=>marks[t.term]=='ok'?'✅ 외웠어요':marks[t.term]=='bad'?'🤔 헷갈려요':'';
-const buzz=(p=12)=>{if(S.haptic&&navigator.vibrate)try{navigator.vibrate(p)}catch(e){}};
+var buzz=(p=12)=>{if(S.haptic&&navigator.vibrate)try{navigator.vibrate(p)}catch(e){}};
 let toastT;function toast(msg,act,fn,ms=2600){const el=$('#toast');el.innerHTML=esc(msg)+(act?` <button>${esc(act)}</button>`:'');el.classList.remove('hide');if(act)el.querySelector('button').onclick=()=>{el.classList.add('hide');fn()};clearTimeout(toastT);toastT=setTimeout(()=>el.classList.add('hide'),ms)}
 // ---- accuracy tracking
 function record(term,ok,src){const a=acc[term]||(acc[term]={c:0,n:0,s:0});a.n++;if(ok){a.c++;a.s++}else a.s=0;const h=H();h.n++;if(ok)h.c++;
@@ -5119,9 +5147,9 @@ function passSet(n){const st=passStat();const un=shuffle(st.un.slice());const ta
 function passGo(){const n=S.kwN||20;const L=passSet(n);if(!L.length){toast('오늘 분량과 복습을 모두 마쳤어요');return}S.lastStart={m:'pass'};save();kwRun(L,'📅 오늘 할 분량')}
 function passCard(){let st;try{st=passStat()}catch(e){return ''}const pct=st.tot?Math.round(st.done/st.tot*1000)/10:0;
  const subs=Object.entries(st.bys).sort((a,b)=>b[1].n-a[1].n).map(([s,o])=>`<div class="pvrow"><span>${esc(s)}</span><span class="pbar sm"><i style="width:${o.n?o.d/o.n*100:0}%"></i></span><span class="small mut">${o.d}/${o.n}</span></div>`).join('');
- return `<div class="box passcard"><h2>📅 7일 완주 · 오늘 할 분량</h2><div class="pbar"><i style="width:${pct}%"></i></div><p><b>${st.done}/${st.tot}</b> (${pct}%) · D-${st.dday} · 오늘 <b>${st.today}/${st.quota}</b>${st.need?'':' ✅'}</p>
- <div class="row"><button class="sbtn pri big" id="passgo">▶ ${st.need?'오늘 분량 시작 ('+st.need+'개 남음)':'복습 더 하기'}</button>${S.lastStart&&S.lastStart.m&&S.lastStart.m!='pass'?'<button class="sbtn" id="resume">↻ 이어하기</button>':''}</div>
- <details class="small"><summary>과목별 진도 · 설정</summary>${subs}<p class="mut">남은 문항을 남은 날짜로 나눠 매일 분량을 다시 계산해요(빠진 날은 다음 날로 넘어가요). 카드·퀴즈·인출 어디서 풀어도 '본 문항'으로 셉니다.</p><button class="sbtn" id="passreset">시작일을 오늘로 다시 설정</button></details></div>`}
+ return `<div class="box passcard"><div class="hero">${ring(st.today,st.quota||1)}<div style="flex:1"><div class="mut">D-${st.dday} · 7일 완주 ${pct}%</div><div class="big">${st.need?'오늘 분량 '+st.need+'개':'오늘 분량 완료 ✅'}</div><div class="mut">전체 ${st.done}/${st.tot} · 오늘 ${st.today}/${st.quota}</div></div></div>
+ <button class="cta" id="passgo">${st.need?'▶ 오늘 분량 시작':'▶ 복습 더 하기'}<small>단어·인출·암기 어디서 풀어도 진도에 반영돼요</small></button>${S.lastStart&&S.lastStart.m&&S.lastStart.m!='pass'?'<button class="sbtn" id="resume" style="width:100%;margin-top:8px">↻ 이어하기</button>':''}
+ <div class="mslot"></div><details class="small fold"><summary>과목별 진도 · 설정</summary>${subs}<p class="mut">남은 문항을 남은 날짜로 나눠 매일 분량을 다시 계산해요(빠진 날은 다음 날로 넘어가요).</p><button class="sbtn" id="passreset">시작일을 오늘로 다시 설정</button></details></div>`}
 function passBind(v){const b=id=>v.querySelector('#'+id);b('passgo')&&(b('passgo').onclick=passGo);b('resume')&&(b('resume').onclick=resumeLast);b('passreset')&&(b('passreset').onclick=()=>{if(confirm('7일 시작일을 오늘로 바꿀까요? (기록은 유지)')){LS.set('gv_pass',{start:kstYMD(),days:7});renderHome()}})}
 function resumeLast(){const l=S.lastStart||{};if(l.m=='kw'&&l.kd){const P=kwPool(l.kd,T.filter(inDeck));if(P.length)return kwRun(kwOrder(P,S.kwN||20),l.ttl||'인출')}if(l.m=='card')return go('card');if(l.m=='mem')return memMenu();passGo()}
 // ---- 3모드 ----
@@ -5146,7 +5174,7 @@ let goRaw=go;
 (function(){const mo=new MutationObserver(()=>{const a=document.querySelector('#kwag');if(a&&!document.querySelector('#kwnext')){a.insertAdjacentHTML('beforebegin','<button class="sbtn pri" id="kwnext">▶ 다음 세트</button>');a.classList.remove('pri');document.querySelector('#kwnext').onclick=()=>{const l=S.lastStart||{};if(l.m=='kw'||l.m=='mem')resumeLast();else passGo()}}});mo.observe(document.body,{childList:true,subtree:true})})();
 // 홈 정리: 단발 버튼 제거 → 패스 카드 + 3모드
 (function(){const _rh=renderHome;renderHome=function(){_rh.apply(this,arguments);const v=$('#v-home');if(!v)return;['#lsbtn','#s2btn','#ftbtn','#sqbtnh','#ecbtnh'].forEach(s=>v.querySelectorAll(s).forEach(e=>e.remove()));v.querySelectorAll('.passcard,.modes3').forEach(e=>e.remove());
- v.insertAdjacentHTML('afterbegin',passCard()+`<div class="box modes3"><div class="plgrid big3"><button class="sbtn big" data-go="word"><b>🃏 단어학습</b><br><span class="small">카드 · 5지선다 · 개념 구별</span></button><button class="sbtn big" data-go="kw"><b>✍️ 인출학습</b><br><span class="small">키워드 · 빈칸 지문 · 워크북</span></button><button class="sbtn big" data-go="mem"><b>🧠 암기학습</b><br><span class="small">서술 Q&amp;A · 놓친 것 · 2차</span></button></div></div>`);passBind(v);v.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go))}})();
+ v.insertAdjacentHTML('afterbegin',passCard()+`<div class="kpis modes3"><button class="kpi" data-go="word"><b>🃏</b><span>단어학습<br><small>카드·5지선다</small></span></button><button class="kpi" data-go="kw"><b>✍️</b><span>인출학습<br><small>키워드·빈칸</small></span></button><button class="kpi" data-go="mem"><b>🧠</b><span>암기학습<br><small>서술·놓친 것</small></span></button></div>`);{const pc=v.querySelector('.passcard'),ms=v.querySelector('.modes3');pc&&ms&&pc.querySelector('.mslot').replaceWith(ms)}passBind(v);v.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go))}})();
 // 키워드 인출 해설: 확인된 연결 용어(대비 개념·관련 용어)를 탭하면 카드
 function relLinks(t){if(!t)return '';const out=[];const vs=vsKey(t);if(vs&&findT(vs.other))out.push(['대비',findT(vs.other).term]);(t.distractors||[]).slice(0,4).forEach(d=>{const x=findT(d);x&&x.term!=t.term&&out.push(['혼동',x.term])});
  const seen=new Set();const L=out.filter(([_,n])=>!seen.has(n)&&seen.add(n));return L.length?`<div class="rel small"><b>연결 용어</b> ${L.map(([k,n])=>`<button class="chip" data-rt="${esc(n)}">${k} · ${esc(n)}</button>`).join(' ')}</div>`:''}
@@ -5155,7 +5183,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-rt]');if(!
 // r29 홈 정리: 예전 섹션은 접어 두고, 기능은 모드 메뉴에서 호출
 function homeClick(label){ovClose();goRaw('home');setTimeout(()=>{const b=[...document.querySelectorAll('#v-home button')].find(x=>x.textContent.includes(label));b&&b.click()},60)}
 (function(){const _rh=renderHome;renderHome=function(){_rh.apply(this,arguments);const v=$('#v-home');if(!v||v.querySelector('#oldhome'))return;const keep=new Set([...v.querySelectorAll('.passcard,.modes3')]);const mv=[...v.children].filter(e=>!keep.has(e)&&!/앱처럼 설치/.test(e.textContent));
- const d=document.createElement('details');d.id='oldhome';d.className='box';d.innerHTML='<summary><b>더 보기</b> <span class="small mut">용어 플랜(7일·10일)·벼락치기·과목별 할 일·취약 분석·D-day</span></summary>';v.querySelector('.modes3').after(d);mv.forEach(e=>{if(e.id=='qtabs'||e.querySelector('#hgo,.hero')||e.classList.contains('plcard')){e.remove();return}e.classList.remove('box');e.style.margin='10px 0';d.appendChild(e)});d.insertAdjacentHTML('beforeend','<div class="row" style="margin-top:10px"><button class="sbtn" id="ohplan">🗓️ 7일·10일 용어 플랜 설정</button><button class="sbtn" id="ohcram">⚡ 벼락치기</button><button class="sbtn" id="ohrev">🔁 오늘 복습(간격 반복)</button></div>');d.querySelector('#ohplan').onclick=()=>plSetup();d.querySelector('#ohcram').onclick=()=>cramMenu();d.querySelector('#ohrev').onclick=()=>go('review');if(sessionStorage.getItem('gv_oh')=='1')d.open=true;d.ontoggle=()=>sessionStorage.setItem('gv_oh',d.open?'1':'0')}})();
+ const d=document.createElement('details');d.id='oldhome';d.className='box';d.innerHTML='<summary><b>더 보기</b> <span class="small mut">용어 플랜(7일·10일)·벼락치기·과목별 할 일·취약 분석·D-day</span></summary>';v.querySelector('.passcard').after(d);mv.forEach(e=>{if(e.id=='qtabs'||e.querySelector('#hgo,.hero')||e.classList.contains('plcard')){e.remove();return}e.classList.remove('box');e.style.margin='10px 0';d.appendChild(e)});d.insertAdjacentHTML('beforeend','<div class="row" style="margin-top:10px"><button class="sbtn" id="ohplan">🗓️ 7일·10일 용어 플랜 설정</button><button class="sbtn" id="ohcram">⚡ 벼락치기</button><button class="sbtn" id="ohrev">🔁 오늘 복습(간격 반복)</button></div>');d.querySelector('#ohplan').onclick=()=>plSetup();d.querySelector('#ohcram').onclick=()=>cramMenu();d.querySelector('#ohrev').onclick=()=>go('review');if(sessionStorage.getItem('gv_oh')=='1')d.open=true;d.ontoggle=()=>sessionStorage.setItem('gv_oh',d.open?'1':'0')}})();
 (function(){const wm=wordMenu;wordMenu=function(){wm();const g=document.querySelectorAll('.plgrid');const x=g[g.length-1];x&&x.insertAdjacentHTML('beforeend','<button class="sbtn" id="wm5">⏱️ 모의고사</button>');const b=document.querySelector('#wm5');b&&(b.onclick=()=>homeClick('모의고사'))};
  const mm=memMenu;memMenu=function(){mm();const g=document.querySelector('.big3');g&&g.insertAdjacentHTML('afterend','<h3 class="small mut">더 보기</h3><div class="plgrid"><button class="sbtn" id="mm4">📝 지문형 서술</button><button class="sbtn" id="mm5">📒 오답노트</button></div>');const q=s=>document.querySelector(s);q('#mm4')&&(q('#mm4').onclick=()=>homeClick('지문형 서술'));q('#mm5')&&(q('#mm5').onclick=()=>homeClick('오답노트'))}})();
 // 해설·출처·채점기준 접기, 배지 줄이기 (렌더 후 후처리)
@@ -5174,6 +5202,48 @@ document.addEventListener('click',e=>{const i=e.target.closest('.fig img');if(!i
 // r29.1 settings: version + login diagnostics
 (function(){const cu=cloudUI;cloudUI=function(){cu.apply(this,arguments);const a=$('#acct');if(a&&!$('#adiag')){a.insertAdjacentHTML('afterend',`<details class="box fold" id="adiag"><summary>앱 버전 ${document.querySelector('.verchip')?.textContent||''} · 로그인 진단</summary><div class="small mut" style="white-space:pre-wrap">상태: ${CL.user?'로그인됨 ('+esc(CL.user.email||'')+')':'로그인 안 됨'} · 클라우드 ${CL.st}${CL.err?' · 마지막 오류 '+esc(CL.err):''}\n${esc(JSON.parse(localStorage.getItem('gv_alog')||'[]').join('\n'))}</div></details>`)}}})();
 (function(){const g=go;go=function(m){const r=g.apply(this,arguments);if(m=='data')setTimeout(()=>{try{cloudUI()}catch(e){}},0);return r}})();
+// r29.1 mobile 더보기 tab
+(function(){const g=go;go=function(m){if(m=='more'){const d=$('#navdue');const n=d&&!d.classList.contains('hide')?d.textContent:'';const o=ov(`<h2>더보기</h2><div class="moremenu"><button class="sbtn" data-mm="review">🔁 복습${n?' <span class="pill bad">'+esc(n)+'</span>':''}</button><button class="sbtn" data-mm="stats">📊 통계</button><button class="sbtn" data-mm="data">⚙️ 설정 · 계정 · 버전</button></div>`);o.querySelectorAll('[data-mm]').forEach(b=>b.onclick=()=>{ovClose();go(b.dataset.mm)});return}return g.apply(this,arguments)};
+ const sync=()=>{const a=$('#navdue'),b=$('#navdue2');if(a&&b){b.textContent=a.textContent;b.classList.toggle('hide',a.classList.contains('hide'))}};setInterval(sync,2000);setTimeout(sync,300)})();
+// ---- r29.2 학습 기록 미러: 오답 백필 + 세션 활동 + 사용 스냅샷 (이름·이메일 없음) ----
+function kstDay(t){return new Date((t||Date.now())+9*3600e3).toISOString().slice(0,10)}
+function rtOk(){return fb&&CL.user&&fb.D}
+function missClean(o){const c={};for(const k in o){const v=o[k];if(v===''||v==null)continue;c[k.replace(/[.#$\/\[\]]/g,'_')]=typeof v=='string'?v.slice(0,200):typeof v=='number'||typeof v=='boolean'?v:String(v).slice(0,200)}if(typeof c.at!='number')c.at=Date.now();if(!c.d)c.d='kw';return c}
+function missKey(o){let h=0;const s=(o.id||'')+'|'+(o.term||'');for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return 'm'+(o.at||0)+'_'+(h>>>0).toString(36)}
+// 오답: 로컬 gv_miss 전부를 결정적 키로 업로드(중복 없음) → 이후 실시간
+async function missBackfill(){if(!rtOk())return;const {D}=fb,uid=CL.user.uid,L=LS.get('gv_miss',[])||[],done=LS.get('gv_missbf',0)||0;const todo=L.filter(o=>(o.at||0)>done);if(!todo.length)return;
+ for(let i=0;i<todo.length;i+=200){const u={};todo.slice(i,i+200).forEach(o=>{u[missKey(o)]=missClean(o)});try{await D.update(D.ref(fb.rt,'review/'+uid+'/misses'),u)}catch(e){alog('miss up err '+(e.code||e.message));toast('오답 업로드 실패 ['+(e.code||e.message)+']',null,null,9000);return}}
+ LS.set('gv_missbf',Math.max(...todo.map(o=>o.at||0)));LS.set('gv_missq',[]);LS.set('gv_missup',(LS.get('gv_missup',0)||0)+todo.length);alog('miss up '+todo.length);toast('오답 '+todo.length+'건을 올렸어요')}
+// missAdd: 로컬 기록 후 백필 경로로 업로드(필드 정리·d 기본값)
+(function(){const m0=missAdd;missAdd=function(o){const save0=CL.user;const u=CL.user;CL.user=null;try{m0.call(this,Object.assign({d:'kw'},o))}finally{CL.user=u}if(u)setTimeout(()=>missBackfill().catch(()=>{}),300)}})();
+missFlush=function(){missBackfill().catch(()=>{})};
+// 세션 활동
+const ACT={cur:null,t:0};
+function actStart(kind,title){actEnd();const sn=kwSeen();ACT.cur={sid:Date.now().toString(36)+Math.random().toString(36).slice(2,5),kind,title:String(title||'').slice(0,60),deck:(S.lastStart&&S.lastStart.id)||'',subj:(sfGet().join(',')||'전체').slice(0,80),start:Date.now(),items:[],seen0:new Set(Object.keys(sn))};ACT.t=Date.now()}
+function actItem(id,ok,mine){const a=ACT.cur;if(!a)return;const now=Date.now(),ms=now-ACT.t;ACT.t=now;const it={id:String(id||'').slice(0,80),ok:ok?1:0,ms:Math.min(ms,600000)};if(!ok&&mine)it.mine=String(mine).slice(0,100);it.nw=a.seen0.has(id)||a.seen0.has('T:'+String(id).replace(/^K:/,''))?0:1;if(a.items.length<300)a.items.push(it);a.n=(a.n||0)+1;a.c=(a.c||0)+(ok?1:0);a.last=now}
+function actEnd(){const a=ACT.cur;ACT.cur=null;if(!a||!a.n)return;const end=a.last||Date.now();const rec={start:a.start,end,dur:Math.round((end-a.start)/1000),kind:a.kind,title:a.title,deck:a.deck,subj:a.subj,n:a.n,c:a.c,w:a.n-a.c,nw:a.items.filter(x=>x.nw).length,avg:Math.round(a.items.reduce((s,x)=>s+x.ms,0)/Math.max(1,a.items.length)/100)/10,items:Object.fromEntries(a.items.map((x,i)=>['i'+i,x]))};
+ const day=kstDay(a.start),Q=LS.get('gv_actq',{});(Q[day]||(Q[day]={}))[a.sid]=rec;const ks=Object.keys(Q).sort();while(ks.length>14)delete Q[ks.shift()];LS.set('gv_actq',Q);actFlush()}
+async function actFlush(){if(!rtOk())return;const Q=LS.get('gv_actq',{}),sent=LS.get('gv_actsent',{});const {D}=fb,uid=CL.user.uid;const u={};for(const d in Q)for(const s in Q[d])if(!sent[d+'/'+s])u[d+'/'+s]=Q[d][s];if(!Object.keys(u).length)return;
+ try{await D.update(D.ref(fb.rt,'review/'+uid+'/activity'),u);Object.keys(u).forEach(k=>sent[k]=1);LS.set('gv_actsent',sent);alog('act up '+Object.keys(u).length)}catch(e){alog('act err '+(e.code||e.message))}}
+// kwRun 세션: buzz(8)=맞음, 배열=놓침 (grade 안에서 호출, CURID=현재 문항)
+(function(){const k0=kwRun;kwRun=function(L,title){actStart('kw',title);return k0.apply(this,arguments)};
+ const oc=ovClose;ovClose=function(){if(ACT.cur&&ACT.cur.kind=='kw')actEnd();return oc.apply(this,arguments)};
+ const b0=buzz;window.buzz=buzz=function(p){if(ACT.cur&&ACT.cur.kind=='kw'&&(p===8||Array.isArray(p))){const I=document.querySelector('#plin');actItem(window.CURID,p===8,I&&I.value)}else if(ACT.cur&&ACT.cur.kind=='kw')ACT._b=1;return b0.apply(this,arguments)};
+ // 카드·퀴즈 등: record() — kw 세션 밖이면 모드별 자동 세션(10분 쉬면 종료)
+ const r0=record;record=function(term,ok,src){if(!(ACT.cur&&ACT.cur.kind=='kw')){const k='m:'+(src||mode||'');if(!ACT.cur||ACT.cur.kind!=k||Date.now()-ACT.t>600000)actStart(k,mode);actItem('T:'+term,ok,'')}return r0.apply(this,arguments)}})();
+addEventListener('pagehide',()=>{try{actEnd()}catch(e){}});document.addEventListener('visibilitychange',()=>{if(document.hidden&&ACT.cur&&ACT.cur.kind!='kw')actEnd()});
+// 사용 스냅샷: 로컬 데이터 전부를 집계해 /review/{uid}/usage
+function usageSnap(){const sn=kwSeen(),pre={};Object.keys(sn).forEach(k=>{const p=k.split(':')[0];pre[p]=(pre[p]||0)+1});
+ const bySub={};for(const term in acc){const t=findT(term);const s=(t&&t.cat)||'기타',o=bySub[s]||(bySub[s]={n:0,c:0,terms:0});o.n+=acc[term].n||0;o.c+=acc[term].c||0;o.terms++}
+ const M=LS.get('gv_miss',[])||[],md={},mh={},td=kstDay();M.forEach(o=>{md[o.d||'?']=(md[o.d||'?']||0)+1;if(kstDay(o.at)==td){const h=new Date((o.at||0)+9*3600e3).getUTCHours();mh['h'+h]=(mh['h'+h]||0)+1}});
+ const days={};for(const d in hist){const h=hist[d];days['d'+d]={n:h.n||0,c:h.c||0,rev:h.rev||0}}const dk=Object.keys(days).sort().slice(-30),hd={};dk.forEach(k=>hd[k]=days[k]);
+ const sq=LS.get('gv_sq',{}),sqn=Object.values(sq).reduce((a,r)=>[a[0]+(r.n||0),a[1]+(r.c||0)],[0,0]);const ft=LS.get('gv_ft',{});const res=LS.get('gv_kwres',null);const pass=LS.get('gv_pass',null);
+ const act=LS.get('gv_actq',{}),ak={};for(const d in act)for(const s in act[d]){const r=act[d][s],k=(r.kind||'')+'|'+(r.title||'');const o=ak[k]||(ak[k]={sess:0,n:0,c:0,sec:0,last:0});o.sess++;o.n+=r.n;o.c+=r.c;o.sec+=r.dur;o.last=Math.max(o.last,r.end)}
+ const clean=o=>JSON.parse(JSON.stringify(o).replace(/"([^"]*)":/g,(m,k)=>'"'+k.replace(/[.#$\/\[\]]/g,'_')+'":'));
+ return clean({at:Date.now(),ver:(document.querySelector('.verchip')||{}).textContent||'',seenByType:pre,seenTotal:Object.keys(sn).length,cardsTracked:Object.keys(acc).length,srsCards:Object.keys(srs).length,srsDue:Object.values(srs).filter(c=>c&&c.due<=Date.now()).length,wrongNote:Object.keys(wrong).length,bySubject:bySub,missByDrill:md,missTodayByHourKST:mh,missTotal:M.length,histLast30:hd,scholar:{items:Object.keys(sq).length,n:sqn[0],c:sqn[1]},ftSets:Object.keys(ft).length,kwResume:res?{kd:res.kd||'',i:res.i||0,n:(res.keys||[]).length}:null,pass:pass?{start:pass.start,days:pass.days,quota:pass.d&&pass.d.quota||0}:null,lastStart:S.lastStart||null,deckMode:deck,cat,theme:S.theme||'',sessions:ak})}
+async function usageUp(){if(!rtOk())return;try{await fb.D.set(fb.D.ref(fb.rt,'review/'+CL.user.uid+'/usage'),usageSnap());LS.set('gv_usageAt',Date.now());alog('usage up')}catch(e){alog('usage err '+(e.code||e.message))}}
+(function(){const cu=cloudUI;let done=0;cloudUI=function(){cu.apply(this,arguments);if(CL.user&&!done){done=1;setTimeout(()=>{missBackfill().catch(()=>{});actFlush();usageUp()},1500)}if(!CL.user)done=0}})();
+setInterval(()=>{if(CL.user){actFlush();if(Date.now()-(LS.get('gv_usageAt',0)||0)>3600e3)usageUp()}},300000);
 // ---- settings & sync
 const PKEYS=['gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
