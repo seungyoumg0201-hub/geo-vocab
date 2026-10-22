@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r24">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r25">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/favicon-32.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -230,9 +230,11 @@ svg text{fill:var(--fg)}svg .ln{stroke:var(--fg)}svg .bx{fill:var(--card);stroke
 
 [data-theme=dark] mark.blk.cur{background:#6b5a1f!important;color:#fff3c8!important;outline:2px solid #e0b25c}[data-theme=dark] mark.blk{color:#f3e7c4}
 @media(min-width:1200px){.small{font-size:15px}}
+
+.big3{grid-template-columns:1fr!important;gap:10px}.big3 .sbtn.big{min-height:76px;font-size:1.12em;text-align:left;padding:14px 18px}@media(min-width:760px){.big3{grid-template-columns:repeat(3,1fr)!important}.big3 .sbtn.big{min-height:110px}}
 </style></head><body>
 <header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b></h1>
-<nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="review"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="card"><span class="ic">🃏</span>카드</button><button data-m="plan"><span class="ic">⚡</span>플랜</button><button data-m="kw"><span class="ic">🔑</span>키워드</button><button data-m="s2"><span class="ic">🎤</span>2차</button><button data-m="quiz"><span class="ic">✏️</span>퀴즈</button><button data-m="stats"><span class="ic">📊</span>통계</button><button data-m="data"><span class="ic">⚙️</span>설정</button></nav>
+<nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="review"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="card"><span class="ic">🃏</span>카드</button><button data-m="kw"><span class="ic">✍️</span>인출</button><button data-m="s2"><span class="ic">🎤</span>2차</button><button data-m="quiz"><span class="ic">✏️</span>퀴즈</button><button data-m="stats"><span class="ic">📊</span>통계</button><button data-m="data"><span class="ic">⚙️</span>설정</button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
 <div id="filters"><div class="deck" id="deck"><button data-d="core" class="on">⭐ 기출 핵심 <span id="dc1"></span></button><button data-d="all">📚 전체 단어장 <span id="dc2"></span></button></div><div class="chips" id="cats"></div><div class="chips" id="subs"></div></div>
@@ -29163,9 +29165,11 @@ function kwPool(kind,scope){
  const out=[];PSG.forEach(p=>(cat=='전체'||p.subj==cat)&&sfOk(p)&&p.blanks.length&&out.push({k:'B',p,i:0,g:{}}));return out}
 function kwPri(x){const t=x.t||(x.p&&findT((x.p.rel||[])[x.i]||''))||(x.k=='W'&&findT(x.p.bl[x.i][1]));if(!t)return Math.random();const c=srs[t.term];return (wrong[t.term]?-3:0)+(marks[t.term]=='bad'?-2:0)+(t.exam&&t.exam.length?-1:0)+(c?Math.min(3,(c.i||0)/10):0)+Math.random()}
 function kwMenu(){const sc=T.filter(inDeck);const n={keys:kwPool('keys',sc).length,vs:kwPool('vs',sc).length,blank:kwPool('blank').length,wb:kwPool('wb').length,w16:kwPool('w16').length};
- const o=ov(`<h2>🔑 키워드 인출</h2><p class="mut">채점 기준처럼 핵심 키워드를 떠올려 쓰는 연습. 덱: ${deck=='all'?'전체':'⭐기출 핵심'} · ${isTouch()?'모바일: 탭으로 확인 → 스와이프(→ 알아요 / ← 몰라요)':'PC: 키워드 입력 → Enter로 채점, 1/2로 확정'} · 놓친 항목은 복습(SRS)에 들어가요.</p>
- <div class="plgrid"><button class="sbtn" data-k="keys"><b>용어 → 키워드</b><br><span class="small">${n.keys}개 · 3~5개 채점 키워드</span></button><button class="sbtn" data-k="blank"><b>기출형 지문 빈칸</b><br><span class="small">${n.blank}지문 · ㉠㉡㉢ 차례로</span></button><button class="sbtn" data-k="vs"><b>비교쌍 구별 키워드</b><br><span class="small">${n.vs}개 · A vs B 차이</span></button><button class="sbtn" data-k="wb"><b>기출 워크북 빈칸</b><br><span class="small">${n.wb}칸 · 2002–2025 주제 재구성</span></button><button class="sbtn" data-k="w16"><b>16주 스터디 Q&amp;A</b><br><span class="small">${n.w16}문항 · 서술 인출</span></button></div><p class="small mut">워크북·스터디 문항은 스터디원이 기출 주제를 재구성한 자료예요(원 시험지 문구 아님).</p>
+ const tm=x=>x.t?x.t.term:(()=>{try{const b=blOf(x)[0];const t=b&&findT(b.t||b.a[0]);return t&&t.term}catch(e){return null}})();const mc=k=>kwPool(k,k=='keys'?sc:undefined).filter(x=>{const t=tm(x);return t&&wrong[t]}).length;const dc=k=>kwPool(k,sc).filter(x=>x.t&&srs[x.t.term]&&srs[x.t.term].due<endOfToday()).length;
+ const o=ov(`<h2>✍️ 인출</h2><p class="mut">채점 기준처럼 핵심 키워드를 떠올려 쓰는 연습. 덱: ${deck=='all'?'전체':'⭐기출 핵심'} · ${isTouch()?'모바일: 탭으로 확인 → 스와이프(→ 알아요 / ← 몰라요)':'PC: 키워드 입력 → Enter로 채점, 1/2로 확정'} · 놓친 항목은 복습(SRS)에 들어가요.</p>
+ <div class="plgrid big3"><button class="sbtn big" data-k="keys"><b>🔑 키워드 인출</b><br><span class="small">${n.keys}개 · 놓친 것 ${mc('keys')} · 복습 대기 ${dc('keys')}</span></button><button class="sbtn big" data-k="blank"><b>📄 기출형 지문 빈칸</b><br><span class="small">${n.blank}지문 · ㉠㉡㉢ 차례로 · 놓친 것 ${mc('blank')}</span></button><button class="sbtn big" data-k="wb"><b>📘 기출 워크북 빈칸</b><br><span class="small">${n.wb}지문 · 놓친 것 ${mc('wb')}</span></button></div><h3 class="small mut">더 보기</h3><div class="plgrid"><button class="sbtn" data-k="vs"><b>비교쌍 구별 키워드</b><br><span class="small">${n.vs}개 · A vs B 차이</span></button><button class="sbtn" data-k="w16"><b>16주 스터디 Q&amp;A</b><br><span class="small">${n.w16}문항 · 서술 인출</span></button><button class="sbtn" id="kwplan"><b>📅 학습 플랜 · ⚡ 벼락치기</b><br><span class="small">7일·10일 플랜 진도</span></button></div><p class="small mut">워크북·스터디 문항은 스터디원이 기출 주제를 재구성한 자료예요(원 시험지 문구 아님).</p>
  <div class="seg" id="kwn"><button data-n="10">10개</button><button data-n="20" class="on">20개</button><button data-n="40">40개</button></div>`);
+ {const pb=o.querySelector('#kwplan');pb&&(pb.onclick=e=>{e.stopPropagation();ovClose();go('home');setTimeout(()=>{const b=document.querySelector('#plgo,#plopen');b&&b.scrollIntoView({block:'center'})},50)})}
  let N=20;o.querySelector('#kwn').onclick=e=>{const b=e.target.closest('button');if(!b)return;N=+b.dataset.n;o.querySelectorAll('#kwn button').forEach(x=>x.classList.toggle('on',x==b))};
  o.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{const L=kwPool(b.dataset.k,sc).map(x=>[kwPri(x),x]).sort((a,b)=>a[0]-b[0]).slice(0,N).map(x=>x[1]);if(!L.length){toast('이 범위에 문항이 없어요');return}kwRun(L,b.querySelector('b').textContent)})}
 function kwRun(L,title){let i=0,c=0;const miss=[];
