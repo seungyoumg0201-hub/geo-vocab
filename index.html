@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r48">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r49">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon.svg?v=2" type="image/svg+xml"><link rel="icon" href="icons/favicon-32.png?v=2" sizes="32x32"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=2">
@@ -386,8 +386,12 @@ h1 .lg{border-radius:7px;vertical-align:-5px;margin-right:8px}
 }
 .flrow>span:first-child{flex:1;text-align:left}.flrow>span.small{font-size:13px;font-weight:600;background:color-mix(in srgb,var(--fg) 6%,transparent);padding:3px 9px;border-radius:99px}
 .flrow:has(>span.mut:not(.small))::after{display:none}
+
+@media (min-width:1024px){#plov{left:256px!important;top:48px!important;width:auto!important;right:0!important}}
+#am .ambtn #amn{background:var(--bads)!important;color:var(--bad)!important;border:0!important}#am .ambtn #amy{background:var(--oks)!important;color:var(--ok)!important;border:0!important}
+@media (min-width:1024px){#plov>*{max-width:720px;margin-left:32px}}
 </style></head><body>
-<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r48</span></h1>
+<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r49</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -5608,7 +5612,8 @@ function amTerms(id){return amBase(id).filter(sfOk)}
 function amOrder(L){const sn=kwSeen(),un=L.filter(t=>!sn['T:'+t.term]),hot=L.filter(t=>sn['T:'+t.term]&&(wrong[t.term]||marks[t.term]=='bad')),rest=L.filter(t=>sn['T:'+t.term]&&!(wrong[t.term]||marks[t.term]=='bad'));return [...un,...hot,...rest]}
 function amRun(L,title){if(!L.length){toast('외울 카드가 없어요');return}L=L.map(t=>({t}));let i=0,ok=0,bad=0;const done=new Set();
  const o=ov('<div id="am"></div>');o.classList.add('amov');const box=o.querySelector('#am');
- const fin=()=>{box.innerHTML=`<div class="rescard"><div class="big">${done.size}장</div><div class="mut">알아요 ${ok} · 몰라요 ${bad}</div></div><button class="cta" id="amnx">▶ 다음 세트</button><button class="sbtn" id="amx">닫기</button>`;box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();_amNext&&_amNext()}};
+ const fin=()=>{box.innerHTML=`<div class="rescard"><div class="big">${done.size}장</div><div class="mut">알아요 ${ok} · 몰라요 ${bad}</div></div><button class="cta" id="amnx">▶ 다음 세트</button><button class="sbtn" id="amx">닫기</button>`;box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();_amNext&&_amNext()};box.querySelector('#amnx').focus();box._k=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();box.querySelector('#amnx').click()}}};
+ const kh=e=>{if(!document.body.contains(box)){document.removeEventListener('keydown',kh);return}if(e.target.closest&&e.target.closest('input,textarea'))return;box._k&&box._k(e)};document.addEventListener('keydown',kh);
  const show=()=>{if(i>=L.length)return fin();const t=L[i].t,ex=(t.kx||[])[0];
   box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
   <div class="amcard" id="amc"><div class="amf"><div class="small amcat">${esc(grpOf(t.cat))} · ${esc(t.cat)}</div><div class="amterm">${esc(t.term)}</div>${t.en?`<div class="small mut">${esc(t.en)}</div>`:''}${t.keys?`<div class="amkeys">${esc(t.keys)}</div>`:''}<div class="small mut amhint">탭해서 뒤집기</div></div>
@@ -5616,7 +5621,7 @@ function amRun(L,title){if(!L.length){toast('외울 카드가 없어요');return
   <div class="ambtn"><button class="sbtn bad" id="amn">✗ 몰라요</button><button class="sbtn ok" id="amy">✓ 알아요</button></div>`;
   const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
   const grade=g=>{const sn=kwSeen();sn['T:'+t.term]=1;LS.set('gv_kwseen',sn);if(!L[i].rq){record(t.term,g);done.add(t.term);g?ok++:bad++}if(!L[i].rq){try{srs[t.term]=sched(srs[t.term],g?3:1)}catch(e){}}if(!g){if(!L[i].rq)L.splice(Math.min(L.length,i+4),0,{t,rq:1})}try{save()}catch(e){}i++;show()};
-  box.querySelector('#amy').onclick=()=>grade(1);box.querySelector('#amn').onclick=()=>grade(0);
+  box.querySelector('#amy').onclick=()=>grade(1);box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='ArrowRight'||e.key=='j')grade(1);else if(e.key=='ArrowLeft'||e.key=='f')grade(0)};box.querySelector('#amn').onclick=()=>grade(0);
   let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?1:0)}})};
  try{actStart&&actStart('amgi',title)}catch(e){}show()}
 var _amNext=null;
@@ -5720,8 +5725,7 @@ inMenu=dkDeckMenu;try{kwMenu=dkDeckMenu}catch(e){}try{sqMenu=()=>dkDeckMenu()}ca
 function lastLbl(){const l=S.lastStart||{};if(l.m=='am'&&l.id)return '📚 '+dkName(l.id)+' 암기';if(l.m=='icdeck'&&l.id)return '✏️ '+dkName(l.id)+' 인출';return ''}
 renderHome=function(){const v=$('#v-home');if(!v)return;let st=null;try{st=passStat()}catch(e){}const pct=st&&st.tot?Math.round(st.done/st.tot*100):0,ll=lastLbl();
  v.innerHTML=`<div class="flhome"><div class="tline"><b>📅 오늘 학습</b><span class="small mut">${st?`7일 완주 ${st.done}/${st.tot} (${pct}%) · D-${st.dday} · 오늘 ${st.today}/${st.quota}`:''}</span></div><div class="pbar"><i style="width:${pct}%"></i></div>
- <button class="cta" id="hdeck">📚 단어장<small>범위 → 과목 선택</small></button>
- ${ll?`<button class="sbtn sub2" id="hres">↩ 이어하기 · ${esc(ll)}</button>`:`<button class="sbtn sub2" id="amgo">▶ 오늘 분량 암기 ${st?Math.max(0,st.quota-st.today):''}장</button>`}
+ ${ll?`<button class="cta" id="hres">▶ 이어하기<small>${esc(ll)}</small></button><button class="sbtn sub2" id="hdeck">📚 단어장 · 과목 선택</button>`:`<button class="cta" id="hdeck">📚 단어장<small>범위 → 과목 선택</small></button><button class="sbtn sub2" id="amgo">▶ 오늘 분량 암기 ${st?Math.max(0,st.quota-st.today):''}장</button>`}
  <details class="fold"><summary>옵션</summary><div class="optr"><span class="small">범위</span>${scopeSeg()}</div><div class="optr"><span class="small">7일 코스</span><div class="seg"><button data-course="A" class="${passCourse()=='A'?'on':''}">A 암기</button><button data-course="B" class="${passCourse()=='B'?'on':''}">B 암기+인출</button></div></div>${passCourse()=='B'?'<div class="optr"><button class="sbtn" id="ingo2">✏️ 오늘 인출</button></div>':''}<div class="optr"><button class="sbtn" id="passreset">7일 진도 다시 시작</button></div></details></div>`;
  const ag=v.querySelector('#amgo');ag&&(ag.onclick=homeAm);v.querySelector('#hdeck').onclick=()=>go('deck');const r=v.querySelector('#hres');r&&(r.onclick=resumeLast);const i2=v.querySelector('#ingo2');i2&&(i2.onclick=homeIn);
  v.querySelectorAll('[data-course]').forEach(b=>b.onclick=()=>{LS.set('gv_course',b.dataset.course);renderHome()});try{passBind(v)}catch(e){}};
