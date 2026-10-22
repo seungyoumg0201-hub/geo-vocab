@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r41">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r42">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/favicon-32.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -323,8 +323,14 @@ h2{font-size:22px;line-height:1.3;font-weight:700}
 .relk{margin:8px 0;font-size:13px}.relk .pill{margin:2px}
 .bex{overflow-wrap:anywhere;word-break:break-word}
 .plh{background:var(--bg,#f5f6f8);z-index:5;margin:0 -4px;padding:0 4px}
+.cfm{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;padding:16px}
+@media(min-width:600px){.cfm{align-items:center}}
+.cfmb{background:var(--card,#fff);color:var(--fg);border-radius:16px;padding:20px;max-width:420px;width:100%;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.cfmb h3{margin:0 0 8px;font-size:18px}.cfml{margin:0 0 16px;color:var(--mut);line-height:1.5}
+.cfmr{display:flex;gap:8px}.cfmr button{flex:1;min-height:48px;border-radius:12px;font-size:16px;font-weight:700;border:0}
+.cfmc{background:var(--acc,#3182f6);color:#fff}.cfmo{background:#d92d20;color:#fff}
 </style></head><body>
-<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b><span class="verchip">v6-r41</span></h1>
+<header><div class="hd"><h1>🗺️ 지리 임용 <b>단어장</b><span class="verchip">v6-r42</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -4585,7 +4591,7 @@ function plSetup(){const p=plGet()||{len:7,start:kstYMD()};
  let L=p.len;const prev=()=>{const d=plSchedule(L);const w=Object.entries(FREQ).map(([g,n])=>`${g} ${Math.round(n/668*100)}%`).join(' · ');o.querySelector('#plprev').innerHTML=`<p>하루 평균 <b>${Math.round(d.slice(0,-1).reduce((a,x)=>a+x.length,0)/(L-1))}</b>개 (새 학습+반복) · 기출 비중 ${w}</p>`};prev();
  o.querySelector('#pllen').onclick=e=>{const b=e.target.closest('button');if(!b)return;L=+b.dataset.l;o.querySelectorAll('#pllen button').forEach(x=>x.classList.toggle('on',x==b));prev()};
  o.querySelector('#plsave').onclick=()=>{const s=o.querySelector('#plst').value||kstYMD();plSet({len:L,start:s,cyc:null,done:{},miss:{}});toast('📅 플랜을 저장했어요');ovClose()};
- const d=o.querySelector('#pldel');d&&(d.onclick=()=>{if(confirm('플랜을 끌까요? (학습 기록은 남아요)')){localStorage.removeItem('gv_plan');LS.set('gv_plan',null);ovClose()}})}
+ const d=o.querySelector('#pldel');d&&(d.onclick=async()=>{if(await askConfirm('정말로 플랜을 끄시겠어요?','현재 학습 플랜 설정이 삭제돼요. 학습 기록은 남아요.','끄기')){localStorage.removeItem('gv_plan');LS.set('gv_plan',null);ovClose()}})}
 // ---- runner: terms (swipe/typing), MCQ, 지문형
 function plRun(catchup){const st=plState();if(!st||st.before!=null)return;const t=plToday(st);let q=(catchup?t.behind:t.todo).filter(k=>!st.p.done[k]);if(!q.length)q=t.todo.slice();
  q=q.slice(0,catchup?60:400);runQ(q,{title:catchup?'⏩ 따라잡기':(t.isRev?'🔁 누적 오답 복습':'📅 오늘 학습'),onItem:(k,ok)=>{const p=plGet();p.done[k]=1;if(!ok)(p.miss=p.miss||{})[k.replace(/^r/,'')]=1;plSet(p)}})}
@@ -4851,7 +4857,7 @@ function s2Lp(){const d=s2(),lp=d.lp;const frame=(lp.practice_frame_NOT_exam||[]
  <div class="small mut">${s2Badge('연습')} 아래 틀은 연습용 양식이에요(기출 양식 아님). 실제 답안은 검은 펜·두 줄 수정 규정을 지켜 손으로 써 보세요.</div>
  <textarea id="s2lpt" class="s2ta big">${esc(saved??frame)}</textarea><div class="row"><button class="sbtn" id="s2lpr">틀 초기화</button><span class="small mut" id="s2lpn"></span></div>`);
  const t=o.querySelector('#s2lpt'),n=o.querySelector('#s2lpn');const cnt=()=>n.textContent=t.value.length+'자 · 자동 저장';cnt();t.oninput=()=>{s2set('lp',t.value);cnt()};
- o.querySelector('#s2lpr').onclick=()=>{if(confirm('작성 내용을 지우고 틀로 되돌릴까요?')){t.value=frame;s2set('lp',frame);cnt()}};
+ o.querySelector('#s2lpr').onclick=async()=>{if(await askConfirm('정말로 작성 내용을 지우시겠어요?','지금까지 쓴 내용이 지워지고 기본 틀로 되돌아가요.','지우기')){t.value=frame;s2set('lp',frame);cnt()}};
  o.querySelector('#s2lu').onchange=e=>{const v=e.target.value;o.querySelector('#s2lstd').innerHTML=v===''?'':s2StdHTML(d.std[+v])};
  s2Timer(o,[{name:'지도안 작성',sec:3600}])}
 (function(){const c0=ovClose;ovClose=function(){s2Stop();return c0.apply(this,arguments)};
@@ -4903,7 +4909,7 @@ async function audOffline(vv){if(!('caches'in window)){toast('이 브라우저�
  const del1=async(r)=>{const u=await urls(r.dataset.c);const c=await caches.open(AUD_CACHE);for(const x of u)await c.delete(x);r.querySelector('.aust').textContent='삭제됨'};
  o.querySelector('#aulist').onclick=e=>{const b=e.target.closest('button');if(!b)return;const r=b.closest('[data-c]');b.disabled=true;(b.classList.contains('ausv')?save1(r):del1(r)).finally(()=>{b.disabled=false;refresh()})};
  o.querySelector('#auall').onclick=async()=>{for(const r of o.querySelectorAll('#aulist [data-c]'))await save1(r);refresh()};
- o.querySelector('#auclr').onclick=async()=>{if(!confirm(AUD_V[V].label+' 음성 저장분을 모두 지울까요?'))return;const c=await caches.open(AUD_CACHE);for(const k of await c.keys())if(new URL(k.url).pathname.includes('/'+AUD_V[V].dir)&&(V!='sunhi'||!k.url.includes('/hyunsu/')))await c.delete(k);refresh()};
+ o.querySelector('#auclr').onclick=async()=>{if(!await askConfirm('정말로 음성 저장분을 삭제하시겠어요?',AUD_V[V].label+' 오프라인 음성 파일이 모두 지워져요. 다시 내려받아야 해요.','삭제'))return;const c=await caches.open(AUD_CACHE);for(const k of await c.keys())if(new URL(k.url).pathname.includes('/'+AUD_V[V].dir)&&(V!='sunhi'||!k.url.includes('/hyunsu/')))await c.delete(k);refresh()};
  o.querySelector('#auv').onclick=e=>{const b=e.target.closest('button');if(b){ovClose&&ovClose();audOffline(b.dataset.v)}};
  o.querySelector('#aucore').onchange=refresh;refresh()}
 // 듣기 메뉴에 음성 토글 + 오프라인 저장 버튼
@@ -5190,7 +5196,7 @@ function passCard(){let st;try{st=passStat()}catch(e){return ''}const pct=st.tot
  return `<div class="box passcard"><div class="hero">${ring(st.today,st.quota||1)}<div style="flex:1"><div class="mut">D-${st.dday} · 7일 완주 ${pct}%</div><div class="big">${st.need?'오늘 분량 '+st.need+'개':'오늘 분량 완료 ✅'}</div><div class="mut">전체 ${st.done}/${st.tot} · 오늘 ${st.today}/${st.quota}</div></div></div>
  <button class="cta" id="passgo">${st.need?'▶ 오늘 분량 시작':'▶ 복습 더 하기'}<small>단어·인출·암기 어디서 풀어도 진도에 반영돼요</small></button>${S.lastStart&&S.lastStart.m&&S.lastStart.m!='pass'?'<button class="sbtn" id="resume" style="width:100%;margin-top:8px">↻ 이어하기</button>':''}
  <div class="mslot"></div><details class="small fold"><summary>과목별 진도 · 설정</summary>${subs}<p class="mut">남은 문항을 남은 날짜로 나눠 매일 분량을 다시 계산해요(빠진 날은 다음 날로 넘어가요).</p><button class="sbtn" id="passreset">시작일을 오늘로 다시 설정</button></details></div>`}
-function passBind(v){const b=id=>v.querySelector('#'+id);b('passgo')&&(b('passgo').onclick=passGo);b('resume')&&(b('resume').onclick=resumeLast);b('passreset')&&(b('passreset').onclick=()=>{if(confirm('7일 시작일을 오늘로 바꿀까요? (기록은 유지)')){LS.set('gv_pass',{start:kstYMD(),days:7});renderHome()}})}
+function passBind(v){const b=id=>v.querySelector('#'+id);b('passgo')&&(b('passgo').onclick=passGo);b('resume')&&(b('resume').onclick=resumeLast);b('passreset')&&(b('passreset').onclick=async()=>{if(await askConfirm('정말로 7일 진도를 오늘부터 다시 시작하시겠어요?','7일 코스 시작일이 오늘로 바뀌어 일차 진행이 처음부터 다시 계산돼요. 학습 기록은 유지돼요.','다시 시작')){LS.set('gv_pass',{start:kstYMD(),days:7});renderHome()}})}
 function resumeLast(){const l=S.lastStart||{};if(l.m=='kw'&&l.kd){const P=kwPool(l.kd,T.filter(inDeck));if(P.length)return kwRun(kwOrder(P,S.kwN||20),l.ttl||'인출')}if(l.m=='card')return go('card');if(l.m=='mem')return memMenu();passGo()}
 // ---- 3모드 ----
 function wordMenu(){const o=ov(`<h2>🃏 단어학습</h2><p class="mut">용어를 익히는 단계: 카드로 보고, 고르고, 구별해요.</p><div class="plgrid big3">
@@ -5406,6 +5412,13 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-scope]');i
  const _rh=renderHome;renderHome=function(){_rh.apply(this,arguments);const v=$('#v-home');const t=v&&v.querySelector('.dktiles');if(t&&!v.querySelector('.scope'))t.insertAdjacentHTML('beforebegin',scopeSeg())}})();
 (function(){const dm=dkDeckMenu;dkDeckMenu=function(){dm.apply(this,arguments);const h=document.querySelector('.ov h2');h&&h.insertAdjacentHTML('afterend',scopeSeg())}})();
 (function(){const pk=passKey;passKey=function(){const k=pk();return amScope()=='core'?k+'c':k}})();
+
+// 파괴적 작업 확인 모달 (window.confirm 대신, 모바일·PWA 안전). 취소가 기본 포커스, 확인은 빨간색.
+function askConfirm(title,lose,okLabel){return new Promise(res=>{const d=document.createElement('div');d.className='cfm';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');
+ d.innerHTML=`<div class="cfmb"><h3>${esc(title)}</h3>${lose?`<p class="cfml">${esc(lose)}</p>`:''}<div class="cfmr"><button class="cfmc" type="button">취소</button><button class="cfmo" type="button">${esc(okLabel||'확인')}</button></div></div>`;
+ const done=v=>{d.remove();document.removeEventListener('keydown',kd,true);res(v)};const kd=e=>{if(e.key=='Escape'){e.preventDefault();e.stopPropagation();done(false)}};
+ d.querySelector('.cfmc').onclick=()=>done(false);d.querySelector('.cfmo').onclick=()=>done(true);d.onclick=e=>{if(e.target===d)done(false)};document.addEventListener('keydown',kd,true);
+ document.body.appendChild(d);d.querySelector('.cfmc').focus()})}
 // ---- settings & sync
 const PKEYS=['gv_passA','gv_passAc','gv_passc','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
@@ -5448,15 +5461,15 @@ function renderData(){$('#v-data').innerHTML=`<div class="box"><h2>⚙️ 설정
  $('#snot').onclick=async()=>{if(!('Notification' in window)){toast('이 환경은 알림/배지를 지원하지 않아요 (iOS는 홈 화면 앱에서만)');return}const p=await Notification.requestPermission();toast(p=='granted'?'허용됨 — 앱 아이콘에 복습 수가 표시돼요':'허용되지 않았어요');pushDueToSW();renderData()};
  $('#xcode').onclick=async()=>{const c=await toCode(progressObj());$('#xtxt').value=c;try{await navigator.clipboard.writeText(c);$('#xmsg').textContent=`복사됨 (${c.length.toLocaleString()}자). 다른 기기에서 붙여넣으세요.`}catch(e){$('#xtxt').select();$('#xmsg').textContent='아래 코드를 길게 눌러 복사하세요.'}};
  $('#xfile').onclick=()=>{const b=new Blob([JSON.stringify(progressObj())],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='geo-vocab-progress-'+new Date().toISOString().slice(0,10)+'.json';a.click()};
- $('#xin').onchange=async e=>{try{mergeIn(JSON.parse(await e.target.files[0].text()));$('#xmsg').textContent='✅ 파일의 진도를 합쳤어요'}catch(err){$('#xmsg').textContent='❌ 파일 형식 오류'}};
- $('#ximp').onclick=async()=>{try{mergeIn(await fromCode($('#xtxt').value));$('#xmsg').textContent='✅ 진도를 합쳤어요';navBadge()}catch(err){$('#xmsg').textContent='❌ 코드가 올바르지 않아요'}};
- const conf=(m,f)=>{if(confirm(m)){f();save();rq=null;navBadge()}};
- function clrM(v,l){const n=Object.values(marks).filter(x=>x==v).length;if(!n){$('#dmsg').textContent=l+' 표시가 없어요';return}conf(l+' '+n+'개를 모두 해제할까요?',()=>{for(const k in marks)if(marks[k]==v)delete marks[k];$('#dmsg').textContent=l+' '+n+'개 해제됨'})}
- $('#clrbad').onclick=()=>clrM('bad','헷갈려요');$('#clrok').onclick=()=>clrM('ok','외웠어요');$('#rst').onclick=()=>conf('외웠어요/헷갈려요 표시를 모두 지울까요?',()=>{marks={};$('#dmsg').textContent='모든 표시 초기화'});
- $('#rsrs').onclick=()=>conf('간격 반복 일정을 모두 초기화할까요? (되돌릴 수 없어요)',()=>{srs={};$('#dmsg').textContent='복습 일정 초기화됨'});$('#rwr').onclick=()=>conf('오답노트를 비울까요?',()=>{wrong={};wrongq={};$('#dmsg').textContent='오답노트 비움'});
- $('#impb').onclick=()=>{try{const a=JSON.parse($('#imp').value);if(!Array.isArray(a))throw 0;const ok=a.filter(x=>x.term&&x.def).map(x=>({term:x.term,en:x.en||'',def:x.def,cat:x.cat||'지역지리',keys:x.keys||'',vs:x.vs||'',ex:x.ex||'',distractors:x.distractors||[],exam:x.exam||[]}));const m=new Map(user.map(t=>[t.term.replace(/\s/g,''),t]));ok.forEach(t=>m.set(t.term.replace(/\s/g,''),t));user=[...m.values()];LS.set('gv_user',user);T=all();TM=new Map(T.map(t=>[t.term,t]));catsUI();$('#dmsg').textContent=ok.length+'개 추가됨'}catch(e){$('#dmsg').textContent='JSON 형식 오류'}};
+ $('#xin').onchange=async e=>{if(!e.target.files[0])return;if(!await askConfirm('정말로 파일의 진도를 가져오시겠어요?','현재 기기의 진도에 파일 내용이 합쳐져요. 같은 항목은 파일 값으로 바뀔 수 있어요. 먼저 "진도 파일 저장"으로 백업하세요.','가져오기')){e.target.value='';return}try{mergeIn(JSON.parse(await e.target.files[0].text()));$('#xmsg').textContent='✅ 파일의 진도를 합쳤어요'}catch(err){$('#xmsg').textContent='❌ 파일 형식 오류'}};
+ $('#ximp').onclick=async()=>{if(!$('#xtxt').value.trim()){$('#xmsg').textContent='코드를 먼저 붙여넣으세요';return}if(!await askConfirm('정말로 동기화 코드를 가져오시겠어요?','현재 기기의 진도에 코드 내용이 합쳐져요. 같은 항목은 코드 값으로 바뀔 수 있어요. 먼저 "진도 파일 저장"으로 백업하세요.','가져오기'))return;try{mergeIn(await fromCode($('#xtxt').value));$('#xmsg').textContent='✅ 진도를 합쳤어요';navBadge()}catch(err){$('#xmsg').textContent='❌ 코드가 올바르지 않아요'}};
+ const conf=async(t,l,ok,f)=>{if(await askConfirm(t,l,ok)){f();save();rq=null;navBadge()}};
+ function clrM(v,l){const n=Object.values(marks).filter(x=>x==v).length;if(!n){$('#dmsg').textContent=l+' 표시가 없어요';return}conf('정말로 '+l+' 표시를 모두 해제하시겠어요?',l+' 표시 '+n+'개가 사라져요. 되돌릴 수 없어요.','해제',()=>{for(const k in marks)if(marks[k]==v)delete marks[k];$('#dmsg').textContent=l+' '+n+'개 해제됨'})}
+ $('#clrbad').onclick=()=>clrM('bad','헷갈려요');$('#clrok').onclick=()=>clrM('ok','외웠어요');$('#rst').onclick=()=>conf('정말로 모든 표시를 초기화하시겠어요?','외웠어요·헷갈려요 표시 '+Object.keys(marks).length+'개가 모두 사라져요. 되돌릴 수 없어요.','초기화',()=>{marks={};$('#dmsg').textContent='모든 표시 초기화'});
+ $('#rsrs').onclick=()=>conf('정말로 복습 일정을 초기화하시겠어요?','용어 '+Object.keys(srs).length+'개의 간격 반복 기록(다음 복습일·간격)이 모두 사라져요. 되돌릴 수 없어요.','초기화',()=>{srs={};$('#dmsg').textContent='복습 일정 초기화됨'});$('#rwr').onclick=()=>conf('정말로 오답노트를 비우시겠어요?','오답 '+(Object.keys(wrong).length+Object.keys(wrongq).length)+'개 기록이 모두 사라져요. 되돌릴 수 없어요.','비우기',()=>{wrong={};wrongq={};$('#dmsg').textContent='오답노트 비움'});
+ $('#impb').onclick=async()=>{if(!await askConfirm('정말로 용어를 가져오시겠어요?','같은 이름의 내 용어는 가져온 내용으로 덮어써져요.','가져오기'))return;try{const a=JSON.parse($('#imp').value);if(!Array.isArray(a))throw 0;const ok=a.filter(x=>x.term&&x.def).map(x=>({term:x.term,en:x.en||'',def:x.def,cat:x.cat||'지역지리',keys:x.keys||'',vs:x.vs||'',ex:x.ex||'',distractors:x.distractors||[],exam:x.exam||[]}));const m=new Map(user.map(t=>[t.term.replace(/\s/g,''),t]));ok.forEach(t=>m.set(t.term.replace(/\s/g,''),t));user=[...m.values()];LS.set('gv_user',user);T=all();TM=new Map(T.map(t=>[t.term,t]));catsUI();$('#dmsg').textContent=ok.length+'개 추가됨'}catch(e){$('#dmsg').textContent='JSON 형식 오류'}};
  $('#expb').onclick=()=>{const b=new Blob([JSON.stringify(T,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='geo-terms.json';a.click()};
- $('#clr').onclick=()=>conf('추가한 단어를 삭제할까요?',()=>{user=[];localStorage.removeItem('gv_user');T=all();TM=new Map(T.map(t=>[t.term,t]));catsUI()})}
+ $('#clr').onclick=()=>conf('정말로 추가한 단어를 삭제하시겠어요?','내가 추가한 단어 '+user.length+'개가 모두 지워져요. 되돌릴 수 없어요. (기본 단어장은 그대로예요)','삭제',()=>{user=[];localStorage.removeItem('gv_user');T=all();TM=new Map(T.map(t=>[t.term,t]));catsUI()})}
 // ---- routing
 function navBadge(){const n=dueList().length;const b=$('#navdue');b.textContent=n>99?'99+':n;b.classList.toggle('hide',!n)}
 function go(m){mode=m;if(m!='home'&&m!='stats'&&m!='data')S.last=m;$$('#nav button').forEach(x=>x.classList.toggle('on',x.dataset.m==m));render();window.scrollTo({top:0})}
