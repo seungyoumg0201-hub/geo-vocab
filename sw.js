@@ -1,4 +1,4 @@
-const VER='v6-r66';const CACHE='gv-'+VER;const ASSETS=['./','./index.html','./manifest.webmanifest','./icons/icon-192.png?v=3','./icons/icon-512.png?v=3','./icons/maskable-512.png?v=3','./icons/apple-touch-icon.png?v=3','./icons/favicon-32.png?v=3','./icons/icon.svg?v=3'];
+const VER='v6-r67';const CACHE='gv-'+VER;const ASSETS=['./','./index.html','./manifest.webmanifest','./icons/icon-192.png?v=3','./icons/icon-512.png?v=3','./icons/maskable-512.png?v=3','./icons/apple-touch-icon.png?v=3','./icons/favicon-32.png?v=3','./icons/icon.svg?v=3'];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)))});
 self.addEventListener('message',e=>{if(e.data==='SKIP_WAITING')self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('gv-')&&k!==CACHE&&k!=='gv-meta').map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
