@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r57b">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r57c">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon.svg?v=2" type="image/svg+xml"><link rel="icon" href="icons/favicon-32.png?v=2" sizes="32x32"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=2">
@@ -472,7 +472,7 @@ details[open]>summary::after{transform:rotate(180deg)!important}
  .plx svg.li{width:24px;height:24px}
 }
 </style></head><body>
-<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r57b</span></h1>
+<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r57c</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -5698,7 +5698,7 @@ function amRun(L,title){if(!L.length){toast('외울 카드가 없어요');return
  const kh=e=>{if(!document.body.contains(box)){document.removeEventListener('keydown',kh);return}if(e.target.closest&&e.target.closest('input,textarea'))return;box._k&&box._k(e)};document.addEventListener('keydown',kh);
  const show=()=>{if(i>=L.length)return fin();const t=L[i].t,ex=(t.kx||[])[0];
   box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
-  <div class="amcard" id="amc"><div class="amf"><div class="small amcat">${esc(grpOf(t.cat))} · ${esc(t.cat)}</div><div class="amterm">${esc(t.term)}</div>${t.en?`<div class="small mut">${esc(t.en)}</div>`:''}${t.keys?`<div class="amkeys">${esc(t.keys)}</div>`:''}<div class="small mut amhint">탭해서 뒤집기</div></div>
+  <div class="amcard" id="amc"><div class="amf"><div class="small amcat">${esc(grpOf(t.cat))} · ${esc(t.cat)}</div><div class="amterm">${esc(t.term)}</div>${t.en?`<div class="small mut">${esc(t.en)}</div>`:''}<div class="small mut amhint">탭해서 뒤집기</div></div>
   <div class="amb hide"><div class="small amcat">${esc(grpOf(t.cat))} · ${esc(t.cat)}</div><div class="amterm2">${esc(t.term)}</div><div class="amdef">${esc(t.def)}</div>${t.keys?`<div class="ambx"><b>서술 키워드</b> ${esc(t.keys)}</div>`:''}${t.vs?`<div class="ambx"><b>비교</b> ${esc(t.vs)}</div>`:''}${t.ex?`<div class="ambx"><b>사례</b> ${esc(t.ex)}</div>`:''}${t.distractors&&t.distractors.length?`<div class="ambx mut">⚠️ 혼동 주의: ${esc(t.distractors.join(' · '))}</div>`:''}</div></div>
   <div class="ambtn"><button class="sbtn bad" id="amn">✗ 몰라요</button><button class="sbtn ok" id="amy">✓ 알아요</button></div>`;
   const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
