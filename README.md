@@ -10,7 +10,8 @@
 | **베타 (beta)** | https://seungyoumg0201-hub.github.io/geo-vocab/beta/ | 새 기능 시험용. 밤샘(nightly) 작업은 여기에만 배포 |
 
 ### 안정판 동결 규칙
-- 현재 안정판: **v6-r78**, git 태그 **`stable-v6-r78`**
+- 현재 안정판: **v6-r79**, git 태그 **`stable-v6-r79`** (이전: `stable-v6-r78`)
+- 변경 이력: r79(2026-10-23, 사용자 승인 치명적 수정) — 로그인 기기에서 최신 크롬이 `requestIdleCallback(fn, 1)`을 거부해 초기화가 app9에서 멈추던 문제 수정
 - 안정판 주소(저장소 루트의 `index.html`·`app.js`·`sw.js`)에는 **사용자가 승인한 치명적 수정만** 배포한다.
 - 밤샘/자동 작업은 루트 파일을 절대 바꾸지 않는다. `beta/` 폴더만 바꾼다.
 - 안정판은 베타 코드·원격 코드에 의존하지 않는다(외부 스크립트는 Firebase SDK뿐, 베타 폴더를 읽지 않음).
@@ -41,10 +42,10 @@ curl -s "https://seungyoumg0201-hub.github.io/geo-vocab/beta/sw.js?nc=$RANDOM" |
 2. 루트 앱 파일만 되돌리기:
    ```
    cd /tmp/pub && git pull
-   git checkout stable-v6-r78 -- index.html app.js sw.js
-   git commit -m "rollback to stable-v6-r78" && git push
+   git checkout stable-v6-r79 -- index.html app.js sw.js
+   git commit -m "rollback to stable-v6-r79" && git push
    ```
-3. 확인: `curl -s "https://seungyoumg0201-hub.github.io/geo-vocab/sw.js?nc=$RANDOM" | head -c 22` 가 `const VER='v6-r78';con`
+3. 확인: `curl -s "https://seungyoumg0201-hub.github.io/geo-vocab/sw.js?nc=$RANDOM" | head -c 22` 가 `const VER='v6-r79';con`
    - GitHub Pages가 빌드를 안 하면 빈 커밋으로 다시 트리거: `git commit --allow-empty -m rebuild && git push`
 4. 사용자 기기: 앱을 한 번 열면 SW가 새 파일을 받아 자동으로 다시 열림(r75~). 안 되면 `?nc=1`을 붙여 새로고침. **앱 삭제·데이터 삭제는 권하지 않는다**(동기화 확인 전).
 5. 주의: 되돌린 버전의 `sw.js` VER가 현재와 같으면 브라우저가 갱신을 모를 수 있다. 그럴 땐 `sw.js` 맨 끝에 주석 한 줄(`// rollback`)을 더해 바이트를 바꿔 배포한다.

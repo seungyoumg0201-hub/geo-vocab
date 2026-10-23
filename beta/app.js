@@ -1,5 +1,7 @@
 
 ;window.__gvStage=1;
+// r79: requestIdleCallback 안전 호출 — 옵션은 반드시 {timeout}, 실패 시 setTimeout
+function gvIdle(f,t){try{if(typeof window.requestIdleCallback=='function')return window.requestIdleCallback(f,{timeout:t||1000})}catch(e){}return setTimeout(f,1)}
 'use strict';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const BASE=JSON.parse($('#terms').textContent),MCQ0=JSON.parse($('#mcqs').textContent);
@@ -399,7 +401,7 @@ function bindAcct(){const l=$('#clogin');if(l)l.onclick=()=>{l.disabled=true;log
 (function(){const rd=renderData;renderData=function(){rd.apply(this,arguments);const v=$('#v-data');v.insertAdjacentHTML('afterbegin',accountSection());bindAcct()};
  const rs=renderStats;renderStats=function(){rs.apply(this,arguments);const v=$('#v-stats');v.insertAdjacentHTML('beforeend',rankSection());bindRank()};
  const rh=renderHome;renderHome=function(){rh.apply(this,arguments);const b=document.querySelector('#v-home .box');if(b&&!$('#onl'))b.insertAdjacentHTML('afterbegin',`<button id="onl" class="onchip hide" title="랭킹 보기"></button>`);const c=$('#onl');if(c)c.onclick=()=>go('stats');onlineUI()};
- if(localStorage.getItem('gv_lpend')=='1')redirectCheck();else if(localStorage.getItem('gv_fb')=='1'&&navigator.onLine)(window.requestIdleCallback||setTimeout)(()=>cloudLoad().catch(()=>{}),1);
+ if(localStorage.getItem('gv_lpend')=='1')redirectCheck();else if(localStorage.getItem('gv_fb')=='1'&&navigator.onLine)gvIdle(()=>cloudLoad().catch(()=>{}),1000);
  addEventListener('online',()=>{if(localStorage.getItem('gv_fb')=='1')cloudLoad().catch(()=>{})})})();
 
 ;window.__gvStage=10;
