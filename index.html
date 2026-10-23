@@ -1,8 +1,8 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r59">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r60">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
-<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon.svg?v=2" type="image/svg+xml"><link rel="icon" href="icons/favicon-32.png?v=2" sizes="32x32"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=2">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon.svg?v=3" type="image/svg+xml"><link rel="icon" href="icons/favicon-32.png?v=3" sizes="32x32"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=3">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="지리단어장">
 <script>try{const s=JSON.parse(localStorage.getItem('gv_set')||'{}');const t=localStorage.getItem('gv_theme');if(t)document.documentElement.dataset.theme=t;if(s.fs)document.documentElement.style.setProperty('--fs',s.fs+'px')}catch(e){}</script>
 <style>
@@ -471,8 +471,21 @@ details[open]>summary::after{transform:rotate(180deg)!important}
  .flback{min-height:44px;padding-right:12px}.flback svg.li{width:24px;height:24px}
  .plx svg.li{width:24px;height:24px}
 }
+/* r58: 데스크톱 상호작용 (MUI 값을 빈 곳에만 사용, Carbon 포커스 링 2px 유지) */
+@media(min-width:1024px) and (hover:hover){
+ .cta{transition:background-color .15s,box-shadow .15s}
+ .cta:hover{background:color-mix(in srgb,var(--accs) 88%,var(--acc))!important}
+ .cta:active{background:color-mix(in srgb,var(--accs) 76%,var(--acc))!important}
+ .sbtn,.flrow,.seg button,#nav button{transition:background-color .15s,border-color .15s}
+ .sbtn:hover,.flrow:hover{background-color:color-mix(in srgb,var(--card) 96%,var(--acc))}
+ .sbtn:active,.flrow:active{background-color:color-mix(in srgb,var(--card) 88%,var(--acc))}
+ #nav button:not(.on):hover{background:color-mix(in srgb,var(--fg) 4%,transparent)}
+ #toast{max-width:560px;min-width:320px;border-radius:4px;padding:6px 16px;font-size:14px;line-height:1.43;letter-spacing:.17px;box-shadow:0 1px 18px rgba(0,0,0,.12),0 6px 10px rgba(0,0,0,.14),0 3px 5px -1px rgba(0,0,0,.2)}
+ table{border-collapse:collapse}table th,table td{padding:12px 16px;font-size:14px;line-height:1.43;border-bottom:1px solid var(--bd)}
+ table tbody tr:hover{background:color-mix(in srgb,var(--fg) 4%,transparent)}
+}
 </style></head><body>
-<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r59</span></h1>
+<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=3" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r60</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
