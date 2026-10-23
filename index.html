@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r64">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r65">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon.svg?v=3" type="image/svg+xml"><link rel="icon" href="icons/favicon-32.png?v=3" sizes="32x32"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=3">
@@ -485,7 +485,7 @@ details[open]>summary::after{transform:rotate(180deg)!important}
  table tbody tr:hover{background:color-mix(in srgb,var(--fg) 4%,transparent)}
 }
 </style></head><body>
-<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=3" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r64</span></h1>
+<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=3" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r65</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -6033,6 +6033,40 @@ fix();new MutationObserver(sch).observe(document.body,{childList:true,subtree:tr
 const ft=()=>{const v=document.getElementById('v-data');if(v&&!document.getElementById('licred')){v.insertAdjacentHTML('beforeend','<p id="licred" class="mut" style="font-size:12px;margin:24px 4px 8px">아이콘: <a href="https://icon-sets.iconify.design/lets-icons/" target="_blank" rel="noopener">Lets Icons</a> by Leonid Tsvetkov, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></p>')}};ft();setTimeout(ft,1500)})();
 // r57b: 앱바 스크롤 상태(멈춤: 구분선 없음, 스크롤: 구분선+블러)
 ;(function(){const h=document.querySelector('header');if(!h)return;const f=()=>h.classList.toggle('scr',scrollY>4);addEventListener('scroll',f,{passive:true});f()})();
+// ===== r65: 같은 계정의 여러 설치(iOS 홈 화면 앱별 저장소) 수렴 — 코스·진도·이어하기 동기화, 대기 표시 해소, 새 버전 감지 =====
+setTimeout(function(){try{
+ ['gv_pseen','gv_pseen_v','gv_pseen_old','gv_pass_old','gv_passA_old','gv_smeta'].forEach(k=>{if(!PKEYS.includes(k))PKEYS.push(k)});
+ // 변경 시각 기록: 코스 선택·범위·마지막 학습 위치
+ const set1=LS.set;let lastSig=null;const sig=()=>JSON.stringify([S.lastStart||null,S.amScope||null]);
+ LS.set=function(k,v){const r=set1.apply(this,arguments);try{if(k=='gv_course'){const m=LS.get('gv_smeta',{});m.course=Date.now();set1('gv_smeta',m)}
+  else if(k=='gv_set'){const g=sig();if(lastSig!==null&&g!==lastSig){const m=LS.get('gv_smeta',{});m.last=Date.now();set1('gv_smeta',m)}lastSig=g}}catch(e){}return r};
+ lastSig=sig();
+ const prog=p=>p?((+p.cd||0)*1e4+((p.dd&&p.dd.day)||0)*10+(p.dd&&p.dd.fin?1:0)):-1;
+ const mi=mergeIn;mergeIn=function(o){const before={course:LS.get('gv_course',null),pass:LS.get('gv_pass',null),passA:LS.get('gv_passA',null),pseen:LS.get('gv_pseen',null),pv:LS.get('gv_pseen_v',0),S:{lastStart:S.lastStart,amScope:S.amScope}};
+  mi.apply(this,arguments);
+  // 원본 mergeIn이 덮어쓴 진도 객체를 되돌린 뒤 '더 많이 진행한 쪽'을 고름(기록 손실 방지)
+  if(before.pass)LS.set('gv_pass',before.pass);if(before.passA)LS.set('gv_passA',before.passA);
+  const lm=LS.get('gv_smeta',{}),rm=o.gv_smeta||{};
+  ['gv_pass','gv_passA'].forEach(k=>{const a=LS.get(k,null),b=o[k];if(b&&typeof b=='object'&&prog(b)>prog(a))LS.set(k,b)});
+  {const a=Object.assign({},LS.get('gv_pseen',{})),b=o.gv_pseen||{};let ch=0;for(const k in b)if(!a[k]){a[k]=b[k];ch=1}if(ch||!LS.get('gv_pseen',null))LS.set('gv_pseen',a)}
+  if((+o.gv_pseen_v||0)>(+LS.get('gv_pseen_v',0)))LS.set('gv_pseen_v',+o.gv_pseen_v);
+  ['gv_pseen_old','gv_pass_old','gv_passA_old'].forEach(k=>{if(o[k]&&!LS.get(k,null))LS.set(k,o[k])});
+  // 코스: 나중에 바꾼 쪽, 시각 정보가 없으면 더 많이 진행한 코스
+  if(o.gv_course&&o.gv_course!=before.course){const rc=rm.course||0,lc=lm.course||0;let take=rc>lc;
+   if(!rc&&!lc){const pk=c=>c=='A'?'gv_passA':'gv_pass';take=prog(LS.get(pk(o.gv_course),null))>=prog(LS.get(pk(before.course||'A'),null))}
+   if(take){LS.set('gv_course',o.gv_course);const m=LS.get('gv_smeta',{});m.course=rc||Date.now();set1('gv_smeta',m)}}
+  // 이어하기 위치·범위
+  const rs=o.gv_set||{};if((rm.last||0)>(lm.last||0)||(!before.S.lastStart&&rs.lastStart)){if(rs.lastStart)S.lastStart=rs.lastStart;if(rs.amScope)S.amScope=rs.amScope;const m=LS.get('gv_smeta',{});m.last=rm.last||Date.now();set1('gv_smeta',m);lastSig=sig()}
+  try{save()}catch(e){}};
+ // 자동 저장 후 칩 갱신·실패 표시(예전엔 5초 뒤 업로드가 끝나도 '동기화 대기'가 남음)
+ const cp=cloudPush;cloudPush=function(force){const r=cp.apply(this,arguments);if(r&&r.then)return r.then(v=>{if(/너무 커서/.test(CL.syncMsg||'')){CL.dirty=true}else if(CL.user){CL.syncMsg='✅ 동기화됨'}try{chipUI()}catch(e){}return v},e=>{CL.dirty=true;CL.syncMsg='⚠️ 동기화 실패: '+(e&&e.code||'');try{chipUI()}catch(_){}throw e});return r};
+ // 다시 열 때(홈 화면 앱은 새로 고침 없이 재개됨) 클라우드에서 받아 합치고 올림
+ let lastPull=0;window.cloudPull=async function(){if(!fb||!CL.user||Date.now()-lastPull<20000)return;lastPull=Date.now();try{const {F}=fb;const s=await F.getDoc(F.doc(fb.db,'users',CL.user.uid));if(s.exists()){const d=s.data();if(d.p)mergeIn(JSON.parse(d.p))}await cloudPush(true);try{render()}catch(e){}}catch(e){CL.syncMsg='⚠️ 동기화 실패: '+(e.code||'');try{chipUI()}catch(_){}}};
+ document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='visible'){cloudPull();verCheck()}});
+ // 새 버전 감지: 열려 있는 옛 빌드도 서버 sw.js 버전과 비교해 갱신
+ window.verCheck=async function(){try{const t=await (await fetch('sw.js?nc='+Date.now(),{cache:'no-store'})).text();const m=t.match(/VER='([^']+)'/);const ks=await caches.keys(),cur=(ks.find(k=>/^gv-v/.test(k))||'').slice(3);if(m&&cur&&m[1]!==cur&&sessionStorage.getItem('gv_vchk')!==m[1]){sessionStorage.setItem('gv_vchk',m[1]);const r=await navigator.serviceWorker.getRegistration();if(r)await r.update();if(!document.querySelector('.amcard,#plov:not(:empty)'))location.reload();else toast('새 버전이 있어요 — 학습을 마치면 자동으로 적용돼요')}}catch(e){}};
+ setTimeout(verCheck,4000);
+}catch(e){console.warn('r65',e)}},0);
 // ---- settings & sync
 const PKEYS=['gv_passA','gv_passAc','gv_passc','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
