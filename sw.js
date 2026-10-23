@@ -1,7 +1,7 @@
-const VER='v6-r73';const CACHE='gv-'+VER;const ASSETS=['./','./index.html','./manifest.webmanifest','./icons/icon-192.png?v=3','./icons/icon-512.png?v=3','./icons/maskable-512.png?v=3','./icons/apple-touch-icon.png?v=3','./icons/favicon-32.png?v=3','./icons/icon.svg?v=3'];
-self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)))});
+const VER='v6-r75';const CACHE='gv-'+VER;const ASSETS=['./','./index.html','./manifest.webmanifest','./icons/icon-192.png?v=3','./icons/icon-512.png?v=3','./icons/maskable-512.png?v=3','./icons/apple-touch-icon.png?v=3','./icons/favicon-32.png?v=3','./icons/icon.svg?v=3'];
+self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS.map(u=>new Request(u,{cache:'reload'})))))});
 self.addEventListener('message',e=>{if(e.data==='SKIP_WAITING')self.skipWaiting()});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('gv-')&&k!==CACHE&&k!=='gv-meta').map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('gv-')&&k!==CACHE&&k!=='gv-meta').map(k=>caches.delete(k)))).then(()=>self.clients.claim()).then(()=>{/* r75: 활성화 직후 열린 창을 새 버전으로 다시 열기(waitUntil 밖 — 안에서 기다리면 내비게이션 fetch와 교착) */setTimeout(()=>self.clients.matchAll({type:'window'}).then(cs=>cs.forEach(c=>{try{c.navigate(c.url).catch(()=>{})}catch(err){}})).catch(()=>{}),300)}))});
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET'||new URL(r.url).origin!==location.origin)return;
  const U=new URL(r.url);if(U.pathname.includes('/audio/')&&U.pathname.endsWith('.mp3')){e.respondWith(caches.open('geo-audio-v1').then(c=>c.match(r).then(h=>h||fetch(r).then(n=>{if(n.ok&&n.status==200)c.put(r,n.clone());return n}))));return}
  if(/\/audio\/([a-z]+\/)?manifest\.json$/.test(U.pathname)){e.respondWith(fetch(r).then(n=>{if(n.ok){const cp=n.clone();caches.open('geo-audio-v1').then(c=>c.put(r,cp))}return n}).catch(()=>caches.open('geo-audio-v1').then(c=>c.match(r))));return}
