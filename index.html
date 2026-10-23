@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r76"><script>/* r74 앱 밖 복구: 초기화가 12초 안에 안 끝나면 서비스워커·캐시만 지우고 1번 새로고침(학습 기록 localStorage·IndexedDB는 그대로) */
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r77"><script>/* r74 앱 밖 복구: 초기화가 12초 안에 안 끝나면 서비스워커·캐시만 지우고 1번 새로고침(학습 기록 localStorage·IndexedDB는 그대로) */
 (function(){var K='gv_recov';setTimeout(function(){if(window.__gvOK)return;try{var t=+sessionStorage.getItem(K)||0;if(Date.now()-t<6e5)return;sessionStorage.setItem(K,Date.now())}catch(e){return}
 var p=[];try{if(navigator.serviceWorker)p.push(navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.map(function(r){return r.unregister()}))}))}catch(e){}
 try{if(window.caches)p.push(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return /^gv-/.test(k)}).map(function(k){return caches.delete(k)}))}))}catch(e){}
@@ -323,7 +323,7 @@ h2{font-size:22px;line-height:1.3;font-weight:700}
 .amterm{font-size:30px;font-weight:800;text-align:center;margin:10px 0;line-height:1.3}.amf{text-align:center}.amhint{margin-top:18px}
 .amterm2{font-size:20px;font-weight:800;margin-bottom:8px}.amdef{font-size:17px;line-height:1.7}.amkeys{margin-top:10px;font-size:15px;color:var(--acc)}
 .amkx{margin-top:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--mut,#777)}
-.ambtn{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ambtn .sbtn{min-height:56px;font-size:17px;font-weight:700}.ambtn .ok{background:var(--oks);color:var(--ok)}.ambtn .bad{background:var(--bads);color:var(--bad)}
+.ambtn{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.ambtn .sbtn{min-height:56px;font-size:17px;font-weight:700}.ambtn .ok{background:var(--oks);color:var(--ok)}.ambtn .bad{background:var(--bads);color:var(--bad)}
 .icchips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}.icchip{min-height:44px;padding:6px 12px;border-radius:999px;border:1px solid var(--line,#ccc);background:var(--card);color:var(--fg);font-size:14px}.icchip small{margin-left:6px;opacity:.7}.icchip.on{background:var(--acc);color:var(--onacc,#fff);border-color:var(--acc)}
 .amcat{color:var(--ok);font-weight:700}.ambx{margin-top:8px;padding:8px 12px;border-radius:10px;background:var(--bg);font-size:15px;line-height:1.6}.ambx b{color:var(--ok)}
 
@@ -495,8 +495,10 @@ details[open]>summary::after{transform:rotate(180deg)!important}
 .revc .revq{font-size:1.05rem;line-height:1.6;margin:10px 0;word-break:keep-all}
 
 .amre{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--warnbg,#fff4d6);color:var(--warn,#a46200);margin-bottom:6px}
+
+/* r77 헷갈려요 */.sbtn.mid{background:var(--card);color:var(--ok,#2b8a3e);border:2px solid var(--ok,#2b8a3e)!important;min-height:48px;font-weight:700}#plbtn .sbtn.mid{min-height:52px}
 </style></head><body>
-<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=3" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r76</span></h1>
+<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=3" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r77</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -4651,5 +4653,5 @@ details[open]>summary::after{transform:rotate(180deg)!important}
  window.addEventListener('load',function(){setTimeout(function(){if(!window.__gvOK)show('앱 초기화가 끝나지 않음 (마지막 단계 app'+(window.__gvStage||'?')+')'+(window.__gvRej?' / 거부: '+window.__gvRej:''),'init')},1500)});
 })();
 
-</script><script src="app.js?v=v6-r76"></script><script>
+</script><script src="app.js?v=v6-r77"></script><script>
 </script></body></html>

@@ -470,9 +470,9 @@ function runQ(q,o){let i=0,c=0,n=0,t0=Date.now();const R={};
   <div id="plbtn" class="row"><button class="sbtn" id="plrev">${ty?'정답 보기 (Space)':'탭해서 보기'}</button></div>
   ${!ty?'<p class="mut small">보기 후 → 오른쪽 스와이프: 알아요 · ← 왼쪽: 몰라요</p>':''}</div>`);
   const ans=el.querySelector('#plans'),btn=el.querySelector('#plbtn'),inp=el.querySelector('#plin');let shown=false,auto=null;
-  const show=()=>{if(shown)return;shown=true;ans.classList.remove('hide');btn.innerHTML='<button class="sbtn bad" data-g="0">✗ 몰라요 (1)</button><button class="sbtn ok" data-g="1">✓ 알아요 (2)</button>';
+  const show=()=>{if(shown)return;shown=true;ans.classList.remove('hide');btn.innerHTML='<button class="sbtn bad" data-g="0">✗ 몰라요 (1)</button><button class="sbtn mid" data-gh="1">△ 헷갈려요</button><button class="sbtn ok" data-g="1">✓ 알아요 (2)</button>';
    if(auto!=null)btn.insertAdjacentHTML('afterbegin',`<div class="pill ${auto?'ok':'bad'}" style="width:100%">${auto?'✓ 정답 판정':'✗ 오답 판정'} — 맞으면 Enter</div>`);
-   btn.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>grade(+b.dataset.g))};
+   btn.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>grade(+b.dataset.g));{const h=btn.querySelector('[data-gh]');if(h)h.onclick=()=>{gvHard(t.term,'plan');const hh=H();if(!srs[t.term].r||srs[t.term].r==1)hh.nw=(hh.nw||0)+1;else hh.rev=(hh.rev||0)+1;done(true)}}};
   const grade=g=>{record(t.term,!!g,'plan');srs[t.term]=sched(srs[t.term],g?3:1);const h=H();if(!srs[t.term].r||srs[t.term].r==1)h.nw=(h.nw||0)+1;else h.rev=(h.rev||0)+1;done(!!g)};
   el.querySelector('#plrev').onclick=show;if(inp){inp.focus();inp.onkeydown=e=>{if(e.key=='Enter'&&!shown){e.preventDefault();e.stopPropagation();if(!cram)auto=judge(inp.value,t)>0;show()}}}
   const card=el.querySelector('.plq');card.onclick=e=>{if(!ty&&!shown&&!e.target.closest('button'))show()};
@@ -1183,7 +1183,7 @@ function wrMenu(){const P=kwPool('w16');const o=ov(`<h2>📝 서술</h2><p class
 // 더보기
 function moreMenu(){const d=$('#navdue');const n=d&&!d.classList.contains('hide')?d.textContent:'';const it=[['stats','📊 통계 · 취약 분석'],['ls','🎧 듣기 모드'],['mock','⏱️ 모의고사'],['plan','🗓️ 기존 플랜 (7일·10일)'],['cram','⚡ 벼락치기'],['data','⚙️ 설정 · 테마 · 글자 · 로그인 · 내 기기']];
  const o=ov(`<h2>더보기</h2><div class="moremenu">${it.map(([k,l])=>`<button class="sbtn" data-mm="${k}">${l}</button>`).join('')}</div>`);
- o.querySelectorAll('[data-mm]').forEach(b=>b.onclick=()=>{ovClose();const k=b.dataset.mm;k=='ls'?lsMenu():k=='plan'?plSetup():k=='cram'?cramMenu():k=='ft'?ftMenu():k=='ec'?ecMenu():goRaw(k)})}
+ o.querySelectorAll('[data-mm]').forEach(b=>b.onclick=()=>{ovClose();const k=b.dataset.mm;k=='ls'?lsMenu():k=='plan'?plSetup():k=='cram'?cramMenu():k=='ft'?ftMenu():k=='ec'?ecMenu():k=='mock'?(qmode='mock',S.qmode='mock',qcur=null,goRaw('quiz')):goRaw(k)})}
 (function(){const g=go;go=function(m){const nav=k=>$$('#nav button').forEach(x=>x.classList.toggle('on',x.dataset.m==k));
  if(m=='deck'){nav('deck');return dkDeckMenu()}if(m=='write'||m=='mem'){nav('write');return wrMenu()}if(m=='more'){nav('more');return moreMenu()}if(m=='word'){nav('deck');return dkDeckMenu()}return g.apply(this,arguments)}})();
 // 홈: 오늘 학습 한 줄 + 두 덱 타일 + 과목 칩
@@ -1260,10 +1260,10 @@ function amRun(L,title){if(!L.length){toast('외울 카드가 없어요');return
   box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
   <div class="amcard" id="amc"><div class="amf">${L[i].rq?'<span class="amre">다시 보기</span>':''}<div class="small amcat">${esc(grpOf(t.cat))} · ${esc(t.cat)}</div><div class="amterm">${esc(t.term)}</div>${t.en?`<div class="small mut">${esc(t.en)}</div>`:''}<div class="small mut amhint">탭해서 뒤집기</div></div>
   <div class="amb hide"><div class="small amcat">${esc(grpOf(t.cat))} · ${esc(t.cat)}</div><div class="amterm2">${esc(t.term)}</div><div class="amdef">${esc(t.def)}</div>${t.keys?`<div class="ambx"><b>서술 키워드</b> ${esc(t.keys)}</div>`:''}${t.vs?`<div class="ambx"><b>비교</b> ${esc(t.vs)}</div>`:''}${t.ex?`<div class="ambx"><b>사례</b> ${esc(t.ex)}</div>`:''}${t.distractors&&t.distractors.length?`<div class="ambx mut">⚠️ 혼동 주의: ${esc(t.distractors.join(' · '))}</div>`:''}</div></div>
-  <div class="ambtn"><button class="sbtn bad" id="amn">✗ 몰라요</button><button class="sbtn ok" id="amy">✓ 알아요</button></div>`;
+  <div class="ambtn"><button class="sbtn bad" id="amn">✗ 몰라요</button><button class="sbtn mid" id="amh">△ 헷갈려요</button><button class="sbtn ok" id="amy">✓ 알아요</button></div>`;
   const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
-  const grade=g=>{const sn=kwSeen();sn['T:'+t.term]=1;LS.set('gv_kwseen',sn);if(!L[i].rq){record(t.term,g);done.add(t.term);g?ok++:bad++}if(!L[i].rq){try{srs[t.term]=sched(srs[t.term],g?3:1)}catch(e){}}if(!g){if(!L[i].rq)L.splice(Math.min(L.length,i+4),0,{t,rq:1})}try{save()}catch(e){}i++;show()};
-  box.querySelector('#amy').onclick=()=>grade(1);box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='ArrowRight'||e.key=='j')grade(1);else if(e.key=='ArrowLeft'||e.key=='f')grade(0)};box.querySelector('#amn').onclick=()=>grade(0);
+  const grade=g=>{if(g===2){const sn=kwSeen();sn['T:'+t.term]=1;LS.set('gv_kwseen',sn);if(!L[i].rq){gvHard(t.term,'amgi');done.add(t.term);bad++;L.splice(Math.min(L.length,i+8),0,{t,rq:1})}try{save()}catch(e){}i++;return show()}const sn=kwSeen();sn['T:'+t.term]=1;LS.set('gv_kwseen',sn);if(!L[i].rq){record(t.term,g);done.add(t.term);g?ok++:bad++}if(!L[i].rq){try{srs[t.term]=sched(srs[t.term],g?3:1)}catch(e){}}if(!g){if(!L[i].rq)L.splice(Math.min(L.length,i+4),0,{t,rq:1})}try{save()}catch(e){}i++;show()};
+  box.querySelector('#amy').onclick=()=>grade(1);box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='ArrowRight'||e.key=='j')grade(1);else if(e.key=='ArrowLeft'||e.key=='f')grade(0);else if(e.key=='ArrowDown'||e.key=='h')grade(2)};box.querySelector('#amn').onclick=()=>grade(0);{const h=box.querySelector('#amh');if(h)h.onclick=()=>grade(2)}
   let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?1:0)}})};
  try{actStart&&actStart('amgi',title)}catch(e){}show()}
 var _amNext=null;
@@ -1376,7 +1376,7 @@ renderHome=function(){const v=$('#v-home');if(!v)return;let st=null;try{st=passS
 // 더보기: 이름만 있는 목록(같은 기능 중복 진입 없음)
 moreMenu=function(){const it=[['stats','📊 통계'],['mock','⏱️ 모의고사'],['ls','🎧 듣기 모드'],['data','⚙️ 설정']];
  const o=ov(`<h2>더보기</h2><div class="fllist">${it.map(([k,l])=>`<button class="flrow" data-mm="${k}"><span>${l}</span><span class="mut">›</span></button>`).join('')}</div>`);
- o.querySelectorAll('[data-mm]').forEach(b=>b.onclick=()=>{ovClose();const k=b.dataset.mm;k=='ls'?lsMenu():goRaw(k)})};
+ o.querySelectorAll('[data-mm]').forEach(b=>b.onclick=()=>{ovClose();const k=b.dataset.mm;k=='ls'?lsMenu():k=='mock'?(qmode='mock',S.qmode='mock',qcur=null,goRaw('quiz')):goRaw(k)})};
 // 설정·통계 화면: 첫 섹션만 펼치고 나머지는 접힌 옵션으로
 (function(){const fold=id=>{const v=$('#v-'+id);if(!v)return;[...v.querySelectorAll(':scope > .box, :scope .box.sec')].forEach((b,i)=>{if(i==0||b.closest('details.flsec'))return;const h=b.querySelector('h2,h3');const d=document.createElement('details');d.className='fold flsec';d.innerHTML=`<summary>${h?esc(h.textContent):'옵션'}</summary>`;b.replaceWith(d);d.appendChild(b);h&&h.remove()})};
  const _rd=renderData;renderData=function(){const r=_rd.apply(this,arguments);try{fold('data')}catch(e){}return r};
@@ -1516,7 +1516,7 @@ function revRun(){const L=revOrder().slice(0,S.kwN||20).map(x=>({x}));if(!L.leng
   let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?1:0)}})};
  show()}
 function revRow(){const c=revCnt();return `<button class="flrow revrow" id="revgo"><i class="sbub" data-g="all">뜻</i><span>뜻 보고 단어 떠올리기 <span class="small mut">(반대 모드)</span></span><span class="small mut">${c.n}장 · 외움 ${c.ok} · 헷갈림 ${c.hd}</span></button>`}
-{const _dm=dkDeckMenu;dkDeckMenu=function(){_dm.apply(this,arguments);const l=[...document.querySelectorAll('.fllist')].pop();if(l&&REV.length&&!document.getElementById('revgo')){l.insertAdjacentHTML('afterend',`<h3 class="small mut">다른 방식</h3><div class="fllist">${revRow()}</div>`);document.getElementById('revgo').onclick=()=>{ovClose();revRun()}}}}
+{const _dm=dkDeckMenu;dkDeckMenu=function(){_dm.apply(this,arguments);const l=[...document.querySelectorAll('.fllist')].pop();if(l&&REV.length&&!(PL.ov&&PL.ov.querySelector('#revgo'))){document.querySelectorAll('#revgo').forEach(e=>{const f=e.closest('.fllist');if(f&&f.previousElementSibling&&f.previousElementSibling.tagName=='H3')f.previousElementSibling.remove();(f||e).remove()});l.insertAdjacentHTML('afterend',`<h3 class="small mut">다른 방식</h3><div class="fllist">${revRow()}</div>`);document.getElementById('revgo').onclick=()=>{ovClose();revRun()}}}}
 {const _rl=resumeLast;resumeLast=function(){const l=S.lastStart||{};if(l.m=='rev')return revRun();return _rl.apply(this,arguments)}}
 // 동기화: 별도 키 gv_rev, 카드별로 나중 기록(at)이 이김
 setTimeout(()=>{try{if(!PKEYS.includes('gv_rev'))PKEYS.push('gv_rev')}catch(e){}},0);
@@ -1533,6 +1533,9 @@ setTimeout(()=>{try{if(!PKEYS.includes('gv_rev'))PKEYS.push('gv_rev')}catch(e){}
   un.forEach(x=>{if(h.length>=q)return d.push(x);if(x.k!='K'&&ans(x).some(v=>td.has(v)))return d.push(x);if(x.k=='K'&&x.t)td.add(x.t.term);h.push(x)});for(let g=0;g<3&&_ok();g++){const kt=new Set(h.filter(x=>x.k=='K').map(x=>x.t.term)),bad=h.filter(x=>x.k!='K'&&ans(x).some(v=>kt.has(v)));if(!bad.length)break;bad.forEach(x=>{h.splice(h.indexOf(x),1);d.push(x)});
    for(let j=0;j<d.length&&h.length<q&&(j&63||_ok());j++){const x=d[j];if(x.k=='K'||!ans(x).some(v=>kt.has(v))){h.push(x);d.splice(j--,1)}}}un=[...h,...d]}
  st.un=un}catch(e){}return st}}
+
+// r77: 헷갈려요(중간 단계) — 아직 못 외움. 헷갈려요 표시(marks=bad)로 기존 헷갈려요 목록·통계와 같은 기준, SRS는 '어려움'(2): 몰라요(10분)보다 늦고 알아요보다 빨리 다시 나옴. 오답노트엔 넣지 않음
+function gvHard(term,src){try{const a=acc[term]||(acc[term]={c:0,n:0,s:0});a.n++;a.s=0;const h=H();h.n++;try{snap&&snap([term])}catch(e){}marks[term]='bad';srs[term]=sched(srs[term],2);{const c=srs[term],n=Date.now();if(c&&c.due>n)c.due=n+Math.max(36e5,(c.due-n)/2)}try{actItem&&ACT&&ACT.cur&&actItem('T:'+term,false,'')}catch(e){}}catch(e){}}
 
 ;window.__gvStage=7;
 // ---- settings & sync
