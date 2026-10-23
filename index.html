@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r57">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r57b">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon.svg?v=2" type="image/svg+xml"><link rel="icon" href="icons/favicon-32.png?v=2" sizes="32x32"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=2">
@@ -462,8 +462,17 @@ details[open]>summary::after{transform:rotate(180deg)!important}
 }
 /* r57: 한글 렌더링(한국어 UI 튜토리얼 파일: Noto Sans KR 14/21·15/22·16/24 = 줄간 1.5, 제목 18px -0.5px) */
 @media(max-width:1023px){body{line-height:1.5;word-break:keep-all}h1,h2,h3,.flrow b,.flrow strong{letter-spacing:-.025em}#nav button{letter-spacing:0}}
+/* r57b: 상단 앱바 (8-3 상단 앱바 파일 h56·좌우 16·아이콘 24·간격 12·제목 20 Medium lh1.4 / iOS 터치 44) */
+@media(max-width:1023px){
+ header{border-bottom-color:transparent!important;transition:border-color .2s,background .2s}
+ header>*:first-child{min-height:56px}
+ header.scr{border-bottom-color:var(--bd)!important;background:color-mix(in srgb,var(--bg) 80%,transparent)!important;-webkit-backdrop-filter:saturate(1.6) blur(14px);backdrop-filter:saturate(1.6) blur(14px)}
+ header .ib,header .achip{min-height:44px}header .ib{min-width:44px}
+ .flback{min-height:44px;padding-right:12px}.flback svg.li{width:24px;height:24px}
+ .plx svg.li{width:24px;height:24px}
+}
 </style></head><body>
-<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r57</span></h1>
+<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=2" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r57b</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -5881,6 +5890,8 @@ pre('.cta',/^\s*▶\s*/,'play');pre('#amn',/^\s*[✗✕×]\s*/,'no');pre('#amy',
 let q=0;const sch=()=>{if(busy||q)return;q=1;requestAnimationFrame(()=>{q=0;fix()})};
 fix();new MutationObserver(sch).observe(document.body,{childList:true,subtree:true,characterData:true});
 const ft=()=>{const v=document.getElementById('v-data');if(v&&!document.getElementById('licred')){v.insertAdjacentHTML('beforeend','<p id="licred" class="mut" style="font-size:12px;margin:24px 4px 8px">아이콘: <a href="https://icon-sets.iconify.design/lets-icons/" target="_blank" rel="noopener">Lets Icons</a> by Leonid Tsvetkov, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></p>')}};ft();setTimeout(ft,1500)})();
+// r57b: 앱바 스크롤 상태(멈춤: 구분선 없음, 스크롤: 구분선+블러)
+;(function(){const h=document.querySelector('header');if(!h)return;const f=()=>h.classList.toggle('scr',scrollY>4);addEventListener('scroll',f,{passive:true});f()})();
 // ---- settings & sync
 const PKEYS=['gv_passA','gv_passAc','gv_passc','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
