@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r65">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r66">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon.svg?v=3" type="image/svg+xml"><link rel="icon" href="icons/favicon-32.png?v=3" sizes="32x32"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=3">
@@ -485,7 +485,7 @@ details[open]>summary::after{transform:rotate(180deg)!important}
  table tbody tr:hover{background:color-mix(in srgb,var(--fg) 4%,transparent)}
 }
 </style></head><body>
-<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=3" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r65</span></h1>
+<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=3" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r66</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -4951,6 +4951,7 @@ function cloudLoad(){if(fbP)return fbP;const u=m=>`https://www.gstatic.com/fireb
   Au.onAuthStateChanged(fb.auth,authCb);watchOnline();return fb})
  .catch(e=>{CL.st='fail';CL.err=navigator.onLine?'클라우드 기능을 불러오지 못했어요':'오프라인 — 로그인·랭킹은 온라인에서 사용할 수 있어요';fbP=null;cloudUI();throw e});return fbP}
 function nick(){return (S.nick||'').trim()||(CL.user?'학습자'+CL.user.uid.slice(0,4):'')}
+function randNick(){const a=['푸른','고요한','높은','깊은','따뜻한','맑은','단단한','넓은','빛나는','잔잔한','굽이진','새벽의'],b=['산맥','삼각주','해안','고원','분지','하천','빙하','사구','협곡','평야','화산','석호','섬','곶','습지'],r=n=>crypto.getRandomValues(new Uint32Array(1))[0]%n;return a[r(a.length)]+b[r(b.length)]+String(10+r(90))}
 function cleanNick(s){return (s||'').replace(/[<>\u0000-\u001f]/g,'').trim().slice(0,16)}
 // metrics
 function wkStart(d=today()){return d-((d+3)%7)}
@@ -4958,8 +4959,9 @@ function metrics(){let reviews=0,wk=0;const w0=wkStart();for(const d in hist){co
  let c=0,n=0;for(const k in acc){c+=acc[k].c||0;n+=acc[k].n||0}return {reviews:Math.min(reviews,9999999),wk:Math.min(wk,999999),wkId:w0,acc:n?Math.round(c/n*1000)/10:0,answered:Math.min(n,9999999),streak:Math.min(streak(),10000)}}
 // sync
 async function onLogin(u){const {F}=fb;CL.syncMsg='동기화 중…';cloudUI();try{const ref=F.doc(fb.db,'users',u.uid);const snap=await F.getDoc(ref);
-  if(snap.exists()){const d=snap.data();if(d.p){try{mergeIn(JSON.parse(d.p))}catch(e){}}if(!S.nick&&d.nick){S.nick=d.nick;save()}}
-  if(!S.nick){S.nick=cleanNick((u.displayName||'').split(' ')[0])||('학습자'+u.uid.slice(0,4));save()}
+  if(snap.exists()){const d=snap.data();if(d.p){try{mergeIn(JSON.parse(d.p))}catch(e){}}CL._rn=d.nick||''}
+  {const dn=(u.displayName||'').trim(),em=(u.email||'').split('@')[0],nm=new Set([dn,dn.replace(/\s+/g,''),...dn.split(/\s+/),em].map(cleanNick).filter(Boolean));if(!S.nickCustom&&S.nick&&nm.has(cleanNick(S.nick))){S.nick=''}const rn=cleanNick(CL._rn);if(!S.nick&&rn&&!nm.has(rn))S.nick=rn}
+  if(!S.nick){S.nick=randNick();save();CL._nickFix=1}
   await cloudPush(true);presenceOn();CL.syncMsg='✅ 동기화됨';try{render()}catch(e){}}catch(e){CL.syncMsg='⚠️ 동기화 실패: '+(e.code||e.message);console.warn(e);alog('sync err '+(e.code||e.message));toast('로그인됨 · 동기화 실패 ['+(e.code||e.message)+'] '+(e.code=='permission-denied'?'Firestore 보안 규칙 배포 필요':''),null,null,9000)}cloudUI()}
 async function cloudPush(force){if(!fb||!CL.user)return;if(!force&&!CL.dirty)return;CL.dirty=false;const {F}=fb,uid=CL.user.uid,m=metrics();
  const p=JSON.stringify(progressObj());if(p.length>900000){CL.syncMsg='⚠️ 진도 데이터가 너무 커서 클라우드에 저장할 수 없어요';return}
@@ -5008,7 +5010,7 @@ function accountSection(){const u=CL.user;return `<div class="box sec" id="acct"
 function cloudUI(){const a=$('#acct');if(a&&mode=='data'){a.outerHTML=accountSection();bindAcct()}const ub=$('#ubtn');if(ub)ub.textContent=CL.user?'👤':'🔑'}
 function bindAcct(){const l=$('#clogin');if(l)l.onclick=()=>{l.disabled=true;login().finally(()=>{l.disabled=false})};const o=$('#clogout');if(o)o.onclick=()=>logout();
  const s=$('#csync');if(s)s.onclick=async()=>{s.disabled=true;try{await cloudPush(true);CL.syncMsg='✅ 방금 동기화됨'}catch(e){CL.syncMsg='⚠️ '+(e.code||e.message)}cloudUI()};
- const n=$('#snick');if(n)n.onchange=async()=>{S.nick=cleanNick(n.value);n.value=S.nick;save();try{await cloudPush(true);if(presRef)fb.D.update(presRef,{nick:cleanNick(nick())||'학습자'});toast('닉네임을 저장했어요')}catch(e){toast('저장 실패: '+(e.code||''))}}}
+ const n=$('#snick');if(n)n.onchange=async()=>{S.nick=cleanNick(n.value);S.nickCustom=S.nick?1:0;if(!S.nick)S.nick=randNick();n.value=S.nick;save();try{await cloudPush(true);if(presRef)fb.D.update(presRef,{nick:cleanNick(nick())||'학습자'});toast('닉네임을 저장했어요')}catch(e){toast('저장 실패: '+(e.code||''))}}}
 (function(){const rd=renderData;renderData=function(){rd.apply(this,arguments);const v=$('#v-data');v.insertAdjacentHTML('afterbegin',accountSection());bindAcct()};
  const rs=renderStats;renderStats=function(){rs.apply(this,arguments);const v=$('#v-stats');v.insertAdjacentHTML('beforeend',rankSection());bindRank()};
  const rh=renderHome;renderHome=function(){rh.apply(this,arguments);const b=document.querySelector('#v-home .box');if(b&&!$('#onl'))b.insertAdjacentHTML('afterbegin',`<button id="onl" class="onchip hide" title="랭킹 보기"></button>`);const c=$('#onl');if(c)c.onclick=()=>go('stats');onlineUI()};
@@ -5628,7 +5630,7 @@ function missFlush(){const q=LS.get('gv_missq',[]);if(!q.length||!fb||!CL.user)r
 function chipUI(){let c=$('#authchip');if(!c){const t=$('#theme');if(!t)return;t.insertAdjacentHTML('beforebegin','<button id="authchip" class="achip"></button>');c=$('#authchip');c.onclick=()=>{if(!CL.user){login()}else if(/실패/.test(CL.syncMsg||'')||CL.dirty){cloudPush(true).then(()=>{CL.syncMsg='✅ 동기화됨';chipUI()}).catch(e=>{CL.syncMsg='⚠️ 동기화 실패: '+(e.code||'');chipUI()})}else go('data')}}
  const u=CL.user,hm=t=>t?new Date(t).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false}):'';let st,tx;
  if(!u){st='off';tx=CL.st=='loading'&&localStorage.getItem('gv_fb')=='1'?'연결 중…':'로그인 안 됨'}else if(/실패/.test(CL.syncMsg||'')){st='err';tx='동기화 실패 · 다시 시도'}else if(CL.dirty||/중/.test(CL.syncMsg||'')){st='pend';tx='동기화 대기'}else{st='ok';tx='동기화됨 '+hm(CL.lastPush)}
- const ini=u?esc(((S.nick||u.displayName||u.email||'나')+'').trim().charAt(0)):'';c.className='achip '+st;c.title=u?'로그인됨 — 탭하면 계정 설정':'탭해서 Google 로그인';c.innerHTML=(u?`<span class="av">${ini}</span>`:'')+`<span class="dot"></span><span class="tx">${tx}</span>`}
+ const ini=u?esc(((S.nick||'나')+'').trim().charAt(0)):'';c.className='achip '+st;c.title=u?'로그인됨 — 탭하면 계정 설정':'탭해서 Google 로그인';c.innerHTML=(u?`<span class="av">${ini}</span>`:'')+`<span class="dot"></span><span class="tx">${tx}</span>`}
 (function(){const cu=cloudUI;cloudUI=function(){cu.apply(this,arguments);chipUI();if(CL.user&&!window._devd){window._devd=1;devPing();missFlush()}if(!CL.user)window._devd=0};
  const cp=cloudPush;cloudPush=async function(){const r=await cp.apply(this,arguments);devPing();chipUI();return r};
  setInterval(chipUI,4000);setTimeout(chipUI,0);
