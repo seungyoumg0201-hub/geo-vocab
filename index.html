@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>지리 임용 단어장</title><meta name="app-version" content="v6-r71">
+<title>지리 임용 단어장</title><meta name="app-version" content="v6-r72">
 <meta name="description" content="중등 지리교사 임용 전공 핵심 용어 · 간격 반복 · 기출 개념 퀴즈">
 <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1217" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon.svg?v=3" type="image/svg+xml"><link rel="icon" href="icons/favicon-32.png?v=3" sizes="32x32"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=3">
@@ -486,8 +486,10 @@ details[open]>summary::after{transform:rotate(180deg)!important}
 }
 /* r68 반대 모드 */
 .revc .revq{font-size:1.05rem;line-height:1.6;margin:10px 0;word-break:keep-all}
+
+.amre{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--warnbg,#fff4d6);color:var(--warn,#a46200);margin-bottom:6px}
 </style></head><body>
-<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=3" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r71</span></h1>
+<header><div class="hd"><h1><img class="lg" src="icons/icon.svg?v=3" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r72</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -5844,7 +5846,7 @@ function amRun(L,title){if(!L.length){toast('외울 카드가 없어요');return
  const kh=e=>{if(!document.body.contains(box)){document.removeEventListener('keydown',kh);return}if(e.target.closest&&e.target.closest('input,textarea'))return;box._k&&box._k(e)};document.addEventListener('keydown',kh);
  const show=()=>{if(i>=L.length)return fin();const t=L[i].t,ex=(t.kx||[])[0];
   box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
-  <div class="amcard" id="amc"><div class="amf"><div class="small amcat">${esc(grpOf(t.cat))} · ${esc(t.cat)}</div><div class="amterm">${esc(t.term)}</div>${t.en?`<div class="small mut">${esc(t.en)}</div>`:''}<div class="small mut amhint">탭해서 뒤집기</div></div>
+  <div class="amcard" id="amc"><div class="amf">${L[i].rq?'<span class="amre">다시 보기</span>':''}<div class="small amcat">${esc(grpOf(t.cat))} · ${esc(t.cat)}</div><div class="amterm">${esc(t.term)}</div>${t.en?`<div class="small mut">${esc(t.en)}</div>`:''}<div class="small mut amhint">탭해서 뒤집기</div></div>
   <div class="amb hide"><div class="small amcat">${esc(grpOf(t.cat))} · ${esc(t.cat)}</div><div class="amterm2">${esc(t.term)}</div><div class="amdef">${esc(t.def)}</div>${t.keys?`<div class="ambx"><b>서술 키워드</b> ${esc(t.keys)}</div>`:''}${t.vs?`<div class="ambx"><b>비교</b> ${esc(t.vs)}</div>`:''}${t.ex?`<div class="ambx"><b>사례</b> ${esc(t.ex)}</div>`:''}${t.distractors&&t.distractors.length?`<div class="ambx mut">⚠️ 혼동 주의: ${esc(t.distractors.join(' · '))}</div>`:''}</div></div>
   <div class="ambtn"><button class="sbtn bad" id="amn">✗ 몰라요</button><button class="sbtn ok" id="amy">✓ 알아요</button></div>`;
   const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
@@ -5977,10 +5979,12 @@ const go=()=>document.querySelectorAll('#nav button').forEach(b=>{const m=b.data
 go();new MutationObserver(go).observe(document.getElementById('nav'),{childList:true,subtree:true})})();
 // r50: 7일 코스와 자유 학습 분리. 코스 진도는 코스 세션(homeAm·homeIn)에서 본 카드만 gv_pseen에 기록
 var _inCourse=false;
+// r72-4: 코스 맥락을 '지금 떠 있는 세트'에 묶음 — 세트 화면(.plin[data-course])이 보이는 동안만 코스 기록. 다른 세트가 ov()로 열리면 표시가 사라져 자동 해제
+function inCourse(){try{return !!(_inCourse&&PL.ov&&!PL.ov.classList.contains('hide')&&PL.ov.querySelector(':scope>[data-course]'))}catch(e){return _inCourse}}
 function passSeen(){let p=LS.get('gv_pseen',null);if(!p){p=Object.assign({},LS.get('gv_kwseen',{}));LS.set('gv_pseen',p);LS.set('gv_pseen_seed',{date:kstYMD(),n:Object.keys(p).length})}return p}
-{const _ks=kwSeen;kwSeen=function(){const o=_ks.apply(this,arguments);if(!_inCourse||!o)return o;return new Proxy(o,{set(t,k,v){t[k]=v;const p=passSeen();if(!p[k]){p[k]=1;LS.set('gv_pseen',p)}return true}})}}
+{const _ks=kwSeen;kwSeen=function(){const o=_ks.apply(this,arguments);if(!inCourse()||!o)return o;return new Proxy(o,{set(t,k,v){t[k]=v;const p=passSeen();if(!p[k]){p[k]=1;LS.set('gv_pseen',p)}return true}})}}
 {const _ps=passStat;passStat=function(){const k=kwSeen;passSeen();kwSeen=()=>LS.get('gv_pseen',{});try{return _ps.apply(this,arguments)}finally{kwSeen=k}}}
-{const keep=f=>function(){const l=S.lastStart;f.apply(this,arguments);_inCourse=true;if(l&&l.m!='amhome'){S.lastStart=l;try{save()}catch(e){}}};const a=homeAm;homeAm=keep(a);const b=homeIn;homeIn=keep(b);
+{const keep=f=>function(){const l=S.lastStart;f.apply(this,arguments);_inCourse=true;try{const c=PL.ov&&PL.ov.firstElementChild;c&&(c.dataset.course='1')}catch(e){}if(l&&l.m!='amhome'){S.lastStart=l;try{save()}catch(e){}}};const a=homeAm;homeAm=keep(a);const b=homeIn;homeIn=keep(b);
  const c=amDeck;amDeck=function(){_inCourse=false;return c.apply(this,arguments)};const d=icDeck;icDeck=function(){_inCourse=false;return d.apply(this,arguments)};
  const e=ovClose;ovClose=function(){_inCourse=false;return e.apply(this,arguments)}}
 lastLbl=function(){const l=S.lastStart||{};const nm=id=>String(dkName(id)).replace(/^[^\p{L}\p{N}]+/u,'').replace(/\s*\d+$/,'');const sc=amScope()=='core'?' 기출 핵심':'';if(l.m=='am'&&l.id)return nm(l.id)+sc+' 암기';if(l.m=='icdeck'&&l.id)return nm(l.id)+' 인출';return ''};
@@ -6101,6 +6105,18 @@ function revRow(){const c=revCnt();return `<button class="flrow revrow" id="revg
 // 동기화: 별도 키 gv_rev, 카드별로 나중 기록(at)이 이김
 setTimeout(()=>{try{if(!PKEYS.includes('gv_rev'))PKEYS.push('gv_rev')}catch(e){}},0);
 {const _mi=mergeIn;mergeIn=function(o){const loc=revSt();const r=_mi.apply(this,arguments);try{const rem=(o&&o.gv_rev)||{},m=Object.assign({},loc);for(const k in rem){const a=m[k],b=rem[k];if(!b)continue;if(!a||(b.at||0)>(a.at||0))m[k]=Object.assign({},b,{n:Math.max(b.n||0,(a&&a.n)||0)});else m[k]=Object.assign({},a,{n:Math.max(a.n||0,b.n||0)})}LS.set('gv_rev',m)}catch(e){}return r}}
+
+// r72-1·2: 7일 코스 미학습 목록 순서 — 종류·과목 비율대로 고르게 섞음(결정적: 전체 목록 안 순번/과목 수). 순서만 바꾸고 진도(gv_pseen·gv_pass*)는 그대로
+{const _ps=passStat;passStat=function(){const st=_ps.apply(this,arguments);try{if(!st||!st.U||!st.un)return st;
+ const ck=x=>(x.k||'')+'|'+((x.t&&x.t.cat)||(x.p&&x.p.cat)||(x.q&&x.q.cat)||passSubj(x)||'');const n={},r=new Map();
+ st.U.forEach(x=>{const c=ck(x);r.set(x,n[c]=(n[c]||0)+1)});
+ let un=st.un.map((x,i)=>[x,(r.get(x)-0.5)/n[ck(x)],i]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).map(a=>a[0]);
+ // 코스 B: 오늘 분량 안에 용어 카드가 있으면, 그 용어가 정답인 인출 문항은 다음 날로 미룸
+ if(st.course=='B'&&st.need>0){const q=st.need,ans=x=>{const b=(x.p&&x.p.blanks)||(x.q&&x.q.blanks)||[];return b.flatMap(y=>[].concat(typeof y=='string'?y:(y.a||[])))};
+  const td=new Set(un.slice(0,q).filter(x=>x.k=='K'&&x.t).map(x=>x.t.term)),h=[],d=[];
+  un.forEach(x=>{if(h.length>=q)return d.push(x);if(x.k!='K'&&ans(x).some(v=>td.has(v)))return d.push(x);if(x.k=='K'&&x.t)td.add(x.t.term);h.push(x)});for(let g=0;g<3;g++){const kt=new Set(h.filter(x=>x.k=='K').map(x=>x.t.term)),bad=h.filter(x=>x.k!='K'&&ans(x).some(v=>kt.has(v)));if(!bad.length)break;bad.forEach(x=>{h.splice(h.indexOf(x),1);d.push(x)});
+   for(let j=0;j<d.length&&h.length<q;j++){const x=d[j];if(x.k=='K'||!ans(x).some(v=>kt.has(v))){h.push(x);d.splice(j--,1)}}}un=[...h,...d]}
+ st.un=un}catch(e){}return st}}
 // ---- settings & sync
 const PKEYS=['gv_passA','gv_passAc','gv_passc','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
 function progressObj(){const o={app:'geo-vocab',v:1,at:Date.now()};PKEYS.forEach(k=>o[k]=LS.get(k,null));return o}
