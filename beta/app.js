@@ -1614,10 +1614,23 @@ function rcRun(day){const L=rcNext(day).slice(0,S.kwN||20).map(x=>({x}));if(!L.l
   let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?1:0)}})};
  show()}
 function rcRow(){let s;try{s=rcStat()}catch(e){return ''}return `<button class="flrow revrow" id="rcgo"><i class="sbub" data-g="all">7</i><span>7일 코스 (거꾸로) <span class="small mut">(뜻 → 용어)</span></span><span class="small mut">${s.done}/${s.tot} · Day ${s.di+1}</span></button>`}
-{const _dm=dkDeckMenu;dkDeckMenu=function(){_dm.apply(this,arguments);if(!REV.length)return;document.querySelectorAll('#rcgo').forEach(e=>e.remove());const a=document.getElementById('prcgo')||document.getElementById('revgo');if(!a)return;a.insertAdjacentHTML('afterend',rcRow());const b=document.getElementById('rcgo');if(b)b.onclick=()=>{ovClose();rcMenu()}}}
+// r85: 진입점은 '코스' 탭(app30)으로 이동
 {const _rl=resumeLast;resumeLast=function(){const l=S.lastStart||{};if(l.m=='rcourse')return rcRun(l.d==null?undefined:l.d);return _rl.apply(this,arguments)}}
 setTimeout(()=>{try{if(!PKEYS.includes('gv_rpass'))PKEYS.push('gv_rpass')}catch(e){}},0);
 {const _mi=mergeIn;mergeIn=function(o){const loc=LS.get('gv_rpass',null);const r=_mi.apply(this,arguments);try{const b=o&&o.gv_rpass;if(b&&b.start){const a=loc||{start:b.start,done:{}},ra=a.rs||0,rb=b.rs||0;let m;if(ra!=rb)m=ra>rb?a:b;else m={start:a.start<b.start?a.start:b.start,done:Object.assign({},b.done||{},a.done||{}),at:Math.max(a.at||0,b.at||0),rs:ra};LS.set('gv_rpass',m)}else if(loc)LS.set('gv_rpass',loc)}catch(e){}return r}}
+
+;window.__gvStage=30;
+// r85: '코스' 탭 — 날짜·회차형 코스 진입점을 한곳에. 기록 키·동기화는 그대로(진입점만 이동)
+{const n=$('#nav'),d=n&&n.querySelector('button[data-m="deck"]');if(d&&!n.querySelector('button[data-m="course"]'))d.insertAdjacentHTML('afterend','<button data-m="course"><span class="ic">🗓️</span>코스</button>')}
+function coMenu(){let st=null;try{st=passStat()}catch(e){}const r7=(()=>{try{return plRemain(7)}catch(e){return 0}})(),r10=(()=>{try{return plRemain(10)}catch(e){return 0}})(),cp=(()=>{try{return cramPool().length}catch(e){return 0}})(),pl=(()=>{try{return plGet()}catch(e){return null}})();
+ const row=(id,ic,t,sub,r)=>`<button class="flrow" id="${id}"><i class="sbub" data-g="all">${ic}</i><span>${t}${sub?` <span class="small mut">${sub}</span>`:''}</span><span class="small mut">${r}</span></button>`;
+ const o=ov(`<h2>코스</h2><p class="small mut">날짜별로 나눠 푸는 코스와 벼락치기를 모았어요. 진도 기록은 그대로예요.</p>
+ <h3 class="small mut">7일 완주</h3><div class="fllist">${row('co7','7','7일 코스','(코스 '+(()=>{try{return passCourse()}catch(e){return 'A'}})()+')',st&&st.tot?`${st.done}/${st.tot} · 오늘 ${st.today}/${st.quota}`:'')}${(()=>{try{return rcRow()}catch(e){return ''}})()}</div>
+ <h3 class="small mut">주기 플랜</h3><div class="fllist">${row('copl7','7','7일 플랜','(주기 복습)',`${pl&&pl.len==7?'진행 중 · ':''}오늘 ${r7}개`)}${row('copl10','10','10일 플랜','(주기 복습)',`${pl&&pl.len==10?'진행 중 · ':''}오늘 ${r10}개`)}</div>
+ <h3 class="small mut">시험 직전</h3><div class="fllist">${row('cocram','⚡','벼락치기','',`우선 ${cp}개`)}</div>`);
+ const b=(id,f)=>{const e=o.querySelector('#'+id);if(e)e.onclick=()=>{ovClose();f()}};
+ b('co7',()=>homeAm());b('rcgo',()=>rcMenu());b('copl7',()=>plStart(7));b('copl10',()=>plStart(10));b('cocram',()=>cramMenu())}
+{const g=go;go=function(m){if(m=='course'){$$('#nav button').forEach(x=>x.classList.toggle('on',x.dataset.m=='course'));return coMenu()}return g.apply(this,arguments)}}
 
 ;window.__gvStage=7;
 // ---- settings & sync
