@@ -72,7 +72,9 @@ function judge(ans,t){const a=norm(ans);if(!a)return 0;const al=aliases(t.term).
 ;window.__gvStage=2;
 const kw=t=>(t.keys||'').split(/,\s*/).map(x=>x.trim()).filter(Boolean);
 function bigr(s){s=String(s).replace(/[^가-힣A-Za-z0-9]/g,'');const o=new Set();for(let i=0;i<s.length-1;i++)o.add(s.slice(i,i+2));return o}
-const findT=n=>{if(!n)return null;const k=norm(n);return TM.get(n)||T.find(t=>aliases(t.term).includes(k))};
+// r82: 별칭 역색인(첫 일치 우선 = 기존 T.find와 같은 결과). 호출마다 전 용어 별칭을 다시 정규화하던 O(N) 탐색이 단어장 '전체 과목' 열기에서 수 초 걸리던 원인
+let _fx=null,_fxN=-1;function _fidx(){if(_fx&&_fxN===T.length)return _fx;_fx=new Map();_fxN=T.length;T.forEach(t=>aliases(t.term).forEach(a=>{if(!_fx.has(a))_fx.set(a,t)}));return _fx}
+const findT=n=>{if(!n)return null;return TM.get(n)||_fidx().get(norm(n))||null};
 function diagTerm(R,P){if(!P||P===R)return '';if(P.stub)return `<div class="diag"><div class="dh">❌ 고른 답: ${esc(P.term)}</div>${R.dw&&R.dw[P.term]?`<div class="dh">🎯 핵심 구별</div><div>${esc(R.dw[P.term])}</div>`:''}<div class="dh">✅ 정답 ${esc(R.term)}</div><div>${esc(R.keys||R.def)}</div></div>`;const rk=kw(R),pk=kw(P);const base=s=>s.replace(/\(.*?\)/g,'').trim();
  const vsHit=(R.vs&&R.vs.includes(base(P.term)))?R.vs:(P.vs&&P.vs.includes(base(R.term)))?P.vs:'';
  const common=rk.filter(k=>pk.some(p=>p.includes(k)||k.includes(p)));
