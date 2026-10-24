@@ -1581,6 +1581,44 @@ function prcRow(){const c=prcCnt(PRC);return `<button class="flrow revrow" id="p
 setTimeout(()=>{try{if(!PKEYS.includes('gv_prc'))PKEYS.push('gv_prc')}catch(e){}},0);
 {const _mi=mergeIn;mergeIn=function(o){const loc=prcSt();const r=_mi.apply(this,arguments);try{const rem=(o&&o.gv_prc)||{},m=Object.assign({},loc);for(const k in rem){const a=m[k],b=rem[k];if(!b)continue;if(!a||(b.at||0)>(a.at||0))m[k]=Object.assign({},b,{n:Math.max(b.n||0,(a&&a.n)||0)});else m[k]=Object.assign({},a,{n:Math.max(a.n||0,b.n||0)})}LS.set('gv_prc',m)}catch(e){}return r}}
 
+;window.__gvStage=29;
+// r84: 7일 코스 (거꾸로) — 반대 모드 카드(data_reverse.json)를 7일로 나눔. 날마다 과목 비율대로 고르게, 용어 중복 없음(결정적 분배). 별도 기록 gv_rpass{start,done}, 채점은 gv_rev에도 반영
+function rcPlan(){if(rcPlan._c&&rcPlan._n==REV.length)return rcPlan._c;const P=revPool(),n={},r=new Map();P.forEach(x=>{const c=revTerm(x).cat||'';r.set(x,n[c]=(n[c]||0)+1)});
+ const D=[[],[],[],[],[],[],[]];P.map((x,i)=>[x,(r.get(x)-0.5)/n[revTerm(x).cat||''],i]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).forEach(a=>D[Math.min(6,Math.floor(a[1]*7))].push(a[0]));rcPlan._n=REV.length;return rcPlan._c=D}
+function rcGet(){let p=LS.get('gv_rpass',null);if(!p||!p.start){p={start:kstYMD(),done:{}};LS.set('gv_rpass',p)}p.done=p.done||{};return p}
+function rcDay(p){return Math.max(0,Math.min(6,Math.floor((Date.parse(kstYMD())-Date.parse(p.start))/864e5)))}
+function rcStat(){const p=rcGet(),D=rcPlan(),di=rcDay(p);const days=D.map(L=>({n:L.length,d:L.filter(x=>p.done[x.t]).length}));const tot=days.reduce((a,b)=>a+b.n,0),done=days.reduce((a,b)=>a+b.d,0);return {p,D,di,days,tot,done}}
+function rcNext(day){const s=rcStat(),idx=day==null?[...Array(s.di+1).keys()]:[day];return idx.flatMap(i=>s.D[i].filter(x=>!s.p.done[x.t]))}
+function rcMenu(){const s=rcStat(),pct=s.tot?Math.round(s.done/s.tot*1000)/10:0;
+ const o=ov(`<div class="prcm"><h2>7일 코스 (거꾸로)</h2><p class="small mut">뜻을 보고 용어를 떠올리는 반대 모드 카드 ${s.tot}장을 7일로 나눴어요. 날마다 과목이 고르게 섞이고, 같은 용어는 한 번만 나와요. 밀린 날 카드부터 먼저 나와요.</p>
+ <div class="pbar" style="margin:8px 0"><i style="width:${pct}%"></i></div><div class="small mut" style="margin-bottom:10px">${s.done}/${s.tot}장 (${pct}%) · 오늘 Day ${s.di+1}</div>
+ <div class="fllist" id="rcdays">${s.days.map((d,i)=>`<button class="flrow" data-d="${i}"><i class="sbub" data-g="all">${i+1}</i><span>Day ${i+1}${i==s.di?' <span class="small">· 오늘</span>':''}</span><span class="small mut">${d.d}/${d.n}${d.d>=d.n?' ✓':''}</span></button>`).join('')}</div>
+ <button class="cta" id="rcst">${s.done>=s.tot?'완주했어요 🎉':'오늘 분량 이어하기'}</button><button class="sbtn" id="rcrs">처음부터 다시</button><button class="sbtn" id="rcx">닫기</button></div>`);
+ o.querySelector('#rcdays').onclick=e=>{const b=e.target.closest('button');if(!b)return;ovClose();rcRun(+b.dataset.d)};
+ o.querySelector('#rcst').onclick=()=>{ovClose();rcRun()};o.querySelector('#rcx').onclick=ovClose;
+ o.querySelector('#rcrs').onclick=()=>{if(!confirm('거꾸로 7일 코스 진도를 지우고 오늘부터 다시 시작할까요? (반대 모드 기록은 그대로)'))return;LS.set('gv_rpass',{start:kstYMD(),done:{},at:Date.now(),rs:Date.now()});ovClose();rcMenu()}}
+function rcRun(day){const L=rcNext(day).slice(0,S.kwN||20).map(x=>({x}));if(!L.length){toast(day==null?'오늘 분량을 다 했어요':'이 날 카드를 다 봤어요');return}let i=0,ok=0,bad=0;const done=new Set();
+ S.lastStart={m:'rcourse',d:day==null?null:day};try{save()}catch(e){}
+ const o=ov('<div id="am"></div>');o.classList.add('amov');const box=o.querySelector('#am');
+ const fin=()=>{const p=done.size?Math.round(ok/done.size*100):0,s=rcStat();box.innerHTML=`<div class="rescard"><div class="ring" style="--p:${p};margin:0 auto 14px"><b>${p}%</b></div><div class="big">${done.size}장</div><div class="mut">외웠어요 ${ok} · 헷갈려요 ${bad}</div><div class="small mut">거꾸로 7일 코스 ${s.done}/${s.tot}</div></div><button class="cta" id="amnx">다음 세트</button><button class="sbtn" id="amx">닫기</button>`;box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();rcRun(day)};box._k=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();box.querySelector('#amnx').click()}}};
+ const kh=e=>{if(!document.body.contains(box)){document.removeEventListener('keydown',kh);return}if(e.target.closest&&e.target.closest('input,textarea'))return;box._k&&box._k(e)};document.addEventListener('keydown',kh);
+ const show=()=>{if(i>=L.length)return fin();const x=L[i].x,t=revTerm(x);
+  box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
+  <div class="amcard revc" id="amc"><div class="amf"><div class="small amcat">7일 코스 (거꾸로) · ${esc(t.cat)}</div><div class="amdef revq">${esc(x.d)}</div>${x.k?`<div class="ambx"><b>키워드</b> ${esc(x.k)}</div>`:''}<div class="small mut amhint">어떤 용어일까요? 탭해서 확인</div></div>
+  <div class="amb hide"><div class="small amcat">${esc(t.cat)}</div><div class="amterm2">${esc(t.term)}</div>${t.en?`<div class="small mut">${esc(t.en)}</div>`:''}<div class="amdef">${esc(x.d)}</div></div></div>
+  <div class="ambtn"><button class="sbtn bad" id="amn">헷갈려요</button><button class="sbtn ok" id="amy">외웠어요</button></div>`;
+  const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
+  const grade=g=>{if(!L[i].rq){const st=revSt(),r=st[x.t]||{n:0};st[x.t]={g:g?1:0,n:(r.n||0)+1,at:Date.now()};LS.set('gv_rev',st);const p=rcGet();p.done[x.t]=Date.now();p.at=Date.now();LS.set('gv_rpass',p);done.add(x.t);g?ok++:bad++;if(!g)L.splice(Math.min(L.length,i+4),0,{x,rq:1})}i++;show()};
+  box.querySelector('#amy').onclick=()=>grade(1);box.querySelector('#amn').onclick=()=>grade(0);
+  box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='ArrowRight'||e.key=='j')grade(1);else if(e.key=='ArrowLeft'||e.key=='f')grade(0)};
+  let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?1:0)}})};
+ show()}
+function rcRow(){let s;try{s=rcStat()}catch(e){return ''}return `<button class="flrow revrow" id="rcgo"><i class="sbub" data-g="all">7</i><span>7일 코스 (거꾸로) <span class="small mut">(뜻 → 용어)</span></span><span class="small mut">${s.done}/${s.tot} · Day ${s.di+1}</span></button>`}
+{const _dm=dkDeckMenu;dkDeckMenu=function(){_dm.apply(this,arguments);if(!REV.length)return;document.querySelectorAll('#rcgo').forEach(e=>e.remove());const a=document.getElementById('prcgo')||document.getElementById('revgo');if(!a)return;a.insertAdjacentHTML('afterend',rcRow());const b=document.getElementById('rcgo');if(b)b.onclick=()=>{ovClose();rcMenu()}}}
+{const _rl=resumeLast;resumeLast=function(){const l=S.lastStart||{};if(l.m=='rcourse')return rcRun(l.d==null?undefined:l.d);return _rl.apply(this,arguments)}}
+setTimeout(()=>{try{if(!PKEYS.includes('gv_rpass'))PKEYS.push('gv_rpass')}catch(e){}},0);
+{const _mi=mergeIn;mergeIn=function(o){const loc=LS.get('gv_rpass',null);const r=_mi.apply(this,arguments);try{const b=o&&o.gv_rpass;if(b&&b.start){const a=loc||{start:b.start,done:{}},ra=a.rs||0,rb=b.rs||0;let m;if(ra!=rb)m=ra>rb?a:b;else m={start:a.start<b.start?a.start:b.start,done:Object.assign({},b.done||{},a.done||{}),at:Math.max(a.at||0,b.at||0),rs:ra};LS.set('gv_rpass',m)}else if(loc)LS.set('gv_rpass',loc)}catch(e){}return r}}
+
 ;window.__gvStage=7;
 // ---- settings & sync
 const PKEYS=['gv_passA','gv_passAc','gv_passc','gv_course','gv_marks','gv_srs','gv_hist','gv_acc','gv_wrong','gv_wrongq','gv_mocks','gv_set','gv_user','gv_deck','gv_plan','gv_listen','gv_ft','gv_sq','gv_ec','gv_sf','gv_miss','gv_kwseen','gv_kwres','gv_pass'];
