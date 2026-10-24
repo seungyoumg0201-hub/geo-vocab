@@ -10,8 +10,9 @@
 | **베타 (beta)** | https://seungyoumg0201-hub.github.io/geo-vocab/beta/ | 새 기능 시험용. 밤샘(nightly) 작업은 여기에만 배포 |
 
 ### 안정판 동결 규칙
-- 현재 안정판: **v6-r83**, git 태그 **`stable-v6-r83`** (이전: `stable-v6-r81`)
-- 변경 이력: r83(2026-10-24, 사용자 승인 승격) — 베타 v6-r83b 승격. 원리 카드 덱 89장(현상→원리 플립, 별도 진도 gv_prc), 단어장 '전체 과목' 열기 지연 수정(findT 별칭 역색인, 6~9초→0.3초 미만), 단어장 동결 유지
+- 현재 안정판: **v6-r86**, git 태그 **`stable-v6-r86`** (이전: `stable-v6-r83`)
+- 변경 이력: r86(2026-10-24, 사용자 승인 승격) — 베타 v6-r86b 승격. 하단 '코스' 탭 신설(7일 코스·7일 거꾸로·7/10일 플랜·벼락치기), 반대(거꾸로) 모드 1342개 전체 + 정답 누설 전수 제거, 단어장 동결 유지
+- r83(2026-10-24, 사용자 승인 승격) — 베타 v6-r83b 승격. 원리 카드 덱 89장(현상→원리 플립, 별도 진도 gv_prc), 단어장 '전체 과목' 열기 지연 수정(findT 별칭 역색인, 6~9초→0.3초 미만), 단어장 동결 유지
 - r81(2026-10-24, 사용자 승인 승격) — 베타 v6-r81b 검증 후 승격. 기출 누락 보강 인출 n197–n217(2022 개정 지리 선택과목 포함), 단어장 동결 유지
 - r79(2026-10-23, 사용자 승인 치명적 수정) — 로그인 기기에서 최신 크롬이 `requestIdleCallback(fn, 1)`을 거부해 초기화가 app9에서 멈추던 문제 수정
 - 안정판 주소(저장소 루트의 `index.html`·`app.js`·`sw.js`)에는 **사용자가 승인한 치명적 수정만** 배포한다.
@@ -44,7 +45,7 @@ curl -s "https://seungyoumg0201-hub.github.io/geo-vocab/beta/sw.js?nc=$RANDOM" |
 2. 루트 앱 파일만 되돌리기:
    ```
    cd /tmp/pub && git pull
-   git checkout stable-v6-r81 -- index.html app.js sw.js   # 직전 정상 태그(r83 이전)
+   git checkout stable-v6-r83 -- index.html app.js sw.js   # 직전 정상 태그(r86 이전)
    git commit -m "rollback to stable-v6-r79" && git push
    ```
 3. 확인: `curl -s "https://seungyoumg0201-hub.github.io/geo-vocab/sw.js?nc=$RANDOM" | head -c 22` 가 `const VER='v6-r79';con`
