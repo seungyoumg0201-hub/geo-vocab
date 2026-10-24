@@ -72,7 +72,9 @@ function judge(ans,t){const a=norm(ans);if(!a)return 0;const al=aliases(t.term).
 ;window.__gvStage=2;
 const kw=t=>(t.keys||'').split(/,\s*/).map(x=>x.trim()).filter(Boolean);
 function bigr(s){s=String(s).replace(/[^가-힣A-Za-z0-9]/g,'');const o=new Set();for(let i=0;i<s.length-1;i++)o.add(s.slice(i,i+2));return o}
-const findT=n=>{if(!n)return null;const k=norm(n);return TM.get(n)||T.find(t=>aliases(t.term).includes(k))};
+// r82: 별칭 역색인(첫 일치 우선 = 기존 T.find와 같은 결과). 호출마다 전 용어 별칭을 다시 정규화하던 O(N) 탐색이 단어장 '전체 과목' 열기에서 수 초 걸리던 원인
+let _fx=null,_fxN=-1;function _fidx(){if(_fx&&_fxN===T.length)return _fx;_fx=new Map();_fxN=T.length;T.forEach(t=>aliases(t.term).forEach(a=>{if(!_fx.has(a))_fx.set(a,t)}));return _fx}
+const findT=n=>{if(!n)return null;return TM.get(n)||_fidx().get(norm(n))||null};
 function diagTerm(R,P){if(!P||P===R)return '';if(P.stub)return `<div class="diag"><div class="dh">❌ 고른 답: ${esc(P.term)}</div>${R.dw&&R.dw[P.term]?`<div class="dh">🎯 핵심 구별</div><div>${esc(R.dw[P.term])}</div>`:''}<div class="dh">✅ 정답 ${esc(R.term)}</div><div>${esc(R.keys||R.def)}</div></div>`;const rk=kw(R),pk=kw(P);const base=s=>s.replace(/\(.*?\)/g,'').trim();
  const vsHit=(R.vs&&R.vs.includes(base(P.term)))?R.vs:(P.vs&&P.vs.includes(base(R.term)))?P.vs:'';
  const common=rk.filter(k=>pk.some(p=>p.includes(k)||k.includes(p)));
@@ -1538,6 +1540,46 @@ setTimeout(()=>{try{if(!PKEYS.includes('gv_rev'))PKEYS.push('gv_rev')}catch(e){}
 
 // r77: 헷갈려요(중간 단계) — 아직 못 외움. 헷갈려요 표시(marks=bad)로 기존 헷갈려요 목록·통계와 같은 기준, SRS는 '어려움'(2): 몰라요(10분)보다 늦고 알아요보다 빨리 다시 나옴. 오답노트엔 넣지 않음
 function gvHard(term,src){try{const a=acc[term]||(acc[term]={c:0,n:0,s:0});a.n++;a.s=0;const h=H();h.n++;try{snap&&snap([term])}catch(e){}marks[term]='bad';srs[term]=sched(srs[term],2);{const c=srs[term],n=Date.now();if(c&&c.due>n)c.due=n+Math.max(36e5,(c.due-n)/2)}try{actItem&&ACT&&ACT.cur&&actItem('T:'+term,false,'')}catch(e){}}catch(e){}}
+
+;window.__gvStage=28;
+// r82: 원리 카드 — 현상·질문(앞) → 인과 설명·키워드(뒤). 별도 데이터(data_principles.json)·별도 기록(gv_prc). 단어장 진도·SRS와 무관
+var PRC=(()=>{try{return JSON.parse(document.getElementById('prcd').textContent).items||[]}catch(e){return []}})();
+function prcSt(){return LS.get('gv_prc',{})||{}}
+function prcFs(){const o=[];PRC.forEach(x=>{if(!o.includes(x.f))o.push(x.f)});return o}
+function prcPool(){const f=S.prcF||'all';return PRC.filter(x=>f=='all'||x.f==f)}
+function prcCnt(P){P=P||prcPool();const st=prcSt(),n=Date.now();let ok=0,hd=0,un=0,due=0;P.forEach(x=>{const r=st[x.id];if(!r)un++;else{r.g==2?ok++:hd++;if(r.c&&r.c.due<=n)due++}});return {n:P.length,ok,hd,un,due}}
+function prcOrder(){const st=prcSt(),P=prcPool(),n=Date.now(),d=x=>(st[x.id].c&&st[x.id].c.due)||0;
+ const hd=P.filter(x=>st[x.id]&&st[x.id].g<2).sort((a,b)=>st[a.id].g-st[b.id].g||d(a)-d(b)),un=P.filter(x=>!st[x.id]),okd=P.filter(x=>st[x.id]&&st[x.id].g==2&&d(x)<=n).sort((a,b)=>d(a)-d(b)),okl=P.filter(x=>st[x.id]&&st[x.id].g==2&&d(x)>n).sort((a,b)=>d(a)-d(b));
+ return [...hd,...okd,...un,...okl]}
+function prcMenu(){const fs=prcFs(),f=S.prcF||'all',c=prcCnt(),ch=(k,l,P)=>`<button class="icchip ${f==k?'on':''}" data-f="${esc(k)}">${esc(l)} <span class="small">${P.length}</span></button>`;
+ const o=ov(`<div class="prcm"><h2>원리 카드</h2><p class="small mut">현상을 보고 원인을 떠올린 뒤 뒤집어 확인해요. 몰라요·헷갈려요는 곧 다시, 알아요는 간격을 늘려 다시 나와요.</p>
+ <div class="icchips" id="prcf">${ch('all','전체',PRC)}${fs.map(k=>ch(k,k,PRC.filter(x=>x.f==k))).join('')}</div>
+ <div class="small mut" id="prcs" style="margin:10px 0">${c.n}장 · 알아요 ${c.ok} · 학습 중 ${c.hd} · 새 카드 ${c.un}${c.due?` · 복습 ${c.due}`:''}</div>
+ <button class="cta" id="prcst">시작하기</button><button class="sbtn" id="prcx">닫기</button></div>`);
+ o.querySelector('#prcf').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.prcF=b.dataset.f;try{save()}catch(e){}ovClose();prcMenu()};
+ o.querySelector('#prcst').onclick=()=>{ovClose();prcRun()};o.querySelector('#prcx').onclick=ovClose}
+function prcRun(){const L=prcOrder().slice(0,S.kwN||20).map(x=>({x}));if(!L.length){toast('카드가 없어요');return}let i=0,ok=0,hd=0,bad=0;const done=new Set();
+ S.lastStart={m:'prc'};try{save()}catch(e){}
+ const o=ov('<div id="am"></div>');o.classList.add('amov');const box=o.querySelector('#am');
+ const fin=()=>{const p=done.size?Math.round(ok/done.size*100):0;box.innerHTML=`<div class="rescard"><div class="ring" style="--p:${p};margin:0 auto 14px"><b>${p}%</b></div><div class="big">${done.size}장</div><div class="mut">알아요 ${ok} · 헷갈려요 ${hd} · 몰라요 ${bad}</div></div><button class="cta" id="amnx">다음 세트</button><button class="sbtn" id="amx">닫기</button>`;box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();prcRun()};box._k=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();box.querySelector('#amnx').click()}}};
+ const kh=e=>{if(!document.body.contains(box)){document.removeEventListener('keydown',kh);return}if(e.target.closest&&e.target.closest('input,textarea'))return;box._k&&box._k(e)};document.addEventListener('keydown',kh);
+ const show=()=>{if(i>=L.length)return fin();const x=L[i].x;
+  box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
+  <div class="amcard prcc" id="amc"><div class="amf"><div class="small amcat">원리 카드 · ${esc(x.f)}</div><div class="amdef revq">${esc(x.q)}</div><div class="small mut amhint">원인을 떠올려 보고 탭해서 확인</div></div>
+  <div class="amb hide"><div class="small amcat">${esc(x.f)}</div><div class="amdef">${esc(x.a)}</div>${x.k?`<div class="ambx"><b>키워드</b> ${esc(x.k)}</div>`:''}${x.src?`<div class="small mut">출처: ${esc(x.src)}</div>`:''}</div></div>
+  <div class="ambtn"><button class="sbtn bad" id="amn">✗ 몰라요</button><button class="sbtn mid" id="amh">△ 헷갈려요</button><button class="sbtn ok" id="amy">✓ 알아요</button></div>`;
+  const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
+  const grade=g=>{if(!L[i].rq){const st=prcSt(),r=st[x.id]||{n:0};st[x.id]={g,c:sched(r.c,[1,2,3][g]),n:(r.n||0)+1,at:Date.now()};LS.set('gv_prc',st);done.add(x.id);g==2?ok++:g==1?hd++:bad++}
+   if(g<2)L.splice(Math.min(L.length,i+(g?8:4)),0,{x,rq:1});i++;show()};
+  box.querySelector('#amy').onclick=()=>grade(2);box.querySelector('#amh').onclick=()=>grade(1);box.querySelector('#amn').onclick=()=>grade(0);
+  box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='ArrowRight'||e.key=='j')grade(2);else if(e.key=='ArrowDown'||e.key=='h')grade(1);else if(e.key=='ArrowLeft'||e.key=='f')grade(0)};
+  let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?2:0)}})};
+ show()}
+function prcRow(){const c=prcCnt(PRC);return `<button class="flrow revrow" id="prcgo"><i class="sbub" data-g="all">원</i><span>현상 보고 원리 떠올리기 <span class="small mut">(원리 카드)</span></span><span class="small mut">${c.n}장 · 알아요 ${c.ok} · 학습 중 ${c.hd}</span></button>`}
+{const _dm=dkDeckMenu;dkDeckMenu=function(){_dm.apply(this,arguments);if(!PRC.length)return;document.querySelectorAll('#prcgo').forEach(e=>e.remove());const r=document.getElementById('revgo');if(r)r.insertAdjacentHTML('afterend',prcRow());else{const l=[...document.querySelectorAll('.fllist')].pop();if(!l)return;l.insertAdjacentHTML('afterend',`<h3 class="small mut">다른 방식</h3><div class="fllist">${prcRow()}</div>`)}document.getElementById('prcgo').onclick=()=>{ovClose();prcMenu()}}}
+{const _rl=resumeLast;resumeLast=function(){const l=S.lastStart||{};if(l.m=='prc')return prcRun();return _rl.apply(this,arguments)}}
+setTimeout(()=>{try{if(!PKEYS.includes('gv_prc'))PKEYS.push('gv_prc')}catch(e){}},0);
+{const _mi=mergeIn;mergeIn=function(o){const loc=prcSt();const r=_mi.apply(this,arguments);try{const rem=(o&&o.gv_prc)||{},m=Object.assign({},loc);for(const k in rem){const a=m[k],b=rem[k];if(!b)continue;if(!a||(b.at||0)>(a.at||0))m[k]=Object.assign({},b,{n:Math.max(b.n||0,(a&&a.n)||0)});else m[k]=Object.assign({},a,{n:Math.max(a.n||0,b.n||0)})}LS.set('gv_prc',m)}catch(e){}return r}}
 
 ;window.__gvStage=7;
 // ---- settings & sync
