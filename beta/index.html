@@ -2,7 +2,7 @@
 var api={getItem:function(k){return R.getItem(P+k)},setItem:function(k,v){R.setItem(P+k,String(v))},removeItem:function(k){R.removeItem(P+k)},clear:function(){ks().forEach(function(k){R.removeItem(P+k)})},key:function(i){var a=ks();return i<a.length?a[i]:null}};
 var px=new Proxy(api,{get:function(t,k){if(k==='length')return ks().length;if(Object.prototype.hasOwnProperty.call(api,k))return api[k];if(typeof k=='string'){var v=R.getItem(P+k);return v==null?undefined:v}},set:function(t,k,v){R.setItem(P+k,String(v));return true},deleteProperty:function(t,k){R.removeItem(P+k);return true},has:function(t,k){return R.getItem(P+k)!=null},ownKeys:function(){return ks()},getOwnPropertyDescriptor:function(t,k){var v=R.getItem(P+k);if(v!=null)return {value:v,enumerable:true,configurable:true,writable:true}}});
 Object.defineProperty(window,'localStorage',{configurable:true,get:function(){return px}});window.__gvBeta=1}catch(e){window.__gvBetaErr=String(e)}})();</script><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>[베타] 지리 임용 단어장</title><meta name="app-version" content="v6-r82b"><script>/* r74 앱 밖 복구: 초기화가 12초 안에 안 끝나면 서비스워커·캐시만 지우고 1번 새로고침(학습 기록 localStorage·IndexedDB는 그대로) */
+<title>[베타] 지리 임용 단어장</title><meta name="app-version" content="v6-r83b"><script>/* r74 앱 밖 복구: 초기화가 12초 안에 안 끝나면 서비스워커·캐시만 지우고 1번 새로고침(학습 기록 localStorage·IndexedDB는 그대로) */
 (function(){var K='gv_recov';setTimeout(function(){if(window.__gvOK)return;try{var t=+sessionStorage.getItem(K)||0;if(Date.now()-t<6e5)return;sessionStorage.setItem(K,Date.now())}catch(e){return}
 var p=[];try{if(navigator.serviceWorker)p.push(navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.filter(function(r){return r.scope.indexOf('/beta/')>=0}).map(function(r){return r.unregister()}))}))}catch(e){}
 try{if(window.caches)p.push(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return /^gvb-/.test(k)}).map(function(k){return caches.delete(k)}))}))}catch(e){}
@@ -501,7 +501,7 @@ details[open]>summary::after{transform:rotate(180deg)!important}
 
 /* r77 헷갈려요 */.sbtn.mid{background:var(--card);color:var(--ok,#2b8a3e);border:2px solid var(--ok,#2b8a3e)!important;min-height:48px;font-weight:700}#plbtn .sbtn.mid{min-height:52px}
 </style></head><body>
-<header><div class="hd"><h1><img class="lg" src="../icons/icon.svg?v=3" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r82b</span></h1>
+<header><div class="hd"><h1><img class="lg" src="../icons/icon.svg?v=3" alt="" width="24" height="24">지리 임용 <b>단어장</b><span class="verchip">v6-r83b</span></h1>
 <nav id="nav"><button data-m="home" class="on"><span class="ic">🏠</span>홈</button><button data-m="word"><span class="ic">🃏</span>단어<span class="lf">학습</span></button><button data-m="kw"><span class="ic">✍️</span>인출<span class="lf">학습</span></button><button data-m="mem"><span class="ic">🧠</span>암기<span class="lf">학습</span></button><button data-m="review" class="pcx"><span class="ic">🔁</span>복습<span class="bdg hide" id="navdue"></span></button><button data-m="stats" class="pcx"><span class="ic">📊</span>통계</button><button data-m="data" class="pcx"><span class="ic">⚙️</span>설정</button><button data-m="more" class="mox"><span class="ic">☰</span>더보기<span class="bdg hide" id="navdue2"></span></button></nav>
 <button class="ib" id="theme" aria-label="다크 모드 전환">🌙</button></div></header>
 <main>
@@ -4657,5 +4657,5 @@ details[open]>summary::after{transform:rotate(180deg)!important}
  window.addEventListener('load',function(){setTimeout(function(){if(!window.__gvOK)show('앱 초기화가 끝나지 않음 (마지막 단계 app'+(window.__gvStage||'?')+')'+(window.__gvRej?' / 거부: '+window.__gvRej:''),'init')},1500)});
 })();
 
-</script><script src="app.js?v=v6-r82b"></script><script>
+</script><script src="app.js?v=v6-r83b"></script><script>
 </script></body></html>
