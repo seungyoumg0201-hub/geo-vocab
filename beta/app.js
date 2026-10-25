@@ -1288,7 +1288,7 @@ function icQ(){const c0=cat;cat='전체';try{return kwPool('w16')}finally{cat=c0
 function icPool(c,id){id=id||'exam';const sj=DSUBJ.includes(id);const ok=x=>{const s=itSubj(x);return sj?s==id:(s&&sfOk({cat:s}))};const P=dkPool(id).filter(ok),Q=icQ().filter(ok);
  const isSq=x=>x.k=='B'&&x.p&&/서술|비교하|구하시오/.test(x.p.task||'');if(c=='bl')return P.filter(x=>(x.k=='B'&&!isSq(x))||x.k=='W'||x.k=='S'||x.k=='V');if(c=='kw')return P.filter(x=>x.k=='K');if(c=='sq')return [...P.filter(isSq),...Q];
  return [...P.filter(x=>x.k!='K'),...P.filter(x=>x.k=='K'),...Q]}
-function icRun(L,title){const sn=kwSeen(),un=L.filter(x=>!sn[kwKey(x)]&&!sn[seenKey(x)]),rest=L.filter(x=>sn[kwKey(x)]||sn[seenKey(x)]);const R=[...shuffle(un),...rest].slice(0,S.kwN||20);R.length?kwRun(R,title):toast('문항이 없어요')}
+function icRun(L,title){const sn=kwSeen(),un=L.filter(x=>!sn[kwKey(x)]&&!sn[seenKey(x)]),rest=L.filter(x=>sn[kwKey(x)]||sn[seenKey(x)]);const R=[...shuffle(un),...rest].slice(0,S.kwAll?L.length:(S.kwN||20));R.length?kwRun(R,title):toast('문항이 없어요')}
 function icSel(){const a=S.icCats;return Array.isArray(a)&&a.length&&!a.includes('wb')?a:['bl','kw','sq']}
 function icUnion(id){const m=new Map();icSel().forEach(c=>icPool(c,id).forEach(x=>{const k=kwKey(x);if(!m.has(k))m.set(k,x)}));return [...m.values()]}
 function icLbl(){const a=icSel();return a.length==3?'전체':a.map(k=>ICAT.find(x=>x[0]==k)[1]).join('+')}
@@ -1349,19 +1349,27 @@ dkDeckMenu=function(){const L=[['all','전체 과목'],...ISUBJ.map(c=>[c,c])];
  o.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{ovClose();dkSheet(b.dataset.c)})};
 dkSubjList=dkDeckMenu;
 // 2단계: 과목 화면
+// r88: 문항 수 슬라이더(1~현재 범위 전체) — 드래그·클릭·숫자 입력·'전체'
+(function(){if(document.getElementById('npkcss'))return;const st=document.createElement('style');st.id='npkcss';st.textContent='.npk{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%}.npk input[type=range]{flex:1 1 140px;min-width:120px;height:32px;accent-color:var(--acc,#3a7);touch-action:pan-y}.npk input[type=number]{width:64px;padding:6px;border-radius:8px;border:1px solid var(--bd,#ccc);background:transparent;color:inherit;font:inherit;text-align:center}.npk .npall{padding:6px 10px}.npk .npall.on{outline:2px solid var(--acc,#3a7)}.npr{flex-wrap:wrap}';document.head.appendChild(st)})();
+function nPick(id,cur,max,all){max=Math.max(1,max|0);const v=all?max:Math.max(1,Math.min(cur|0||1,max));return `<div class="npk" id="${id}" data-max="${max}"><input type="range" min="1" max="${max}" step="1" value="${v}" aria-label="문항 수"><input type="number" min="1" max="${max}" step="1" value="${v}" inputmode="numeric" aria-label="문항 수 입력"><button type="button" class="sbtn npall ${all?'on':''}" aria-pressed="${all}">전체 ${max}</button></div>`}
+function nBind(o,id,max,cb){const w=o.querySelector('#'+id);if(!w)return;const r=w.querySelector('input[type=range]'),nm=w.querySelector('input[type=number]'),b=w.querySelector('.npall');max=Math.max(1,max|0);
+ const cl=v=>Math.max(1,Math.min(max,Math.round(+v)||1));const setAll=a=>{b.classList.toggle('on',a);b.setAttribute('aria-pressed',a)};
+ let tm=0;r.addEventListener('input',()=>{nm.value=r.value;setAll(false);clearTimeout(tm);tm=setTimeout(()=>cb(cl(r.value),false),180)});r.addEventListener('change',()=>{clearTimeout(tm);const v=cl(r.value);setAll(false);cb(v,false)});
+ nm.addEventListener('change',()=>{const v=cl(nm.value);nm.value=r.value=v;setAll(false);cb(v,false)});nm.addEventListener('keydown',e=>{if(e.key=='Enter'){e.preventDefault();nm.blur()}});
+ b.addEventListener('click',()=>{const a=!b.classList.contains('on');if(a){r.value=nm.value=max}setAll(a);cb(cl(r.value),a)})}
 dkSheet=function(id){if(id=='exam'||id=='core'){S.amScope='core';id='all'}const A=amTerms(id),P=inPool(id),sn=kwSeen(),seen=A.length-amUn(A),pct=A.length?Math.round(seen/A.length*100):0,sel=icSel();
  const o=ov(`${back()}<h2>${esc(dkName(id))}</h2><div class="pbar"><i style="width:${pct}%"></i></div><div class="small mut">${seen}/${A.length}장 (${pct}%)</div>
- <button class="cta" id="dkam">▶ 단어장 암기<small>안 본 카드부터 ${amN()||'전부'}장</small></button>
- <button class="sbtn sub2" id="dkin">✏️ 인출 · ${fmtLbl()} ${P.length}문항</button>
+ <button class="cta" id="dkam">▶ 단어장 암기<small>안 본 카드부터 <span id="dkamn">${amN()?Math.min(amN(),A.length):'전부'}</span>장</small></button>
+ <button class="sbtn sub2" id="dkin">✏️ 인출 · ${fmtLbl()} ${P.length}문항<small id="dkinn"> · ${S.kwAll?'전체':Math.min(S.kwN||20,P.length)+'개'}씩</small></button>
  <details class="fold" id="dkopt"><summary>옵션</summary>
- <div class="optr"><span class="small">단어장 장 수</span><div class="seg" id="amn">${[20,40,0].map(n=>`<button data-n="${n}" class="${amN()==n?'on':''}">${n||'전부'}</button>`).join('')}</div></div>
+ <div class="optr npr"><span class="small">단어장 장 수</span>${nPick('npam',amN()||A.length,A.length,!amN())}</div>
  <div class="optr"><span class="small">인출 유형</span><div class="icchips">${ICAT.map(([k,l])=>{const on=k=='all'?sel.length==3:sel.length<3&&sel.includes(k);const n=k=='all'?P.length:inPool(id,[k]).length;return `<button class="icchip ${on?'on':''}" aria-pressed="${on}" data-icc="${k}">${l}<small>${n}</small></button>`}).join('')}</div></div>
- <div class="optr"><span class="small">인출 문항 수</span><div class="seg" id="kwn">${[10,20,30,50].map(n=>`<button data-n="${n}" class="${(S.kwN||20)==n?'on':''}">${n}</button>`).join('')}</div></div>
+ <div class="optr npr"><span class="small">인출 문항 수</span>${nPick('npkw',S.kwAll?P.length:(S.kwN||20),P.length,!!S.kwAll)}</div>
  <div class="optr"><button class="sbtn" id="dklist">🔍 용어 목록·검색</button></div></details>`);
  bindBack(o,dkDeckMenu);const reopen=()=>{ovClose();dkSheet(id);const d=document.querySelector('#dkopt');d&&(d.open=true)};
  o.querySelector('#dkam').onclick=()=>{ovClose();amDeck(id)};o.querySelector('#dkin').onclick=()=>{ovClose();icDeck(id)};
- o.querySelectorAll('#amn [data-n]').forEach(b=>b.onclick=()=>{S.amN=+b.dataset.n;save();reopen()});
- o.querySelectorAll('#kwn [data-n]').forEach(b=>b.onclick=()=>{S.kwN=+b.dataset.n;save();reopen()});
+ nBind(o,'npam',A.length,(n,all)=>{S.amN=all?0:n;save();const e=o.querySelector('#dkamn');if(e)e.textContent=all?'전부':n});
+ nBind(o,'npkw',P.length,(n,all)=>{S.kwAll=all?1:0;if(!all)S.kwN=n;save();const e=o.querySelector('#dkinn');if(e)e.textContent=' · '+(all?'전체':n+'개')+'씩'});
  o.querySelectorAll('[data-icc]').forEach(b=>b.onclick=()=>{const k=b.dataset.icc;let a=icSel().slice();if(k=='all')a=['bl','kw','sq'];else{a=a.length==3?[k]:a.includes(k)?a.filter(x=>x!=k):[...a,k]}S.icCats=a.length?a:['bl','kw','sq'];save();reopen()});
  o.querySelector('#dklist').onclick=()=>{ovClose();deck=amScope()=='core'?'core':'all';cat=id=='all'?'전체':id;sub='전체';try{save()}catch(e){}listView=true;goRaw('card')}};
 // 옛 인출 화면·중복 진입점 → 단어장 과목 목록으로
