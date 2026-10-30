@@ -1649,7 +1649,7 @@ function yxRun(sj){const L0=yxItems(sj);if(!L0.length){toast('문항이 없어�
   passageUI(box,p,r=>{const ok=sq?r.score>=.75:r.bh==p.blanks.length;if(ok)c++;else{miss.push(p);try{wrongq[p.id]={n:((wrongq[p.id]||{}).n||0)+1,at:Date.now(),ok:0,psg:1}}catch(e){}}
    {const s2=kwSeen();s2['B:'+p.id]=1;LS.set('gv_kwseen',s2)}try{save()}catch(e){}
    box.insertAdjacentHTML('beforeend','<div class="row"><button class="sbtn pri" id="yxnx">'+(i+1<L.length?'다음':'결과 보기')+'</button></div>');box.querySelector('#yxnx').onclick=()=>{i++;show()}});
-  if(!sq){const w=box.querySelector('textarea');if(w){const h=w.previousElementSibling;if(h&&h.tagName=='H3')h.remove();w.remove()}}};
+  if(!sq){const w=box.querySelector('textarea');if(w){const h=w.previousElementSibling;if(h&&h.tagName=='H3')h.style.display='none';w.style.display='none'}}};
  const fin=()=>{const o=ov(`<h2>🎯 예상출제 끝!</h2><p><b>${c}/${L.length}</b> 통과 (서술형은 용어+채점 키워드 75% 이상)</p>${miss.length?`<div class="small mut">다시 볼 문항: ${miss.map(p=>esc(p.blanks.map(b=>b.a[0]).join('/'))).join(' · ')}</div>`:''}<div class="row"><button class="sbtn pri" id="yxag">예상출제 목록</button></div>`);o.querySelector('#yxag').onclick=()=>yxMenu()};
  show()}
 function yxMenu(){const sn=kwSeen(),un=L=>L.filter(x=>!sn[kwKey(x)]&&!sn[seenKey(x)]).length;
