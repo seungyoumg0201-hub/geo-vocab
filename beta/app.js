@@ -1644,12 +1644,22 @@ function coMenu(){let st=null;try{st=passStat()}catch(e){}const r7=(()=>{try{ret
 // r91: 예상출제 세트 (파이널 핵심정리 '예상 출제' 기반, PSG.yx). 코스 탭에서 진입
 const YX_S=['도시지리','문화·역사·정치지리','지역지리','지리교육론','지도학·GIS','지형학','기후학'];
 function yxItems(sj){return PSG.filter(p=>p.yx&&(!sj||sj=='all'||p.cat==sj)).map(p=>({k:'B',p,i:0,g:{}}))}
-function yxRun(sj){const L=yxItems(sj);if(!L.length){toast('문항이 없어요');return}const sn=kwSeen(),un=L.filter(x=>!sn[kwKey(x)]&&!sn[seenKey(x)]),rest=L.filter(x=>sn[kwKey(x)]||sn[seenKey(x)]);kwRun([...shuffle(un),...rest],'🎯 예상출제 · '+(sj=='all'?'전 과목':sj))}
+function yxRun(sj){const L0=yxItems(sj);if(!L0.length){toast('문항이 없어요');return}const sn=kwSeen(),un=L0.filter(x=>!sn[kwKey(x)]),rest=L0.filter(x=>sn[kwKey(x)]);const L=[...shuffle(un),...rest].map(x=>x.p),T='🎯 예상출제 · '+(sj=='all'?'전 과목':sj);let i=0,c=0;const miss=[];
+ const show=()=>{if(i>=L.length)return fin();const p=L[i],sq=p.fmt=='sq';const o=ov(`<div class="small mut" id="yxhd">${esc(T)} · ${i+1}/${L.length} · <b>${sq?'서술형':'기입형'}</b></div><div class="plq" id="yxps" data-fmt="${sq?'sq':'bl'}"></div>`);document.onkeydown=null;const box=o.querySelector('#yxps');
+  passageUI(box,p,r=>{const ok=sq?r.score>=.75:r.bh==p.blanks.length;if(ok)c++;else{miss.push(p);try{wrongq[p.id]={n:((wrongq[p.id]||{}).n||0)+1,at:Date.now(),ok:0,psg:1}}catch(e){}}
+   {const s2=kwSeen();s2['B:'+p.id]=1;LS.set('gv_kwseen',s2)}try{save()}catch(e){}
+   box.insertAdjacentHTML('beforeend','<div class="row"><button class="sbtn pri" id="yxnx">'+(i+1<L.length?'다음':'결과 보기')+'</button></div>');box.querySelector('#yxnx').onclick=()=>{i++;show()}});
+  if(!sq){const w=box.querySelector('textarea');if(w){const h=w.previousElementSibling;if(h&&h.tagName=='H3')h.remove();w.remove()}}};
+ const fin=()=>{const o=ov(`<h2>🎯 예상출제 끝!</h2><p><b>${c}/${L.length}</b> 통과 (서술형은 용어+채점 키워드 75% 이상)</p>${miss.length?`<div class="small mut">다시 볼 문항: ${miss.map(p=>esc(p.blanks.map(b=>b.a[0]).join('/'))).join(' · ')}</div>`:''}<div class="row"><button class="sbtn pri" id="yxag">예상출제 목록</button></div>`);o.querySelector('#yxag').onclick=()=>yxMenu()};
+ show()}
 function yxMenu(){const sn=kwSeen(),un=L=>L.filter(x=>!sn[kwKey(x)]&&!sn[seenKey(x)]).length;
  const rows=[['all','전 과목'],...YX_S.map(s=>[s,s])].map(([id,n])=>{const L=yxItems(id);return `<button class="flrow" data-yx="${esc(id)}"><i class="sbub" data-g="all">${id=='all'?'🎯':esc(n.slice(0,1))}</i><span>${esc(n)}</span><span class="small mut">${L.length}문항 · 안 푼 ${un(L)}</span></button>`}).join('');
  const o=ov(`<h2>🎯 예상출제</h2><p class="small mut">파이널 핵심정리의 '예상 출제' 개념으로 만든 기입형·서술형 문항이에요. 모범답안과 채점 포인트를 함께 볼 수 있어요.</p><div class="fllist" id="yxlist">${rows}</div>`);
  o.querySelectorAll('[data-yx]').forEach(b=>b.onclick=()=>{ovClose();yxRun(b.dataset.yx)})}
-{const _co=coMenu;coMenu=function(){const r=_co.apply(this,arguments);try{const c=document.querySelector('#cocram');const l=c&&c.closest('.fllist');if(l&&!document.querySelector('#coyx')){l.insertAdjacentHTML('afterend',`<h3 class="small mut">예상출제</h3><div class="fllist"><button class="flrow" id="coyx"><i class="sbub" data-g="all">🎯</i><span>예상출제 <span class="small mut">(파이널 핵심정리)</span></span><span class="small mut">${yxItems('all').length}문항</span></button></div>`);document.querySelector('#coyx').onclick=()=>{ovClose();yxMenu()}}}catch(e){}return r}}
+function yxEntry(){if(document.querySelector('#coyx'))return;const root=document.querySelector('#plov .plin')||document.querySelector('#plov');if(!root)return;const n=yxItems('all').length;const html=`<h3 class="small mut">예상출제</h3><div class="fllist"><button class="flrow" id="coyx"><i class="sbub" data-g="all">🎯</i><span>예상출제 <span class="small mut">(파이널 핵심정리)</span></span><span class="small mut">${n}문항</span></button></div>`;
+ const c=document.querySelector('#cocram'),l=c&&c.closest('.fllist');if(l&&root.contains(l))l.insertAdjacentHTML('afterend',html);else root.insertAdjacentHTML('beforeend',html);
+ const b=document.querySelector('#coyx');if(b)b.onclick=()=>{ovClose();yxMenu()}}
+{const _co=coMenu;coMenu=function(){const r=_co.apply(this,arguments);try{yxEntry()}catch(e){console.warn('yxEntry',e)}return r}}
 
 ;window.__gvStage=7;
 // ---- settings & sync
