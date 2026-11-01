@@ -1746,3 +1746,17 @@ const startMode=new URLSearchParams(location.search).get('m');
 deckUI();catsUI();go(['review','card','quiz','stats','data'].includes(startMode)?startMode:'home');pushDueToSW();
 ;window.__gvOK=1;
 
+
+/* r97b(베타): '알아요' 카드 모아 보기 — 잘못 누른 카드를 몰라요/헷갈려요로 되돌림. 기존 저장소(gv_srs·gv_marks)만 사용 */
+function knownList(){const L=[];for(const t of T){const c=srs[t.term];if(!c||!(c.r>0)||marks[t.term]=='bad')continue;const at=c.last||((c.due||0)-(c.i||0)*864e5);L.push({t,at})}L.sort((a,b)=>b.at-a.at);return L}
+function openKnown(){let sb='전체',q='';const draw=()=>{const all=knownList(),subs=['전체',...new Set(all.map(x=>grpOf(x.t.cat)))];const L=all.filter(x=>(sb=='전체'||grpOf(x.t.cat)==sb)&&(!q||x.t.term.includes(q)));
+ o.querySelector('#knb').innerHTML=`<p class="small mut">알아요로 넘긴 카드 <b>${all.length}</b>장${sb!='전체'||q?` · 표시 ${L.length}장`:''} · 최근 순. 카드를 누르면 내용이 펼쳐지고, 잘못 누른 카드는 되돌릴 수 있어요.</p>
+ <div class="row" style="flex-wrap:wrap;gap:6px;margin:6px 0">${subs.map(s=>`<button class="sbtn ${s==sb?'pri':''}" data-ks="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+ <input id="knq" class="sbtn" style="width:100%;margin:4px 0 8px" placeholder="용어 검색" value="${esc(q)}">
+ ${L.length?L.slice(0,400).map(({t})=>`<details class="rv kncard" style="display:block"><summary><b>${esc(t.term)}</b> <span class="small mut">${esc(grpOf(t.cat))} · ${esc(t.cat)}</span></summary><div style="margin-top:6px">${esc(t.def)}</div>${t.fig?`<img src="${esc(t.fig)}" alt="" loading="lazy" style="display:block;max-width:100%;margin:8px auto;border-radius:8px;background:#fff">`:''}${t.keys?`<div class="small mut">🔑 ${esc(t.keys)}</div>`:''}<div class="row" style="margin-top:8px;gap:6px"><button class="sbtn bad" data-kn="0" data-t="${esc(t.term)}">✗ 몰라요로 되돌리기</button><button class="sbtn mid" data-kn="2" data-t="${esc(t.term)}">△ 헷갈려요로 되돌리기</button></div></details>`).join('')+(L.length>400?'<p class="small mut">400장까지 보여요. 과목이나 검색으로 좁혀 보세요.</p>':''):'<p class="mut">해당하는 카드가 없어요.</p>'}`;
+ o.querySelectorAll('[data-ks]').forEach(b=>b.onclick=()=>{sb=b.dataset.ks;draw()});
+ const qi=o.querySelector('#knq');qi.oninput=()=>{q=qi.value.trim();const p=qi.selectionStart;draw();const n=o.querySelector('#knq');n.focus();try{n.setSelectionRange(p,p)}catch(e){}};
+ o.querySelectorAll('[data-kn]').forEach(b=>b.onclick=e=>{e.stopPropagation();knownUndo(b.dataset.t,+b.dataset.kn);draw()})};
+ const o=ov(`<h2>✅ 알아요 카드</h2><div id="knb"></div>`);draw()}
+function knownUndo(k,g){try{snap([k])}catch(e){}if(g==2){gvHard(k,'known')}else{marks[k]='bad';srs[k]=sched(srs[k],1)}save();try{navBadge()}catch(e){}toast((g==2?'헷갈려요':'몰라요')+'로 옮겼어요 · 복습에 다시 나와요: '+k)}
+(function(){if(typeof renderData!='function')return;const _r=renderData;renderData=function(){_r.apply(this,arguments);const v=$('#v-data');if(!v||v.querySelector('#knopen'))return;const bx=v.querySelector('.box');if(bx){bx.insertAdjacentHTML('afterbegin',`<div class="row"><button class="sbtn pri" id="knopen">✅ 알아요 카드 보기 (${knownList().length})</button></div>`);v.querySelector('#knopen').onclick=openKnown}}})();
