@@ -1760,3 +1760,17 @@ function openKnown(){let sb='전체',q='';const draw=()=>{const all=knownList(),
  const o=ov(`<h2>✅ 알아요 카드</h2><div id="knb"></div>`);draw()}
 function knownUndo(k,g){try{snap([k])}catch(e){}if(g==2){gvHard(k,'known')}else{marks[k]='bad';srs[k]=sched(srs[k],1)}save();try{navBadge()}catch(e){}toast((g==2?'헷갈려요':'몰라요')+'로 옮겼어요 · 복습에 다시 나와요: '+k)}
 (function(){if(typeof renderData!='function')return;const _r=renderData;renderData=function(){_r.apply(this,arguments);const v=$('#v-data');if(!v||v.querySelector('#knopen'))return;const bx=v.querySelector('.box');if(bx){bx.insertAdjacentHTML('afterbegin',`<div class="row"><button class="sbtn pri" id="knopen">✅ 알아요 카드 보기 (${knownList().length})</button></div>`);v.querySelector('#knopen').onclick=openKnown}}})();
+
+/* r98b(베타): 병합된 중복 용어의 기록을 남는 카드로 이전 — 덜 외운 쪽 상태를 남김(기록 손실 방지). 멱등. 이메일·이름 미사용 */
+function gvMerge98(){const M={"이전 전파": "재입지 전파", "혼종성": "혼성성", "크레올어": "크레올", "평정법": "평정 척도", "문항 곤란도": "문항 난이도"};let ch=0;try{
+ for(const b in M){const A=M[b];
+  if(srs[b]){const x=srs[b],y=srs[A];if(!y||(x.r||0)<(y.r||0)||((x.r||0)==(y.r||0)&&(x.due||0)<(y.due||0)))srs[A]=x;delete srs[b];ch=1}
+  if(b in marks){if(marks[b]=='bad'||!marks[A])marks[A]=marks[b];delete marks[b];ch=1}
+  if(acc[b]){const x=acc[b],y=acc[A]||{c:0,n:0,s:0};acc[A]={...y,c:(y.c||0)+(x.c||0),n:(y.n||0)+(x.n||0),s:Math.min(y.n?y.s||0:1e9,x.s||0)};delete acc[b];ch=1}
+  if(wrong[b]){const x=wrong[b],y=wrong[A];wrong[A]=y?{...y,n:(y.n||0)+(x.n||0),at:Math.max(y.at||0,x.at||0),ok:Math.min(y.ok||0,x.ok||0)}:x;delete wrong[b];ch=1}
+ }
+ const rv=LS.get('gv_rev',{});let rc=0;for(const b in M){if(rv[b]){const x=rv[b],y=rv[M[b]];if(!y||x.g<y.g)rv[M[b]]=x;delete rv[b];rc=1}}if(rc)LS.set('gv_rev',rv);
+ const ks=LS.get('gv_kwseen',{});let kc=0;for(const b in M){if(ks['T:'+b]){ks['T:'+M[b]]=1;delete ks['T:'+b];kc=1}}if(kc)LS.set('gv_kwseen',ks);
+ const ml=LS.get('gv_miss',[]);let mc=0;ml.forEach(o=>{if(o&&M[o.term]){o.term=M[o.term];mc=1}});if(mc)LS.set('gv_miss',ml);
+ if(ch)save();return ch||rc||kc||mc}catch(e){return 0}}
+gvMerge98();window.addEventListener('focus',()=>{try{gvMerge98()}catch(e){}});
