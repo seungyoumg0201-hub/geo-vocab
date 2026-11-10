@@ -532,7 +532,7 @@ function kwMenu(){const sc=T.filter(inDeck);const n={keys:kwPool('keys',sc).leng
  let N=S.kwN??20;o.querySelector('#kwn').onclick=e=>{const b=e.target.closest('button');if(!b)return;N=+b.dataset.n;S.kwN=N;save();o.querySelectorAll('#kwn button').forEach(x=>x.classList.toggle('on',x==b))};
  o.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{const kd=b.dataset.k,P=kwPool(kd,sc);if(!P.length){toast('이 범위에 문항이 없어요');return}const ttl=b.querySelector('b').textContent;if(!N)return kwAll(kd,P,ttl);const L=kwOrder(P,N);kwRun(L,ttl)})}
 function kwRun(L,title,res){let i=res?res.i:0,c=0;const miss=[],missX=[],conf=[];L=L.slice();
- const KST=[]; function next(){if(res){res.i=i;LS.set('gv_kwres',res)}if(i>=L.length){if(res)localStorage.removeItem('gv_kwres');return fin()}const x=L[i],ty=!isTouch();let q,ans,keys,t;
+ const KST=[]; function next(){if(res){res.i=i;LS.set('gv_kwres',res)}try{window.sessKw&&sessKw(L,i,title,i>=L.length)}catch(e){}if(i>=L.length){if(res)localStorage.removeItem('gv_kwres');return fin()}const x=L[i],ty=!isTouch();let q,ans,keys,t;
   if(x.k=='K'){t=x.t;keys=kwList(t);q=`<div class="pltag">${esc(t.cl||t.cat)}${t.exam&&t.exam.length?' · <span class="ex">'+esc(exTag(t))+'</span>':''}</div><div class="plterm">${esc(t.term)}</div><div class="mut">채점 키워드 ${keys.length}개를 쓰세요</div>`;ans=`<div class="plkeys">${keys.map(k=>`<span class="kwk" data-k="${esc(k)}">${esc(k)}</span>`).join('')}</div><div class="pldef2">${esc(t.def)}</div>${t.fig?`<img class="tfig" src="${esc(t.fig)}" alt="${esc(t.term)} 그림" loading="lazy" style="display:block;max-width:100%;height:auto;margin:10px auto 0;border-radius:8px;background:#fff">`:''}${t.vs?`<div class="small mut">↔ ${esc(t.vs)}</div>`:''}${t.kx?`<div class="kx small"><b>기출 자료</b><br>${t.kx.map(k=>`${esc(k.id)} · ${esc(k.sub)}${k.st?' · '+esc(k.st):''}`).join('<br>')}</div>`:''}`}
   else if(x.k=='E'){const e=x.q;keys=[e.answer];q=`<div class="pltag">${esc(e.cat)}${e.kice&&e.kice.length?' · <span class="ex">'+esc(e.kice.join('·'))+'</span>':''}</div><div class="plterm">${esc(e.clue)}</div><div class="mut">${/^kx/.test(e.id||"")?"다음 설명에 해당하는 개념은?":"이 단서가 가리키는 이론·개념은?"}</div>`;ans=`<div class="plterm">${esc(e.answer)}</div>${e.term&&e.term!=e.answer?`<div class="mut">관련 용어: ${esc(e.term)}</div>`:''}`}
   else if(x.k=='V'){t=x.t;const v=vsKey(t);keys=kwList(t);q=`<div class="pltag">${esc(t.cat)}</div><div class="plterm">${esc(t.term)} <span class="mut">vs</span> ${esc(v.other)}</div><div class="mut">${esc(t.term)}를 ${esc(v.other)}와 구별하는 키워드는?</div>`;ans=`<div class="plkeys">${keys.map(k=>`<span class="kwk" data-k="${esc(k)}">${esc(k)}</span>`).join('')}</div><div class="plvs">↔ ${esc(v.other)}: ${esc(v.diff)}</div>`}
@@ -547,7 +547,7 @@ function kwRun(L,title,res){let i=res?res.i:0,c=0;const miss=[],missX=[],conf=[]
    if(I&&I.value.trim()){if(x.k=='Q'){auto=null;el.querySelector('#kwsc').innerHTML=`<div class="mut small">내 답: ${esc(I.value)}</div>`}else if(x.k=='S'){auto=keys.some(k=>norm(k)==norm(I.value))||judge(I.value,{term:keys.join('/'),en:''})>0;el.querySelector('#kwsc').innerHTML=`<div class="pill ${auto?'ok':'bad'}">${auto?'✓ 정답':'✗ 오답'}</div>${auto?'':`<div class="myans">내 답: <s>${esc(I.value)}</s></div>`}`;if(!auto)window._smine=I.value}else if(x.g!=null){auto=judge(I.value,{term:keys.join('/'),en:''})>0||keys.some(k=>norm(k)==norm(I.value));if(x.g!=null){x.u[x.i]=I.value;const mk=el.querySelector('mark.blk.cur');if(mk){mk.classList.add(auto?'ok':'bad');mk.textContent='( '+keys[0]+' )'}}el.querySelector('#kwsc').innerHTML=`<div class="pill ${auto?'ok':'bad'}">${auto?'✓ 정답':'✗ 오답'}</div>${auto?'':`<div class="myans">내 답: <s>${esc(I.value)}</s></div>`}`}else{let h=0;A.querySelectorAll('.kwk').forEach(s=>{const ok=kwHit(I.value,s.dataset.k);s.classList.add(ok?'hit':'mis');if(ok)h++});auto=h>=Math.ceil(keys.length*0.6);el.querySelector('#kwsc').innerHTML=`<div class="pill ${auto?'ok':'bad'}">${h}/${keys.length} 키워드</div>`}}
    else if(I)auto=false;
    B.innerHTML=`<button class="sbtn bad" data-g="0">✗ 놓침 (1)</button><button class="sbtn ok" data-g="1">✓ 썼음 (2)</button>`;if(I&&I.value.trim()&&auto===false){B.insertAdjacentHTML('beforeend','<button class="sbtn" id="kwov" title="자동 채점이 틀렸을 때">사실 맞음</button>');B.querySelector('#kwov').onclick=()=>{const o={at:Date.now(),id:kwKey(x),mine:I.value.slice(0,100),ans:String(keys[0]||'').slice(0,100)};const q=LS.get('gv_ovr',[]);q.push(o);LS.set('gv_ovr',q.slice(-500));try{window.ovrUp&&ovrUp()}catch(e){}grade(1)}}B.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>grade(+b.dataset.g))};
-  const grade=g=>{if(x.k=='S'){const st=LS.get('gv_sq',{});const r=st[x.q.id]||(st[x.q.id]={n:0,c:0});r.n++;if(g)r.c++;LS.set('gv_sq',st);if(!g&&!t)missAdd({d:'sq',id:'s:'+x.q.id,term:x.q.ans||x.q.con,mine:window._smine||'',sub:x.q.cat||'',how:window._smine?'typed':'self'})}window._smine='';{const sn=kwSeen();sn[kwKey(x)]=1;LS.set('gv_kwseen',sn)}KST.push({i,xi:x.i,g:JSON.stringify(x.g||null),c,m:miss.length});if(t){record(t.term,!!g,'kw');if(!g){srs[t.term]=sched(srs[t.term],1);miss.push(t.term)}else if(!srs[t.term])srs[t.term]=sched(null,3)}if(g)c++;if(x.g){x.g[x.i]=g;const r=blOf(x).findIndex((z,j)=>x.g[j]==null);if(r>=0){x.i=r;buzz(g?8:[8,30,8]);save();return next()}}if(!g){const I2=el.querySelector('#plin');if(I2&&I2.value.trim()&&(t||keys[0]))conf.push([I2.value.trim(),(x.k=='K'||x.k=='V')&&t?t.term:keys[0]]);if(!missX.includes(x))missX.push(x);if(!x._rq){const y=Object.assign({},x,{_rq:1});if(y.g){y.g={};y.u={};y.i=0}L.splice(Math.min(L.length,i+4),0,y)}}i++;buzz(g?8:[8,30,8]);save();next()};
+  const grade=g=>{if(x.k=='S'){const st=LS.get('gv_sq',{});const r=st[x.q.id]||(st[x.q.id]={n:0,c:0});r.n++;if(g)r.c++;LS.set('gv_sq',st);if(!g&&!t)missAdd({d:'sq',id:'s:'+x.q.id,term:x.q.ans||x.q.con,mine:window._smine||'',sub:x.q.cat||'',how:window._smine?'typed':'self'})}window._smine='';{const sn=kwSeen();sn[kwKey(x)]=1;LS.set('gv_kwseen',sn)}KST.push({i,xi:x.i,g:JSON.stringify(x.g||null),c,m:miss.length});if(t){record(t.term,!!g,'kw');if(!g){srs[t.term]=sched(srs[t.term],1);miss.push(t.term)}else if(!srs[t.term])srs[t.term]=sched(null,3)}if(g)c++;if(x.g){x.g[x.i]=g;const r=blOf(x).findIndex((z,j)=>x.g[j]==null);if(r>=0){x.i=r;buzz(g?8:[8,30,8]);save();return next()}}if(!g){const I2=el.querySelector('#plin');if(I2&&I2.value.trim()&&(t||keys[0]))conf.push([I2.value.trim(),(x.k=='K'||x.k=='V')&&t?t.term:keys[0]]);if(!missX.includes(x))missX.push(x);if(!x._rq){const y=Object.assign({},x,{_rq:1});if(y.g){y.g={};y.u={};y.i=0}L.splice(Math.min(L.length,i+12),0,y)}}i++;buzz(g?8:[8,30,8]);save();next()};
   el.querySelector('#plrev').onclick=show;if(I){setTimeout(()=>I.focus(),0);I.onkeydown=e=>{if(e.key=='Enter'&&!shown){e.preventDefault();e.stopPropagation();show()}}}
   const cd=el.querySelector('.plq');if(x.g)el.querySelectorAll('mark.blk[role]').forEach(m=>m.onclick=e=>{e.stopPropagation();const j=+m.dataset.j;if(j!=x.i&&!shown){x.i=j;next()}else show()});cd.onclick=e=>{if(!ty&&!shown&&!e.target.closest('button'))show()};let sx=null;cd.ontouchstart=e=>{sx=e.touches[0].clientX};cd.ontouchend=e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;sx=null;if(shown){if(dx>60)grade(1);else if(dx<-60)grade(0)}};
   document.onkeydown=e=>{if(e.target==I&&!shown)return;if(!shown&&e.key==' '){e.preventDefault();show();return}if(shown){if(e.key=='1')grade(0);else if(e.key=='2')grade(1);else if(e.key=='Enter'){e.preventDefault();grade(auto===false?0:1)}}}}
@@ -1256,9 +1256,10 @@ function amOk(t){return t&&!/[“”"‘’]/.test(t.def||'')}
 function amBase(id){return id=='exam'?T.filter(t=>t.core||(t.exam&&t.exam.length)):id=='core'?T.filter(t=>t.core):T.filter(t=>t.cat==id)}
 function amTerms(id){return amBase(id).filter(sfOk)}
 function amOrder(L){const sn=kwSeen(),un=L.filter(t=>!sn['T:'+t.term]),hot=L.filter(t=>sn['T:'+t.term]&&(wrong[t.term]||marks[t.term]=='bad')),rest=L.filter(t=>sn['T:'+t.term]&&!(wrong[t.term]||marks[t.term]=='bad'));return [...un,...hot,...rest]}
-function amRun(L,title){if(!L.length){toast('외울 카드가 없어요');return}L=L.map(t=>({t}));let i=0,ok=0,bad=0;const done=new Set();
+function amRun(L,title){if(!L.length&&!(window.sessPull&&sessPull('am',[],title))){toast('외울 카드가 없어요');return}L=(L||[]).map(t=>t&&t.t?t:{t});let i=0,ok=0,bad=0;const done=new Set();
+ try{const s=window.sessPull&&sessPull('am',L,title);if(s){L=s.L;i=s.i;ok=s.ok;bad=s.bad;(s.done||[]).forEach(t=>done.add(t))}}catch(e){}
  const o=ov('<div id="am"></div>');o.classList.add('amov');const box=o.querySelector('#am');
- const fin=()=>{box.innerHTML=`<div class="rescard"><div class="ring" style="--p:${done.size?Math.round(ok/done.size*100):0};margin:0 auto 14px"><b>${done.size?Math.round(ok/done.size*100):0}%</b></div><div class="big">${done.size}장</div><div class="mut">알아요 ${ok} · 몰라요 ${bad}</div></div><button class="cta" id="amnx">▶ 다음 세트</button><button class="sbtn" id="amx">닫기</button>`;box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();_amNext&&_amNext()};box.querySelector('#amnx').focus();box._k=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();box.querySelector('#amnx').click()}}};
+ const fin=()=>{try{window.sessDone&&sessDone('am')}catch(e){}box.innerHTML=`<div class="rescard"><div class="ring" style="--p:${done.size?Math.round(ok/done.size*100):0};margin:0 auto 14px"><b>${done.size?Math.round(ok/done.size*100):0}%</b></div><div class="big">${done.size}장</div><div class="mut">알아요 ${ok} · 몰라요 ${bad}</div></div><button class="cta" id="amnx">▶ 다음 세트</button><button class="sbtn" id="amx">닫기</button>`;box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();_amNext&&_amNext()};box.querySelector('#amnx').focus();box._k=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();box.querySelector('#amnx').click()}}};
  const kh=e=>{if(!document.body.contains(box)){document.removeEventListener('keydown',kh);return}if(e.target.closest&&e.target.closest('input,textarea'))return;box._k&&box._k(e)};document.addEventListener('keydown',kh);
  const show=()=>{if(i>=L.length)return fin();const t=L[i].t,ex=(t.kx||[])[0];
   box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
@@ -1266,7 +1267,7 @@ function amRun(L,title){if(!L.length){toast('외울 카드가 없어요');return
   <div class="amb hide"><div class="small amcat">${esc(grpOf(t.cat))} · ${esc(t.cat)}</div><div class="amterm2">${esc(t.term)}</div><div class="amdef">${esc(t.def)}</div>${t.fig?`<img class="tfig" src="${esc(t.fig)}" alt="${esc(t.term)} 그림" loading="lazy" style="display:block;max-width:100%;height:auto;margin:10px auto 0;border-radius:8px;background:#fff">`:''}${t.keys?`<div class="ambx"><b>서술 키워드</b> ${esc(t.keys)}</div>`:''}${t.vs?`<div class="ambx"><b>비교</b> ${esc(t.vs)}</div>`:''}${t.ex?`<div class="ambx"><b>사례</b> ${esc(t.ex)}</div>`:''}${t.distractors&&t.distractors.length?`<div class="ambx mut">⚠️ 혼동 주의: ${esc(t.distractors.join(' · '))}</div>`:''}</div></div>
   <div class="ambtn"><button class="sbtn bad" id="amn">✗ 몰라요</button><button class="sbtn mid" id="amh">△ 헷갈려요</button><button class="sbtn ok" id="amy">✓ 알아요</button></div>`;
   const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
-  const grade=g=>{if(g===2){const sn=kwSeen();sn['T:'+t.term]=1;LS.set('gv_kwseen',sn);if(!L[i].rq){gvHard(t.term,'amgi');done.add(t.term);bad++;L.splice(Math.min(L.length,i+8),0,{t,rq:1})}try{save()}catch(e){}i++;return show()}const sn=kwSeen();sn['T:'+t.term]=1;LS.set('gv_kwseen',sn);if(!L[i].rq){record(t.term,g);done.add(t.term);g?ok++:bad++}if(!L[i].rq){try{srs[t.term]=sched(srs[t.term],g?3:1)}catch(e){}}if(!g){if(!L[i].rq)L.splice(Math.min(L.length,i+4),0,{t,rq:1})}try{save()}catch(e){}i++;show()};
+  const grade=g=>{if(g===2){const sn=kwSeen();sn['T:'+t.term]=1;LS.set('gv_kwseen',sn);if(!L[i].rq){gvHard(t.term,'amgi');done.add(t.term);bad++;L.splice(Math.min(L.length,i+20),0,{t,rq:1})}try{save()}catch(e){}i++;try{window.sessPush&&sessPush('am',{L,i,ok,bad,done,title})}catch(e){}return show()}const sn=kwSeen();sn['T:'+t.term]=1;LS.set('gv_kwseen',sn);if(!L[i].rq){record(t.term,g);done.add(t.term);g?ok++:bad++}if(!L[i].rq){try{srs[t.term]=sched(srs[t.term],g?3:1)}catch(e){}}if(!g){if(!L[i].rq)L.splice(Math.min(L.length,i+12),0,{t,rq:1})}try{save()}catch(e){}i++;try{window.sessPush&&sessPush('am',{L,i,ok,bad,done,title})}catch(e){}show()};
   box.querySelector('#amy').onclick=()=>grade(1);box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='ArrowRight'||e.key=='j')grade(1);else if(e.key=='ArrowLeft'||e.key=='f')grade(0);else if(e.key=='ArrowDown'||e.key=='h')grade(2)};box.querySelector('#amn').onclick=()=>grade(0);{const h=box.querySelector('#amh');if(h)h.onclick=()=>grade(2)}
   let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?1:0)}})};
  try{actStart&&actStart('amgi',title)}catch(e){}show()}
@@ -1511,10 +1512,11 @@ function revTerm(x){return (typeof TM!='undefined'&&TM.get(x.t))||T.find(t=>t.te
 function revPool(){return REV.filter(x=>revTerm(x))}
 function revCnt(){const st=revSt(),P=revPool();let ok=0,hd=0,un=0;P.forEach(x=>{const r=st[x.t];if(!r)un++;else if(r.g)ok++;else hd++});return {n:P.length,ok,hd,un}}
 function revOrder(){const st=revSt(),P=revPool();const un=shuffle(P.filter(x=>!st[x.t])),hd=P.filter(x=>st[x.t]&&!st[x.t].g).sort((a,b)=>st[a.t].at-st[b.t].at),ok=P.filter(x=>st[x.t]&&st[x.t].g).sort((a,b)=>st[a.t].at-st[b.t].at);return [...hd,...un,...ok]}
-function revRun(){const L=revOrder().slice(0,S.kwN||20).map(x=>({x}));if(!L.length){toast('카드가 없어요');return}let i=0,ok=0,bad=0;const done=new Set();
+function revRun(){let L=(typeof revMix=='function'?revMix(S.kwN||20):revOrder().slice(0,S.kwN||20)).map(x=>x.x?x:{x});if(!L.length&&!(window.sessPull&&sessPull('rev',[],''))){toast('카드가 없어요');return}let i=0,ok=0,bad=0;const done=new Set();
+ try{const s=window.sessPull&&sessPull('rev',L,'');if(s){L=s.L;i=s.i;ok=s.ok;bad=s.bad;(s.done||[]).forEach(t=>done.add(t))}}catch(e){} if(!L.length){toast('카드가 없어요');return}
  S.lastStart={m:'rev'};try{save()}catch(e){}
  const o=ov('<div id="am"></div>');o.classList.add('amov');const box=o.querySelector('#am');
- const fin=()=>{const p=done.size?Math.round(ok/done.size*100):0;box.innerHTML=`<div class="rescard"><div class="ring" style="--p:${p};margin:0 auto 14px"><b>${p}%</b></div><div class="big">${done.size}장</div><div class="mut">외웠어요 ${ok} · 헷갈려요 ${bad}</div></div><button class="cta" id="amnx">다음 세트</button><button class="sbtn" id="amx">닫기</button>`;box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();revRun()};box._k=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();box.querySelector('#amnx').click()}}};
+ const fin=()=>{try{window.sessDone&&sessDone('rev')}catch(e){}const p=done.size?Math.round(ok/done.size*100):0;box.innerHTML=`<div class="rescard"><div class="ring" style="--p:${p};margin:0 auto 14px"><b>${p}%</b></div><div class="big">${done.size}장</div><div class="mut">외웠어요 ${ok} · 헷갈려요 ${bad}</div></div><button class="cta" id="amnx">다음 세트</button><button class="sbtn" id="amx">닫기</button>`;box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();revRun()};box._k=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();box.querySelector('#amnx').click()}}};
  const kh=e=>{if(!document.body.contains(box)){document.removeEventListener('keydown',kh);return}if(e.target.closest&&e.target.closest('input,textarea'))return;box._k&&box._k(e)};document.addEventListener('keydown',kh);
  const show=()=>{if(i>=L.length)return fin();const x=L[i].x,t=revTerm(x);
   box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
@@ -1522,7 +1524,7 @@ function revRun(){const L=revOrder().slice(0,S.kwN||20).map(x=>({x}));if(!L.leng
   <div class="amb hide"><div class="small amcat">${esc(t.cat)}</div><div class="amterm2">${esc(t.term)}</div>${t.en?`<div class="small mut">${esc(t.en)}</div>`:''}<div class="amdef">${esc(x.d)}</div></div></div>
   <div class="ambtn"><button class="sbtn bad" id="amn">헷갈려요</button><button class="sbtn ok" id="amy">외웠어요</button></div>`;
   const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
-  const grade=g=>{if(!L[i].rq){const st=revSt(),r=st[x.t]||{n:0};st[x.t]={g:g?1:0,n:(r.n||0)+1,at:Date.now()};LS.set('gv_rev',st);done.add(x.t);g?ok++:bad++;if(!g)L.splice(Math.min(L.length,i+4),0,{x,rq:1})}i++;show()};
+  const grade=g=>{if(!L[i].rq){const st=revSt(),r=st[x.t]||{n:0};st[x.t]={g:g?1:0,n:(r.n||0)+1,at:Date.now()};LS.set('gv_rev',st);done.add(x.t);g?ok++:bad++;if(!g)L.splice(Math.min(L.length,i+12),0,{x,rq:1})}i++;try{window.sessPush&&sessPush('rev',{L,i,ok,bad,done})}catch(e){}show()};
   box.querySelector('#amy').onclick=()=>grade(1);box.querySelector('#amn').onclick=()=>grade(0);
   box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='ArrowRight'||e.key=='j')grade(1);else if(e.key=='ArrowLeft'||e.key=='f')grade(0)};
   let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?1:0)}})};
@@ -1566,10 +1568,11 @@ function prcMenu(){const fs=prcFs(),f=S.prcF||'all',c=prcCnt(),ch=(k,l,P)=>`<but
  <button class="cta" id="prcst">시작하기</button><button class="sbtn" id="prcx">닫기</button></div>`);
  o.querySelector('#prcf').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.prcF=b.dataset.f;try{save()}catch(e){}ovClose();prcMenu()};
  o.querySelector('#prcst').onclick=()=>{ovClose();prcRun()};o.querySelector('#prcx').onclick=ovClose}
-function prcRun(){const L=prcOrder().slice(0,S.kwN||20).map(x=>({x}));if(!L.length){toast('카드가 없어요');return}let i=0,ok=0,hd=0,bad=0;const done=new Set();
+function prcRun(){let L=(typeof prcMix=='function'?prcMix(S.kwN||20):prcOrder().slice(0,S.kwN||20)).map(x=>x.x?x:{x});if(!L.length&&!(window.sessPull&&sessPull('prc',[],''))){toast('카드가 없어요');return}let i=0,ok=0,hd=0,bad=0;const done=new Set();
+ try{const s=window.sessPull&&sessPull('prc',L,'');if(s){L=s.L;i=s.i;ok=s.ok||0;hd=s.hd||0;bad=s.bad||0;(s.done||[]).forEach(t=>done.add(t))}}catch(e){} if(!L.length){toast('카드가 없어요');return}
  S.lastStart={m:'prc'};try{save()}catch(e){}
  const o=ov('<div id="am"></div>');o.classList.add('amov');const box=o.querySelector('#am');
- const fin=()=>{const p=done.size?Math.round(ok/done.size*100):0;box.innerHTML=`<div class="rescard"><div class="ring" style="--p:${p};margin:0 auto 14px"><b>${p}%</b></div><div class="big">${done.size}장</div><div class="mut">알아요 ${ok} · 헷갈려요 ${hd} · 몰라요 ${bad}</div></div><button class="cta" id="amnx">다음 세트</button><button class="sbtn" id="amx">닫기</button>`;box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();prcRun()};box._k=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();box.querySelector('#amnx').click()}}};
+ const fin=()=>{try{window.sessDone&&sessDone('prc')}catch(e){}const p=done.size?Math.round(ok/done.size*100):0;box.innerHTML=`<div class="rescard"><div class="ring" style="--p:${p};margin:0 auto 14px"><b>${p}%</b></div><div class="big">${done.size}장</div><div class="mut">알아요 ${ok} · 헷갈려요 ${hd} · 몰라요 ${bad}</div></div><button class="cta" id="amnx">다음 세트</button><button class="sbtn" id="amx">닫기</button>`;box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();prcRun()};box._k=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();box.querySelector('#amnx').click()}}};
  const kh=e=>{if(!document.body.contains(box)){document.removeEventListener('keydown',kh);return}if(e.target.closest&&e.target.closest('input,textarea'))return;box._k&&box._k(e)};document.addEventListener('keydown',kh);
  const show=()=>{if(i>=L.length)return fin();const x=L[i].x;
   box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
@@ -1578,7 +1581,7 @@ function prcRun(){const L=prcOrder().slice(0,S.kwN||20).map(x=>({x}));if(!L.leng
   <div class="ambtn"><button class="sbtn bad" id="amn">✗ 몰라요</button><button class="sbtn mid" id="amh">△ 헷갈려요</button><button class="sbtn ok" id="amy">✓ 알아요</button></div>`;
   const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
   const grade=g=>{if(!L[i].rq){const st=prcSt(),r=st[x.id]||{n:0};st[x.id]={g,c:sched(r.c,[1,2,3][g]),n:(r.n||0)+1,at:Date.now()};LS.set('gv_prc',st);done.add(x.id);g==2?ok++:g==1?hd++:bad++}
-   if(g<2)L.splice(Math.min(L.length,i+(g?8:4)),0,{x,rq:1});i++;show()};
+   if(g<2)L.splice(Math.min(L.length,i+(g?20:12)),0,{x,rq:1});i++;try{window.sessPush&&sessPush('prc',{L,i,ok,hd,bad,done})}catch(e){}show()};
   box.querySelector('#amy').onclick=()=>grade(2);box.querySelector('#amh').onclick=()=>grade(1);box.querySelector('#amn').onclick=()=>grade(0);
   box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='ArrowRight'||e.key=='j')grade(2);else if(e.key=='ArrowDown'||e.key=='h')grade(1);else if(e.key=='ArrowLeft'||e.key=='f')grade(0)};
   let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?2:0)}})};
@@ -1616,7 +1619,7 @@ function rcRun(day){const L=rcNext(day).slice(0,S.kwN||20).map(x=>({x}));if(!L.l
   <div class="amb hide"><div class="small amcat">${esc(t.cat)}</div><div class="amterm2">${esc(t.term)}</div>${t.en?`<div class="small mut">${esc(t.en)}</div>`:''}<div class="amdef">${esc(x.d)}</div></div></div>
   <div class="ambtn"><button class="sbtn bad" id="amn">헷갈려요</button><button class="sbtn ok" id="amy">외웠어요</button></div>`;
   const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
-  const grade=g=>{if(!L[i].rq){const st=revSt(),r=st[x.t]||{n:0};st[x.t]={g:g?1:0,n:(r.n||0)+1,at:Date.now()};LS.set('gv_rev',st);const p=rcGet();p.done[x.t]=Date.now();p.at=Date.now();LS.set('gv_rpass',p);done.add(x.t);g?ok++:bad++;if(!g)L.splice(Math.min(L.length,i+4),0,{x,rq:1})}i++;show()};
+  const grade=g=>{if(!L[i].rq){const st=revSt(),r=st[x.t]||{n:0};st[x.t]={g:g?1:0,n:(r.n||0)+1,at:Date.now()};LS.set('gv_rev',st);const p=rcGet();p.done[x.t]=Date.now();p.at=Date.now();LS.set('gv_rpass',p);done.add(x.t);g?ok++:bad++;if(!g)L.splice(Math.min(L.length,i+12),0,{x,rq:1})}i++;show()};
   box.querySelector('#amy').onclick=()=>grade(1);box.querySelector('#amn').onclick=()=>grade(0);
   box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='ArrowRight'||e.key=='j')grade(1);else if(e.key=='ArrowLeft'||e.key=='f')grade(0)};
   let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?1:0)}})};
@@ -1660,6 +1663,185 @@ function yxEntry(){if(document.querySelector('#coyx'))return;const root=document
  const c=document.querySelector('#cocram'),l=c&&c.closest('.fllist');if(l&&root.contains(l))l.insertAdjacentHTML('afterend',html);else root.insertAdjacentHTML('beforeend',html);
  const b=document.querySelector('#coyx');if(b)b.onclick=()=>{ovClose();yxMenu()}}
 {const _co=coMenu;coMenu=function(){const r=_co.apply(this,arguments);try{yxEntry()}catch(e){console.warn('yxEntry',e)}return r}}
+
+;window.__gvStage=32;
+// r104: 단어암기 5일(거꾸로) · 서술형 문제 5일 · 세션 이어하기 · 몰라요 간격 · 반대 모드 섞기
+var RQ_BAD=12,RQ_MID=20;
+function sessAll(){return LS.get('gv_sess',{})||{}}
+function sessKey(kind){const l=S.lastStart||{};
+ if(kind=='am')return 'am:'+(l.id||'all')+':'+(typeof amScope=='function'?amScope():'all');
+ if(kind=='rev')return 'rev';
+ if(kind=='prc')return 'prc:'+(S.prcF||'all');
+ if(kind=='r5')return 'r5:'+(l.d==null?'today':String(l.d));
+ if(kind=='w5')return 'w5:'+(l.d==null?'today':String(l.d));
+ return kind}
+function sessPull(kind,L,title){const k=sessKey(kind),o=sessAll()[k];if(!o||!o.q||!o.q.length||!(o.i>=0)||o.i>=o.q.length)return null;
+ if(kind=='am'){const L2=[];o.q.forEach(it=>{const t=(typeof TM!='undefined'&&TM.get(it.term))||T.find(z=>z.term==it.term);if(t)L2.push({t,rq:it.rq||0})});if(!L2.length||o.i>=L2.length)return null;return {L:L2,i:o.i,ok:o.ok||0,bad:o.bad||0,done:o.done||[]}}
+ if(kind=='rev'){const m=new Map(revPool().map(x=>[x.t,x])),L2=[];o.q.forEach(it=>{const x=m.get(it.t);if(x)L2.push({x,rq:it.rq||0})});if(!L2.length||o.i>=L2.length)return null;return {L:L2,i:o.i,ok:o.ok||0,bad:o.bad||0,done:o.done||[]}}
+ if(kind=='prc'){const m=new Map(PRC.map(x=>[x.id,x])),L2=[];o.q.forEach(it=>{const x=m.get(it.id);if(x)L2.push({x,rq:it.rq||0})});if(!L2.length||o.i>=L2.length)return null;return {L:L2,i:o.i,ok:o.ok||0,hd:o.hd||0,bad:o.bad||0,done:o.done||[]}}
+ if(kind=='r5'){const m=new Map(revPool().map(x=>[x.t,x])),L2=[];o.q.forEach(it=>{const x=m.get(it.t);if(x)L2.push({x,rq:it.rq||0})});if(!L2.length||o.i>=L2.length)return null;return {L:L2,i:o.i,ok:o.ok||0,bad:o.bad||0,done:o.done||[]}}
+ if(kind=='w5'){const m=w5Map(),L2=[];o.q.forEach(it=>{const x=m.get(it.k);if(!x)return;const y=Object.assign({},x);if(it.rq)y._rq=1;if(it.i!=null)y.i=it.i;if(it.g)y.g=Object.assign({},it.g);if(it.u)y.u=Object.assign({},it.u);L2.push(y)});if(!L2.length||o.i>=L2.length)return null;return {L:L2,i:o.i,ok:o.ok||0,bad:o.bad||0}}
+ return null}
+function sessPush(kind,st){const k=sessKey(kind),all=sessAll();
+ if(kind=='am')all[k]={q:st.L.map(x=>({term:x.t.term,rq:!!x.rq})),i:st.i,ok:st.ok,bad:st.bad,done:[...st.done],title:st.title||'',at:Date.now(),v:1};
+ else if(kind=='rev'||kind=='r5')all[k]={q:st.L.map(x=>({t:x.x.t,rq:!!x.rq})),i:st.i,ok:st.ok,bad:st.bad,done:[...(st.done||[])],at:Date.now(),v:1};
+ else if(kind=='prc')all[k]={q:st.L.map(x=>({id:x.x.id,rq:!!x.rq})),i:st.i,ok:st.ok,hd:st.hd,bad:st.bad,done:[...(st.done||[])],at:Date.now(),v:1};
+ else if(kind=='w5')all[k]={q:st.L.map(x=>({k:kwKey(x),rq:!!x._rq,i:x.i,g:x.g||null,u:x.u||null})),i:st.i,at:Date.now(),v:1};
+ else return;
+ LS.set('gv_sess',all);
+ if(kind=='am'){try{const l=S.lastStart||{},t=st.L[Math.max(0,st.i-1)];if(t&&t.t&&!t.rq){const r=LS.get('gv_amrot',{})||{};r[sessKey('am')]=t.t.term;LS.set('gv_amrot',r)}}catch(e){}}}
+function sessDone(kind){const k=sessKey(kind),all=sessAll();delete all[k];LS.set('gv_sess',all)}
+function sessKw(L,i,title,fin){try{if((S.lastStart||{}).m!='w5')return;if(i>0){const x=L[i-1];if(x&&!x._rq)w5Mark(x)}if(fin){sessDone('w5');return}sessPush('w5',{L,i})}catch(e){}}
+function sessHas(kind){const o=sessAll()[sessKey(kind)];return !!(o&&o.q&&o.i<o.q.length)}
+
+function amRotOrder(L,id){const base=amOrder(L),sn=typeof kwSeen=='function'?kwSeen():{};const un=L.filter(t=>!sn['T:'+t.term]);if(un.length)return base;
+ const last=(LS.get('gv_amrot',{})||{})['am:'+id+':'+(typeof amScope=='function'?amScope():'all')];if(!last)return base;
+ const i=base.findIndex(t=>t.term==last);if(i<0)return base;return base.slice(i+1).concat(base.slice(0,i+1))}
+{const _ad=amDeck;amDeck=function(id){_amNext=()=>amDeck(id);S.lastStart={m:'am',id};try{save()}catch(e){}
+ if(sessHas('am')){amRun([],'📚 '+dkName(id));return}
+ const L=amRotOrder(amTerms(id),id);amRun(amN()?L.slice(0,amN()):L,'📚 '+dkName(id))}}
+
+function mixTake(hd,un,ok,N){N=Math.max(1,N|0);const A=hd.slice(0,Math.min(hd.length,Math.max(hd.length?1:0,Math.ceil(N*0.3))));
+ const rest=N-A.length,B=un.slice(0,Math.min(un.length,rest)),C=ok.slice(0,Math.min(ok.length,Math.max(0,rest-B.length))),R=B.concat(C);
+ if(!A.length)return R;if(!R.length)return A;const n=A.length+R.length,out=[],slots=A.map((_,i)=>Math.round((i+1)*n/(A.length+1))-1);let ai=0,ri=0;
+ for(let p=0;p<n;p++){if(ai<A.length&&(slots[ai]==p||ri>=R.length))out.push(A[ai++]);else out.push(R[ri++])}return out}
+function revMix(N){N=N||20;const st=revSt(),P=revPool();
+ const un=shuffle(P.filter(x=>!st[x.t])),hd=P.filter(x=>st[x.t]&&!st[x.t].g).sort((a,b)=>(st[a.t].at||0)-(st[b.t].at||0));
+ let ok=P.filter(x=>st[x.t]&&st[x.t].g).sort((a,b)=>(st[a.t].at||0)-(st[b.t].at||0));
+ if(!un.length&&ok.length){const last=((sessAll().revrot)||{}).t,i=ok.findIndex(x=>x.t==last);if(i>=0)ok=ok.slice(i+1).concat(ok.slice(0,i+1))}
+ return mixTake(hd,un,ok,N)}
+function prcMix(N){N=N||20;const st=prcSt(),P=prcPool(),n=Date.now(),d=x=>((st[x.id]&&st[x.id].c&&st[x.id].c.due)||0);
+ const hd=P.filter(x=>st[x.id]&&st[x.id].g<2).sort((a,b)=>st[a.id].g-st[b.id].g||d(a)-d(b));
+ const un=P.filter(x=>!st[x.id]),okd=P.filter(x=>st[x.id]&&st[x.id].g==2&&d(x)<=n).sort((a,b)=>d(a)-d(b)),okl=P.filter(x=>st[x.id]&&st[x.id].g==2&&d(x)>n).sort((a,b)=>d(a)-d(b));
+ return mixTake(hd,un,okd.concat(okl),N)}
+
+// ---- 단어암기 5일 (거꾸로): 반대 모드 카드를 5일로. 기록 gv_rpass5, 채점은 gv_rev ----
+function r5Plan(){if(r5Plan._c&&r5Plan._n==REV.length)return r5Plan._c;const P=revPool(),n={},r=new Map();P.forEach(x=>{const c=revTerm(x).cat||'';r.set(x,n[c]=(n[c]||0)+1)});
+ const D=[[],[],[],[],[]];P.map((x,i)=>[x,(r.get(x)-0.5)/n[revTerm(x).cat||''],i]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).forEach(a=>D[Math.min(4,Math.floor(a[1]*5))].push(a[0]));r5Plan._n=REV.length;return r5Plan._c=D}
+function r5Get(){let p=LS.get('gv_rpass5',null);if(!p||!p.start){p={start:kstYMD(),done:{}};LS.set('gv_rpass5',p)}p.done=p.done||{};return p}
+function r5Day(p){return Math.max(0,Math.min(4,Math.floor((Date.parse(kstYMD())-Date.parse(p.start))/864e5)))}
+function r5Stat(){const p=r5Get(),D=r5Plan(),di=r5Day(p);const days=D.map(L=>({n:L.length,d:L.filter(x=>p.done[x.t]).length}));const tot=days.reduce((a,b)=>a+b.n,0),done=days.reduce((a,b)=>a+b.d,0);
+ const today=days[di]?days[di].d:0,quota=days[di]?days[di].n:0,need=days.slice(0,di+1).reduce((a,b)=>a+Math.max(0,b.n-b.d),0);
+ return {p,D,di,days,tot,done,today,quota,need,pct:tot?Math.round(done/tot*1000)/10:0}}
+function r5Next(day){const s=r5Stat(),idx=day==null?[...Array(s.di+1).keys()]:[day];return idx.flatMap(i=>s.D[i].filter(x=>!s.p.done[x.t]))}
+function r5Menu(){const s=r5Stat();
+ const o=ov(`<div class="prcm"><h2>단어암기 5일 (거꾸로)</h2><p class="small mut">뜻을 보고 용어를 떠올리는 반대 모드 카드 ${s.tot}장을 5일로 나눴어요. 날마다 과목이 고르게 섞이고, 같은 용어는 한 번만 나와요. 밀린 날 카드부터 먼저 나와요.</p>
+ <div class="pbar" style="margin:8px 0"><i style="width:${s.pct}%"></i></div><div class="small mut" style="margin-bottom:10px">${s.done}/${s.tot}장 (${s.pct}%) · 오늘 Day ${s.di+1}</div>
+ <div class="fllist" id="r5days">${s.days.map((d,i)=>`<button class="flrow" data-d="${i}"><i class="sbub" data-g="all">${i+1}</i><span>Day ${i+1}${i==s.di?' <span class="small">· 오늘</span>':''}</span><span class="small mut">${d.d}/${d.n}${d.d>=d.n?' ✓':''}</span></button>`).join('')}</div>
+ <button class="cta" id="r5st">${s.done>=s.tot?'완주했어요 🎉':(sessHas('r5')?'이어서 하기':'오늘 분량 이어하기')}</button><button class="sbtn" id="r5rs">처음부터 다시</button><button class="sbtn" id="r5x">닫기</button></div>`);
+ o.querySelector('#r5days').onclick=e=>{const b=e.target.closest('button');if(!b)return;ovClose();r5Run(+b.dataset.d)};
+ o.querySelector('#r5st').onclick=()=>{ovClose();r5Run()};o.querySelector('#r5x').onclick=ovClose;
+ o.querySelector('#r5rs').onclick=async()=>{if(!await askConfirm('단어암기 5일(거꾸로) 진도를 지우고 오늘부터 다시 시작할까요?','반대 모드 기록(외움·헷갈림)은 그대로예요.','다시 시작'))return;LS.set('gv_rpass5',{start:kstYMD(),done:{},at:Date.now(),rs:Date.now()});const all=sessAll();Object.keys(all).forEach(k=>{if(k.startsWith('r5:'))delete all[k]});LS.set('gv_sess',all);ovClose();r5Menu()}}
+function r5Run(day){S.lastStart={m:'r5',d:day==null?null:day};try{save()}catch(e){}
+ let L,i=0,ok=0,bad=0;const done=new Set();
+ const pulled=(()=>{try{return sessPull('r5',[],'')}catch(e){return null}})();
+ if(pulled){L=pulled.L;i=pulled.i;ok=pulled.ok;bad=pulled.bad;(pulled.done||[]).forEach(t=>done.add(t))}
+ else{L=r5Next(day).slice(0,S.kwN||20).map(x=>({x}));if(!L.length){toast(day==null?'오늘 분량을 다 했어요':'이 날 카드를 다 봤어요');return}}
+ const o=ov('<div id="am"></div>');o.classList.add('amov');const box=o.querySelector('#am');
+ const fin=()=>{try{sessDone('r5')}catch(e){}const p=done.size?Math.round(ok/done.size*100):0,s=r5Stat();box.innerHTML=`<div class="rescard"><div class="ring" style="--p:${p};margin:0 auto 14px"><b>${p}%</b></div><div class="big">${done.size}장</div><div class="mut">외웠어요 ${ok} · 헷갈려요 ${bad}</div><div class="small mut">단어암기 5일 ${s.done}/${s.tot}</div></div><button class="cta" id="amnx">다음 세트</button><button class="sbtn" id="amx">닫기</button>`;box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();r5Run(day)};box._k=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();box.querySelector('#amnx').click()}}};
+ const kh=e=>{if(!document.body.contains(box)){document.removeEventListener('keydown',kh);return}if(e.target.closest&&e.target.closest('input,textarea'))return;box._k&&box._k(e)};document.addEventListener('keydown',kh);
+ const show=()=>{if(i>=L.length)return fin();const x=L[i].x,t=revTerm(x);
+  box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
+  <div class="amcard revc" id="amc"><div class="amf">${L[i].rq?'<span class="amre">다시 보기</span>':''}<div class="small amcat">단어암기 5일 (거꾸로) · ${esc(t.cat)}</div><div class="amdef revq">${esc(x.d)}</div>${x.k?`<div class="ambx"><b>키워드</b> ${esc(x.k)}</div>`:''}<div class="small mut amhint">어떤 용어일까요? 탭해서 확인</div></div>
+  <div class="amb hide"><div class="small amcat">${esc(t.cat)}</div><div class="amterm2">${esc(t.term)}</div>${t.en?`<div class="small mut">${esc(t.en)}</div>`:''}<div class="amdef">${esc(x.d)}</div></div></div>
+  <div class="ambtn"><button class="sbtn bad" id="amn">헷갈려요</button><button class="sbtn ok" id="amy">외웠어요</button></div>`;
+  const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
+  const grade=g=>{if(!L[i].rq){const st=revSt(),r=st[x.t]||{n:0};st[x.t]={g:g?1:0,n:(r.n||0)+1,at:Date.now()};LS.set('gv_rev',st);const p=r5Get();p.done[x.t]=Date.now();p.at=Date.now();LS.set('gv_rpass5',p);done.add(x.t);g?ok++:bad++;if(!g)L.splice(Math.min(L.length,i+RQ_BAD),0,{x,rq:1})}i++;try{sessPush('r5',{L,i,ok,bad,done})}catch(e){}show()};
+  box.querySelector('#amy').onclick=()=>grade(1);box.querySelector('#amn').onclick=()=>grade(0);
+  box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='ArrowRight'||e.key=='j')grade(1);else if(e.key=='ArrowLeft'||e.key=='f')grade(0)};
+  let x0=null;c.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});c.addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>70){e.preventDefault();grade(d>0?1:0)}})};
+ show()}
+
+// ---- 서술형 문제 5일: 인출·기입·서답 전 문항(MCQ 제외), 유형·과목 균등 분배. 기록 gv_wpass5 ----
+function w5Add(m,x,src){if(!x)return;const k=kwKey(x);if(!k||m.has(k))return;x._src=src;m.set(k,x)}
+function w5All(){if(w5All._c)return w5All._c;const m=new Map();
+ try{PSG.forEach(p=>{if(!p.arch&&p.blanks&&p.blanks.length)w5Add(m,{k:'B',p,i:0,g:{}},'psg')})}catch(e){}
+ try{wbd().wb.forEach(p=>{if(p.bl&&p.bl.length)w5Add(m,{k:'W',p,i:0,g:{}},'wb')})}catch(e){}
+ try{wbd().w16.forEach(q=>w5Add(m,qBl({k:'Q',q})?{k:'Q',q,i:0,g:{}}:{k:'Q',q},'w16'))}catch(e){}
+ try{sqd().forEach(q=>{(q.ans||q.con)&&w5Add(m,{k:'S',q},'sq')})}catch(e){}
+ try{ecd().forEach(e=>w5Add(m,{k:'E',q:e},'ec'))}catch(e){}
+ try{ftd().forEach(s=>{(s.st||[]).forEach((z,i)=>w5Add(m,{k:'E',q:{id:'ft:'+s.id+':'+i,clue:z.s,answer:(s.c||[])[z.c],cat:s.cat||s.subj||'',fmt:'kw'}},'ft'))})}catch(e){}
+ return w5All._c=[...m.values()]}
+function w5Map(){const m=new Map();w5All().forEach(x=>m.set(kwKey(x),x));return m}
+function w5Typ(x){return x._src||(x.k=='B'?'psg':x.k=='W'?'wb':x.k=='S'?'sq':x.k=='E'?(x.q&&String(x.q.id||'').indexOf('ft:')==0?'ft':'ec'):x.k=='Q'?'w16':(x.k||'?'))}
+function w5Subj(x){const c=x.t?x.t.cat:x.p?(x.p.cat||x.p.subj):x.q?(x.q.cat||x.q.subj||''):'';return (typeof grpOf=='function'&&grpOf(c))||c||'기타'}
+function w5Cnt(){const c={all:0};w5All().forEach(x=>{const t=w5Typ(x);c[t]=(c[t]||0)+1;c.all++});return c}
+function w5Plan(){if(w5Plan._c)return w5Plan._c;const P=w5All(),D=[[],[],[],[],[]],typFn=w5Typ,subjFn=w5Subj;
+ const types=[...new Set(P.map(typFn))].sort();
+ types.forEach(t=>{const L=P.filter(x=>typFn(x)==t),n={},r=new Map();L.forEach(x=>{const s=subjFn(x);r.set(x,n[s]=(n[s]||0)+1)});
+  L.map((x,i)=>[x,(r.get(x)-0.5)/n[subjFn(x)],i]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).forEach(a=>{
+   let best=0,bs=1e9,bt=1e9;for(let d=0;d<5;d++){const typc=D[d].filter(z=>typFn(z)==t).length,tot=D[d].length;if(typc<bs||(typc==bs&&tot<bt)||(typc==bs&&tot==bt&&d<best)){best=d;bs=typc;bt=tot}}
+   D[best].push(a[0])})});
+ w5Plan._c=D;return D}
+function w5Get(){let p=LS.get('gv_wpass5',null);if(!p||!p.start){p={start:kstYMD(),done:{}};LS.set('gv_wpass5',p)}p.done=p.done||{};return p}
+function w5Stat(){const p=w5Get(),D=w5Plan(),di=Math.max(0,Math.min(4,Math.floor((Date.parse(kstYMD())-Date.parse(p.start))/864e5)));
+ const days=D.map(L=>({n:L.length,d:L.filter(x=>p.done[kwKey(x)]).length}));const tot=days.reduce((a,b)=>a+b.n,0),done=days.reduce((a,b)=>a+b.d,0);
+ const today=days[di]?days[di].d:0,quota=days[di]?days[di].n:0,need=days.slice(0,di+1).reduce((a,b)=>a+Math.max(0,b.n-b.d),0);
+ return {p,D,di,days,tot,done,today,quota,need,pct:tot?Math.round(done/tot*1000)/10:0}}
+function w5Next(day){const s=w5Stat(),idx=day==null?[...Array(s.di+1).keys()]:[day];return idx.flatMap(i=>s.D[i].filter(x=>!s.p.done[kwKey(x)]))}
+function w5Lbl(){const c=w5Cnt(),ord=[['psg','지문 빈칸'],['wb','기출 워크북'],['w16','16주 서답'],['sq','학자 언행'],['ec','단서어'],['ft','특징 진술']];
+ return ord.map(([k,n])=>`${n} ${c[k]||0}`).join(' · ')+` · 합계 ${c.all}`}
+function w5Menu(){const s=w5Stat();
+ const o=ov(`<div class="prcm"><h2>서술형 문제 5일</h2><p class="small mut">인출·기입·서답 문항 ${s.tot}개를 5일로 나눴어요. 유형·과목이 고르게 섞이고, 같은 문항은 한 번만 나와요. 밀린 날 문항부터 먼저 나와요.</p>
+ <p class="small mut">${esc(w5Lbl())}</p>
+ <div class="pbar" style="margin:8px 0"><i style="width:${s.pct}%"></i></div><div class="small mut" style="margin-bottom:10px">${s.done}/${s.tot}문항 (${s.pct}%) · 오늘 Day ${s.di+1}</div>
+ <div class="fllist" id="w5days">${s.days.map((d,i)=>`<button class="flrow" data-d="${i}"><i class="sbub" data-g="all">${i+1}</i><span>Day ${i+1}${i==s.di?' <span class="small">· 오늘</span>':''}</span><span class="small mut">${d.d}/${d.n}${d.d>=d.n?' ✓':''}</span></button>`).join('')}</div>
+ <button class="cta" id="w5st">${s.done>=s.tot?'완주했어요 🎉':(sessHas('w5')?'이어서 하기':'오늘 분량 이어하기')}</button><button class="sbtn" id="w5rs">처음부터 다시</button><button class="sbtn" id="w5x">닫기</button></div>`);
+ o.querySelector('#w5days').onclick=e=>{const b=e.target.closest('button');if(!b)return;ovClose();w5Run(+b.dataset.d)};
+ o.querySelector('#w5st').onclick=()=>{ovClose();w5Run()};o.querySelector('#w5x').onclick=ovClose;
+ o.querySelector('#w5rs').onclick=async()=>{if(!await askConfirm('서술형 문제 5일 진도를 지우고 오늘부터 다시 시작할까요?','자유 학습 기록은 그대로예요.','다시 시작'))return;LS.set('gv_wpass5',{start:kstYMD(),done:{},at:Date.now(),rs:Date.now()});const all=sessAll();Object.keys(all).forEach(k=>{if(k.startsWith('w5:'))delete all[k]});LS.set('gv_sess',all);ovClose();w5Menu()}}
+function w5Mark(x){const p=w5Get();p.done[kwKey(x)]=Date.now();p.at=Date.now();LS.set('gv_wpass5',p)}
+function w5Run(day){S.lastStart={m:'w5',d:day==null?null:day};try{save()}catch(e){}
+ let L;const pulled=(()=>{try{return sessPull('w5',[],'')}catch(e){return null}})();
+ if(pulled)L=pulled.L;
+ else{L=w5Next(day).slice(0,S.kwN||20).map(x=>{const y=Object.assign({},x);if(y.g)y.g={};if(y.i!=null)y.i=0;return y});if(!L.length){toast(day==null?'오늘 분량을 다 했어요':'이 날 문항을 다 봤어요');return}}
+ kwRun(L,'📝 서술형 5일'+(day==null?'':' · Day '+(day+1)),{i:pulled?pulled.i:0})}
+
+function r5Card(){const s=r5Stat(),left=s.need,cta=s.done>=s.tot?'완주했어요 · 더 보기':sessHas('r5')?`▶ 이어서 하기 · ${left}장`:s.need?`▶ Day ${s.di+1} 오늘 분량 ${left}장`:`Day ${s.di+1} 완료 · 더 하기`;
+ return `<div class="pcard" id="r5card"><div class="hdash"><div class="ring" style="--p:${s.pct}"><b>${Math.round(s.pct)}%</b></div><div class="hdt"><div class="small mut">단어암기 5일 (거꾸로) · Day ${s.di+1}/5</div><div class="hbig">${s.done}<span class="mut">/${s.tot}</span></div><div class="small mut">오늘 ${s.today}/${s.quota}장 · 뜻 → 용어</div></div></div><button class="cta" id="r5go">${cta}</button></div>`}
+function w5Card(){const s=w5Stat(),left=s.need,cta=s.done>=s.tot?'완주했어요 · 더 보기':sessHas('w5')?`▶ 이어서 하기 · ${left}문항`:s.need?`▶ Day ${s.di+1} 오늘 분량 ${left}문항`:`Day ${s.di+1} 완료 · 더 하기`;
+ return `<div class="pcard" id="w5card"><div class="hdash"><div class="ring" style="--p:${s.pct}"><b>${Math.round(s.pct)}%</b></div><div class="hdt"><div class="small mut">서술형 문제 5일 · Day ${s.di+1}/5</div><div class="hbig">${s.done}<span class="mut">/${s.tot}</span></div><div class="small mut">오늘 ${s.today}/${s.quota}문항 · 인출·기입·서답</div></div></div><button class="cta" id="w5go">${cta}</button></div>`}
+
+renderHome=function(){const v=$('#v-home');if(!v)return;let due=0,stk=0,ll='';try{due=dueList().length}catch(e){}try{stk=streak()}catch(e){}try{ll=lastLbl()}catch(e){}
+ const chips=`<div class="hchips">${due?`<span class="hchip">복습 대기 <b>${due}</b></span>`:''}${stk?`<span class="hchip">연속 <b>${stk}일</b></span>`:''}</div>`;
+ let r5h='',w5h='';try{r5h=r5Card()}catch(e){r5h=`<div class="pcard"><p class="small mut">단어암기 5일 카드를 불러오지 못했어요.</p></div>`}try{w5h=w5Card()}catch(e){w5h=`<div class="pcard"><p class="small mut">서술형 5일 카드를 불러오지 못했어요.</p></div>`}
+ v.innerHTML=`<div class="flhome"><div class="pcards">${r5h}${w5h}</div>${chips}
+ ${ll?`<button class="flrow hrow" id="hres"><span>이어서 하기 · ${esc(ll)}</span><span class="small">자유 학습</span></button>`:''}
+ <button class="flrow hrow" id="hdeck"><span>단어장 · 과목 선택</span><span class="small">자유 학습</span></button>
+ <details class="fold"><summary>옵션</summary>
+ <div class="optr"><span class="small">범위</span>${typeof scopeSeg=='function'?scopeSeg():''}</div>
+ <div class="optr"><button class="sbtn" id="r5menu">단어암기 5일 자세히</button><button class="sbtn" id="w5menu">서술형 5일 자세히</button></div>
+ <div class="optr"><button class="sbtn" id="r5rs">단어암기 5일 다시 시작</button><button class="sbtn" id="w5rs">서술형 5일 다시 시작</button></div>
+ </details></div>`;
+ const b=(id,fn)=>{const e=v.querySelector('#'+id);if(e)e.onclick=fn};
+ b('r5go',()=>r5Run());b('w5go',()=>w5Run());b('r5menu',()=>r5Menu());b('w5menu',()=>w5Menu());
+ b('hdeck',()=>go('deck'));b('hres',()=>resumeLast());
+ v.querySelectorAll('[data-scope]').forEach(x=>x.onclick=()=>{S.amScope=x.dataset.scope;save();renderHome()});
+ b('r5rs',async()=>{if(!await askConfirm('단어암기 5일(거꾸로) 진도를 지우고 오늘부터 다시 시작할까요?','반대 모드 기록은 그대로예요.','다시 시작'))return;LS.set('gv_rpass5',{start:kstYMD(),done:{},at:Date.now(),rs:Date.now()});const all=sessAll();Object.keys(all).forEach(k=>{if(k.startsWith('r5:'))delete all[k]});LS.set('gv_sess',all);renderHome()});
+ b('w5rs',async()=>{if(!await askConfirm('서술형 문제 5일 진도를 지우고 오늘부터 다시 시작할까요?','자유 학습 기록은 그대로예요.','다시 시작'))return;LS.set('gv_wpass5',{start:kstYMD(),done:{},at:Date.now(),rs:Date.now()});const all=sessAll();Object.keys(all).forEach(k=>{if(k.startsWith('w5:'))delete all[k]});LS.set('gv_sess',all);renderHome()});
+ try{if(typeof installCard=='function'&&!v.querySelector('#instb')&&!LS.get('gv_noinst',0)){const h=installCard();if(h)v.insertAdjacentHTML('beforeend',h)}}catch(e){}
+ try{if(!$('#onl')){v.insertAdjacentHTML('afterbegin','<button id="onl" class="onchip hide" title="랭킹 보기"></button>');const c=$('#onl');if(c)c.onclick=()=>go('stats')}}catch(e){}
+ try{const q=(LS.get('gv_missq',[])||[]).length;if(q&&!(window.CL&&CL.user)&&!$('#mqban')){v.insertAdjacentHTML('afterbegin','<div class="box warnbox" id="mqban">☁️ 올리지 않은 오답 기록이 있어요. 로그인하면 다른 기기와 합쳐져요.</div>')}}catch(e){}};
+
+{const _rl=resumeLast;resumeLast=function(){const l=S.lastStart||{};if(l.m=='r5')return r5Run(l.d==null?undefined:l.d);if(l.m=='w5')return w5Run(l.d==null?undefined:l.d);if(l.m=='rev')return revRun();if(l.m=='prc')return prcRun();return _rl.apply(this,arguments)}}
+{const _ll=lastLbl;lastLbl=function(){const l=S.lastStart||{};if(l.m=='r5'||l.m=='w5')return '';if(l.m=='rev')return '반대 모드';if(l.m=='prc')return '원리 카드';try{return _ll.apply(this,arguments)}catch(e){return ''}}}
+{const _co=typeof coMenu=='function'?coMenu:null;if(_co){coMenu=function(){_co.apply(this,arguments);try{const l=document.querySelector('#plov .fllist');if(!l||l.querySelector('#cor5'))return;
+ const row=(id,ic,t,sub,r)=>`<button class="flrow" id="${id}"><i class="sbub" data-g="all">${ic}</i><span>${t}${sub?` <span class="small mut">${sub}</span>`:''}</span><span class="small mut">${r}</span></button>`;
+ const s=r5Stat(),w=w5Stat();
+ const h=document.createElement('div');h.innerHTML=`<h3 class="small mut">5일 계획</h3><div class="fllist">${row('cor5','5','단어암기 5일','(거꾸로 · 뜻 → 용어)',`${s.done}/${s.tot} · Day ${s.di+1}`)}${row('cow5','5','서술형 문제 5일','(인출·기입·서답)',`${w.done}/${w.tot} · Day ${w.di+1}`)}</div>`;
+ const first=document.querySelector('#plov h3');if(first)first.parentNode.insertBefore(h,first);else document.querySelector('#plov .plin').insertBefore(h,document.querySelector('#plov h2').nextSibling);
+ document.querySelector('#cor5').onclick=()=>{ovClose();r5Menu()};document.querySelector('#cow5').onclick=()=>{ovClose();w5Menu()}}catch(e){}}}}
+
+setTimeout(()=>{try{['gv_rpass5','gv_wpass5','gv_sess','gv_amrot'].forEach(k=>{if(!PKEYS.includes(k))PKEYS.push(k)})}catch(e){}},0);
+{const _mi=mergeIn;mergeIn=function(o){const loc={r5:LS.get('gv_rpass5',null),w5:LS.get('gv_wpass5',null),sess:LS.get('gv_sess',null),rot:LS.get('gv_amrot',null)};
+ const r=_mi.apply(this,arguments);
+ try{const mix=(key,locv,remv)=>{if(!remv&&!locv)return;if(!remv){LS.set(key,locv);return}if(!locv){LS.set(key,remv);return}
+  const ra=locv.rs||0,rb=remv.rs||0;if(ra!=rb){LS.set(key,ra>rb?locv:remv);return}
+  LS.set(key,{start:locv.start<remv.start?locv.start:remv.start,done:Object.assign({},remv.done||{},locv.done||{}),at:Math.max(locv.at||0,remv.at||0),rs:ra})};
+ mix('gv_rpass5',loc.r5,o&&o.gv_rpass5);mix('gv_wpass5',loc.w5,o&&o.gv_wpass5);
+ const a=Object.assign({},loc.sess||{}),b=(o&&o.gv_sess)||{};for(const k in b){if(!a[k]||(b[k].at||0)>(a[k].at||0))a[k]=b[k]}LS.set('gv_sess',a);
+ const ra=Object.assign({},loc.rot||{}),rb=(o&&o.gv_amrot)||{};LS.set('gv_amrot',Object.assign({},rb,ra))}catch(e){}
+ return r}}
 
 ;window.__gvStage=7;
 // ---- settings & sync
