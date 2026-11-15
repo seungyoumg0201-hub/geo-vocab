@@ -1594,8 +1594,8 @@ setTimeout(()=>{try{if(!PKEYS.includes('gv_prc'))PKEYS.push('gv_prc')}catch(e){}
 
 ;window.__gvStage=29;
 // r84: 7일 코스 (거꾸로) — 반대 모드 카드(data_reverse.json)를 7일로 나눔. 날마다 과목 비율대로 고르게, 용어 중복 없음(결정적 분배). 별도 기록 gv_rpass{start,done}, 채점은 gv_rev에도 반영
-function rcPlan(){if(rcPlan._c&&rcPlan._n==REV.length)return rcPlan._c;const P=revPool(),n={},r=new Map();P.forEach(x=>{const c=revTerm(x).cat||'';r.set(x,n[c]=(n[c]||0)+1)});
- const D=[[],[],[],[],[],[],[]];P.map((x,i)=>[x,(r.get(x)-0.5)/n[revTerm(x).cat||''],i]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).forEach(a=>D[Math.min(6,Math.floor(a[1]*7))].push(a[0]));rcPlan._n=REV.length;return rcPlan._c=D}
+function rcPlan(){if(rcPlan._c&&rcPlan._n==REV.length)return rcPlan._c;const P0=revPool(),P=P0.filter(x=>!x.l5),LT=P0.filter(x=>x.l5),n={},r=new Map();P.forEach(x=>{const c=revTerm(x).cat||'';r.set(x,n[c]=(n[c]||0)+1)});
+ const D=[[],[],[],[],[],[],[]];P.map((x,i)=>[x,(r.get(x)-0.5)/n[revTerm(x).cat||''],i]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).forEach(a=>D[Math.min(6,Math.floor(a[1]*7))].push(a[0]));LT.forEach(x=>D[6].push(x));rcPlan._n=REV.length;return rcPlan._c=D}
 function rcGet(){let p=LS.get('gv_rpass',null);if(!p||!p.start){p={start:kstYMD(),done:{}};LS.set('gv_rpass',p)}p.done=p.done||{};return p}
 function rcDay(p){return Math.max(0,Math.min(6,Math.floor((Date.parse(kstYMD())-Date.parse(p.start))/864e5)))}
 function rcStat(){const p=rcGet(),D=rcPlan(),di=rcDay(p);const days=D.map(L=>({n:L.length,d:L.filter(x=>p.done[x.t]).length}));const tot=days.reduce((a,b)=>a+b.n,0),done=days.reduce((a,b)=>a+b.d,0);return {p,D,di,days,tot,done}}
@@ -1665,6 +1665,7 @@ function yxEntry(){if(document.querySelector('#coyx'))return;const root=document
 {const _co=coMenu;coMenu=function(){const r=_co.apply(this,arguments);try{yxEntry()}catch(e){console.warn('yxEntry',e)}return r}}
 
 ;window.__gvStage=32;
+// r115: 계획 생성 뒤 추가된 카드·문항(l5 표시)은 기존 날짜 배분을 흔들지 않도록 Day 5 끝에 붙임(진행 중인 계획 보존)
 // r104: 단어암기 5일(거꾸로) · 서술형 문제 5일 · 세션 이어하기 · 몰라요 간격 · 반대 모드 섞기
 var RQ_BAD=12,RQ_MID=20;
 function sessAll(){return LS.get('gv_sess',{})||{}}
@@ -1716,8 +1717,8 @@ function prcMix(N){N=N||20;const st=prcSt(),P=prcPool(),n=Date.now(),d=x=>((st[x
  return mixTake(hd,un,okd.concat(okl),N)}
 
 // ---- 단어암기 5일 (거꾸로): 반대 모드 카드를 5일로. 기록 gv_rpass5, 채점은 gv_rev ----
-function r5Plan(){if(r5Plan._c&&r5Plan._n==REV.length)return r5Plan._c;const P=revPool(),n={},r=new Map();P.forEach(x=>{const c=revTerm(x).cat||'';r.set(x,n[c]=(n[c]||0)+1)});
- const D=[[],[],[],[],[]];P.map((x,i)=>[x,(r.get(x)-0.5)/n[revTerm(x).cat||''],i]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).forEach(a=>D[Math.min(4,Math.floor(a[1]*5))].push(a[0]));r5Plan._n=REV.length;return r5Plan._c=D}
+function r5Plan(){if(r5Plan._c&&r5Plan._n==REV.length)return r5Plan._c;const P0=revPool(),P=P0.filter(x=>!x.l5),LT=P0.filter(x=>x.l5),n={},r=new Map();P.forEach(x=>{const c=revTerm(x).cat||'';r.set(x,n[c]=(n[c]||0)+1)});
+ const D=[[],[],[],[],[]];P.map((x,i)=>[x,(r.get(x)-0.5)/n[revTerm(x).cat||''],i]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).forEach(a=>D[Math.min(4,Math.floor(a[1]*5))].push(a[0]));LT.forEach(x=>D[4].push(x));r5Plan._n=REV.length;return r5Plan._c=D}
 function r5Get(){let p=LS.get('gv_rpass5',null);if(!p||!p.start){p={start:kstYMD(),done:{}};LS.set('gv_rpass5',p)}p.done=p.done||{};return p}
 function r5Day(p){return Math.max(0,Math.min(4,Math.floor((Date.parse(kstYMD())-Date.parse(p.start))/864e5)))}
 function r5Stat(){const p=r5Get(),D=r5Plan(),di=r5Day(p);const days=D.map(L=>({n:L.length,d:L.filter(x=>p.done[x.t]).length}));const tot=days.reduce((a,b)=>a+b.n,0),done=days.reduce((a,b)=>a+b.d,0);
@@ -1766,12 +1767,13 @@ function w5Map(){const m=new Map();w5All().forEach(x=>m.set(kwKey(x),x));return 
 function w5Typ(x){return x._src||(x.k=='B'?'psg':x.k=='W'?'wb':x.k=='S'?'sq':x.k=='E'?(x.q&&String(x.q.id||'').indexOf('ft:')==0?'ft':'ec'):x.k=='Q'?'w16':(x.k||'?'))}
 function w5Subj(x){const c=x.t?x.t.cat:x.p?(x.p.cat||x.p.subj):x.q?(x.q.cat||x.q.subj||''):'';return (typeof grpOf=='function'&&grpOf(c))||c||'기타'}
 function w5Cnt(){const c={all:0};w5All().forEach(x=>{const t=w5Typ(x);c[t]=(c[t]||0)+1;c.all++});return c}
-function w5Plan(){if(w5Plan._c)return w5Plan._c;const P=w5All(),D=[[],[],[],[],[]],typFn=w5Typ,subjFn=w5Subj;
+function w5Plan(){if(w5Plan._c)return w5Plan._c;const isL=x=>!!(x.p&&x.p.l5),P0=w5All(),P=P0.filter(x=>!isL(x)),LT=P0.filter(isL),D=[[],[],[],[],[]],typFn=w5Typ,subjFn=w5Subj;
  const types=[...new Set(P.map(typFn))].sort();
  types.forEach(t=>{const L=P.filter(x=>typFn(x)==t),n={},r=new Map();L.forEach(x=>{const s=subjFn(x);r.set(x,n[s]=(n[s]||0)+1)});
   L.map((x,i)=>[x,(r.get(x)-0.5)/n[subjFn(x)],i]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).forEach(a=>{
    let best=0,bs=1e9,bt=1e9;for(let d=0;d<5;d++){const typc=D[d].filter(z=>typFn(z)==t).length,tot=D[d].length;if(typc<bs||(typc==bs&&tot<bt)||(typc==bs&&tot==bt&&d<best)){best=d;bs=typc;bt=tot}}
    D[best].push(a[0])})});
+ LT.forEach(x=>D[4].push(x));
  w5Plan._c=D;return D}
 function w5Get(){let p=LS.get('gv_wpass5',null);if(!p||!p.start){p={start:kstYMD(),done:{}};LS.set('gv_wpass5',p)}p.done=p.done||{};return p}
 function w5Stat(){const p=w5Get(),D=w5Plan(),di=Math.max(0,Math.min(4,Math.floor((Date.parse(kstYMD())-Date.parse(p.start))/864e5)));
