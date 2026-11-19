@@ -547,7 +547,7 @@ function kwRun(L,title,res){let i=res?res.i:0,c=0;const miss=[],missX=[],conf=[]
    if(I&&I.value.trim()){if(x.k=='Q'&&!x.g){auto=null;el.querySelector('#kwsc').innerHTML=`<div class="mut small">내 답: ${esc(I.value)}</div>`}else if(x.k=='S'){auto=keys.some(k=>norm(k)==norm(I.value))||judge(I.value,{term:keys.join('/'),en:''})>0;el.querySelector('#kwsc').innerHTML=`<div class="pill ${auto?'ok':'bad'}">${auto?'✓ 정답':'✗ 오답'}</div>${auto?'':`<div class="myans">내 답: <s>${esc(I.value)}</s></div>`}`;if(!auto)window._smine=I.value}else if(x.g!=null){auto=judge(I.value,{term:keys.join('/'),en:''})>0||keys.some(k=>norm(k)==norm(I.value));if(x.g!=null){x.u[x.i]=I.value;if(auto&&x._mem){const mm=x._mem.find(z=>judge(I.value,{term:z.a.join('/'),en:''})>0||z.a.some(k=>norm(k)==norm(I.value)));if(mm)x.m[x.i]=mm.a[0]}const mk=el.querySelector('mark.blk.cur');if(mk){mk.classList.add(auto?'ok':'bad');mk.textContent='( '+((auto&&x.m[x.i])||keys[0])+' )'}}el.querySelector('#kwsc').innerHTML=`<div class="pill ${auto?'ok':'bad'}">${auto?'✓ 정답':'✗ 오답'}</div>${auto?'':`<div class="myans">내 답: <s>${esc(I.value)}</s></div>`}`}else{let h=0;A.querySelectorAll('.kwk').forEach(s=>{const ok=kwHit(I.value,s.dataset.k);s.classList.add(ok?'hit':'mis');if(ok)h++});auto=h>=Math.ceil(keys.length*0.6);el.querySelector('#kwsc').innerHTML=`<div class="pill ${auto?'ok':'bad'}">${h}/${keys.length} 키워드</div>`}}
    else if(I||ox)auto=false;
    B.innerHTML=`<button class="sbtn bad" data-g="0">✗ 놓침 (1)</button><button class="sbtn ok" data-g="1">✓ 썼음 (2)</button>`;if(I&&I.value.trim()&&auto===false){B.insertAdjacentHTML('beforeend','<button class="sbtn" id="kwov" title="자동 채점이 틀렸을 때">사실 맞음</button>');B.querySelector('#kwov').onclick=()=>{const o={at:Date.now(),id:kwKey(x),mine:I.value.slice(0,100),ans:String(keys[0]||'').slice(0,100)};const q=LS.get('gv_ovr',[]);q.push(o);LS.set('gv_ovr',q.slice(-500));try{window.ovrUp&&ovrUp()}catch(e){}grade(1)}}B.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>grade(+b.dataset.g))};
-  const grade=g=>{if(x.k=='S'){const st=LS.get('gv_sq',{});const r=st[x.q.id]||(st[x.q.id]={n:0,c:0});r.n++;if(g)r.c++;LS.set('gv_sq',st);if(!g&&!t)missAdd({d:'sq',id:'s:'+x.q.id,term:x.q.f=='system_judgement'?x.q.q.slice(0,40):(x.q.ans||x.q.con),mine:window._smine||'',sub:x.q.cat||'',how:window._smine?'typed':'self'})}window._smine='';{const sn=kwSeen();sn[kwKey(x)]=1;LS.set('gv_kwseen',sn)}KST.push({i,xi:x.i,g:JSON.stringify(x.g||null),c,m:miss.length});if(t){record(t.term,!!g,'kw');if(!g){srs[t.term]=sched(srs[t.term],1);miss.push(t.term)}else if(!srs[t.term])srs[t.term]=sched(null,3)}if(g)c++;if(x.g){x.g[x.i]=g;const r=blOf(x).findIndex((z,j)=>x.g[j]==null);if(r>=0){x.i=r;buzz(g?8:[8,30,8]);save();return next()}}if(!g){const I2=el.querySelector('#plin');if(I2&&I2.value.trim()&&(t||keys[0]))conf.push([I2.value.trim(),(x.k=='K'||x.k=='V')&&t?t.term:keys[0]]);if(!missX.includes(x))missX.push(x);if(!x._rq){const y=Object.assign({},x,{_rq:1});if(y.g){y.g={};y.u={};y.m={};y.i=0}L.splice(Math.min(L.length,i+12),0,y)}}i++;buzz(g?8:[8,30,8]);save();next()};
+  const grade=g=>{try{window.wrHook&&wrHook(x,g)}catch(e){}if(x.k=='S'){const st=LS.get('gv_sq',{});const r=st[x.q.id]||(st[x.q.id]={n:0,c:0});r.n++;if(g)r.c++;LS.set('gv_sq',st);if(!g&&!t)missAdd({d:'sq',id:'s:'+x.q.id,term:x.q.f=='system_judgement'?x.q.q.slice(0,40):(x.q.ans||x.q.con),mine:window._smine||'',sub:x.q.cat||'',how:window._smine?'typed':'self'})}window._smine='';{const sn=kwSeen();sn[kwKey(x)]=1;LS.set('gv_kwseen',sn)}KST.push({i,xi:x.i,g:JSON.stringify(x.g||null),c,m:miss.length});if(t){record(t.term,!!g,'kw');if(!g){srs[t.term]=sched(srs[t.term],1);miss.push(t.term)}else if(!srs[t.term])srs[t.term]=sched(null,3)}if(g)c++;if(x.g){x.g[x.i]=g;const r=blOf(x).findIndex((z,j)=>x.g[j]==null);if(r>=0){x.i=r;buzz(g?8:[8,30,8]);save();return next()}}if(!g){const I2=el.querySelector('#plin');if(I2&&I2.value.trim()&&(t||keys[0]))conf.push([I2.value.trim(),(x.k=='K'||x.k=='V')&&t?t.term:keys[0]]);if(!missX.includes(x))missX.push(x);if(!x._rq){const y=Object.assign({},x,{_rq:1});if(y.g){y.g={};y.u={};y.m={};y.i=0}L.splice(Math.min(L.length,i+12),0,y)}}i++;buzz(g?8:[8,30,8]);save();next()};
   const oxPick=v=>{if(shown)return;show();auto=v==x.q.ans;window._smine=v;el.querySelectorAll('#kwox button').forEach(b=>{b.disabled=true;if(b.dataset.o==v)b.classList.add(auto?'ok':'bad')});el.querySelector('#kwsc').innerHTML=`<div class="pill ${auto?'ok':'bad'}">${auto?'✓ 정답':'✗ 오답'}</div><div class="myans">내 답: ${v=='O'?'⭕ O':'❌ X'}</div>`;B.innerHTML=`<button class="sbtn pri" id="kwoxn">다음 (Enter)</button>`;B.querySelector('#kwoxn').onclick=()=>grade(auto?1:0)};
   const chPick=k=>{if(shown||!ch)return;const v=ch[k];if(v==null)return;x.u[x.i]=v;show();auto=v==keys[0];el.querySelectorAll('#kwch button').forEach((b2,kk)=>{b2.disabled=true;if(kk==k)b2.classList.add(auto?'ok':'bad')});const mk=el.querySelector('mark.blk.cur');if(mk){mk.classList.remove('rev');mk.classList.add(auto?'ok':'bad');mk.textContent='( '+keys[0]+' )'}el.querySelector('#kwsc').innerHTML=`<div class="pill ${auto?'ok':'bad'}">${auto?'✓ 정답':'✗ 오답'}</div>${auto?'':`<div class="myans">내 답: <s>${esc(v)}</s></div>`}`;B.innerHTML=`<button class="sbtn pri" id="kwchn">다음 (Enter)</button>`;B.querySelector('#kwchn').onclick=()=>grade(auto?1:0)};
   if(ch)el.querySelectorAll('#kwch button').forEach(b2=>b2.onclick=e=>{e.stopPropagation();chPick(+b2.dataset.k)});
@@ -1696,7 +1696,7 @@ function sessPush(kind,st){const k=sessKey(kind),all=sessAll();
  LS.set('gv_sess',all);
  if(kind=='am'){try{const l=S.lastStart||{},t=st.L[Math.max(0,st.i-1)];if(t&&t.t&&!t.rq){const r=LS.get('gv_amrot',{})||{};r[sessKey('am')]=t.t.term;LS.set('gv_amrot',r)}}catch(e){}}}
 function sessDone(kind){const k=sessKey(kind),all=sessAll();delete all[k];LS.set('gv_sess',all)}
-function sessKw(L,i,title,fin){try{if((S.lastStart||{}).m!='w5')return;if(i>0){const x=L[i-1];if(x&&!x._rq)w5Mark(x)}if(fin){sessDone('w5');return}sessPush('w5',{L,i})}catch(e){}}
+function sessKw(L,i,title,fin){try{if((S.lastStart||{}).m!='w5'||window.__wrOn)return;if(i>0){const x=L[i-1];if(x&&!x._rq)w5Mark(x)}if(fin){sessDone('w5');return}sessPush('w5',{L,i})}catch(e){}}
 function sessHas(kind){const o=sessAll()[sessKey(kind)];return !!(o&&o.q&&o.i<o.q.length)}
 
 function amRotOrder(L,id){const base=amOrder(L),sn=typeof kwSeen=='function'?kwSeen():{};const un=L.filter(t=>!sn['T:'+t.term]);if(un.length)return base;
@@ -1848,6 +1848,41 @@ setTimeout(()=>{try{['gv_rpass5','gv_wpass5','gv_sess','gv_amrot'].forEach(k=>{i
  const a=Object.assign({},loc.sess||{}),b=(o&&o.gv_sess)||{};for(const k in b){if(!a[k]||(b[k].at||0)>(a[k].at||0))a[k]=b[k]}LS.set('gv_sess',a);
  const ra=Object.assign({},loc.rot||{}),rb=(o&&o.gv_amrot)||{};LS.set('gv_amrot',Object.assign({},rb,ra))}catch(e){}
  return r}}
+
+// ---- r117: 서술형 5일 복습 — 서술형 5일 계획에서 틀리거나 '놓침(몰라요)'한 문항만 모아 5일 동안 다시 풀기 ----
+// 기록 gv_wrev5 {start, bad:{key:{n,at}}, ok:{key:at}}. 서술형 5일 계획 진도(gv_wpass5)는 읽기만 하고 바꾸지 않음.
+function wrGet(){let p=LS.get('gv_wrev5',null);if(!p||!p.bad){p={start:kstYMD(),bad:{},ok:{},at:Date.now()}}p.ok=p.ok||{};if(!p.start)p.start=kstYMD();
+ if(!p.seed){try{wrSeed(p)}catch(e){}p.seed=1;LS.set('gv_wrev5',p)}return p}
+function wrSeed(p){const m=w5Map(),w=w5Get(),st=Date.parse(w.start)||0,dn=w.done||{};
+ (LS.get('gv_miss',[])||[]).forEach(o=>{if(o&&o.id&&m.has(o.id)&&(o.at||0)>=st-864e5){const r=p.bad[o.id]||(p.bad[o.id]={n:0,at:0});r.n++;r.at=Math.max(r.at,o.at||0)}});
+ const sq=LS.get('gv_sq',{})||{};Object.keys(sq).forEach(id=>{const k='S:'+id,r=sq[id];if(m.has(k)&&dn[k]&&r&&r.n>r.c&&!p.bad[k])p.bad[k]={n:r.n-r.c,at:dn[k]}})}
+function wrMode(){if(window.__wrOn)return 'wr5';const l=S.lastStart||{};return l.m=='w5'&&/^📝 서술형 5일/.test(window.__kwT||'')?'w5':''}
+function wrHook(x,g){const l={m:wrMode()};if(!l.m)return;const k=kwKey(x);if(!w5Map().has(k))return;const p=wrGet();
+ let last=true,all=!!g;if(x.g){const BL=blOf(x);last=BL.every((z,j)=>j==x.i||x.g[j]!=null);all=all&&BL.every((z,j)=>j==x.i||x.g[j])}
+ if(!g){const r=p.bad[k]||(p.bad[k]={n:0,at:0});r.n++;r.at=Date.now();delete p.ok[k]}
+ else if(last&&all&&l.m=='wr5'&&p.bad[k]&&!x._rq)p.ok[k]=Date.now();
+ p.at=Date.now();LS.set('gv_wrev5',p)}
+function wrStat(){const p=wrGet(),m=w5Map(),keys=Object.keys(p.bad).filter(k=>m.has(k));const pend=keys.filter(k=>!(p.ok[k]&&p.ok[k]>=(p.bad[k].at||0))).sort((a,b)=>(p.bad[a].at||0)-(p.bad[b].at||0));
+ const today=Object.values(p.ok).filter(t=>kstYMD(new Date(t))==kstYMD()).length;
+ const clr=keys.length-pend.length,di=Math.max(0,Math.floor((Date.parse(kstYMD())-Date.parse(p.start))/864e5)),dl=Math.max(1,5-Math.min(4,di)),quota=Math.ceil((pend.length+today)/dl);
+ return {p,m,pend,clr,tot:keys.length,di,quota,today,pct:keys.length?Math.round(clr/keys.length*1000)/10:0}}
+// 복습은 이어하기(S.lastStart)·서술형 5일 세션(gv_sess)을 건드리지 않음 — 메인의 이어하기와 따로 동시에 진행
+function wrRun(){const s=wrStat();
+ const L=s.pend.slice(0,S.kwN||20).map(k=>{const y=Object.assign({},s.m.get(k));if(y.g)y.g={};if(y.u)y.u={};if(y.m)y.m={};if(y.i!=null)y.i=0;return y});
+ if(!L.length){toast(s.tot?'복습할 문항을 모두 맞혔어요 🎉':'서술형 5일에서 틀리거나 놓친 문항이 아직 없어요');return}
+ kwRun(L,WR_T)}
+var WR_T='🔁 서술형 5일 복습';
+{const _kr=kwRun;kwRun=function(L,t){window.__kwT=t||'';window.__wrOn=String(t||'').indexOf(WR_T)==0;return _kr.apply(this,arguments)}}
+function wrCard(){const s=wrStat(),dl=s.di<5?`Day ${s.di+1}/5`:'Day 5 이후';
+ const cta=!s.tot?'틀리거나 놓친 문항이 생기면 여기 모여요':!s.pend.length?'복습 완료 🎉':s.today>=s.quota?`▶ 복습 더 하기 · 남은 ${s.pend.length}문항`:`▶ 복습 이어하기 · 오늘 ${s.quota-s.today}문항`;
+ return `<div class="pcard" id="wrcard"><div class="hdash"><div class="ring" style="--p:${s.pct}"><b>${Math.round(s.pct)}%</b></div><div class="hdt"><div class="small mut">서술형 5일 복습 · ${dl}</div><div class="hbig">${s.clr}<span class="mut">/${s.tot}</span></div><div class="small mut">오답·놓침 문항 남은 ${s.pend.length} · 다시 맞히면 빠져요</div></div></div><button class="cta" id="wrgo"${s.pend.length?'':' disabled'}>${cta}</button></div>`}
+{const _rh=renderHome;renderHome=function(){_rh.apply(this,arguments);try{const v=$('#v-home'),pc=v&&v.querySelector('.pcards');if(!pc||pc.querySelector('#wrcard'))return;pc.insertAdjacentHTML('beforeend',wrCard());const b=pc.querySelector('#wrgo');if(b)b.onclick=()=>wrRun()}catch(e){}}}
+{const _rl2=resumeLast;resumeLast=function(){const l=S.lastStart||{};if(l.m=='wr5'){S.lastStart={m:'w5',d:null};return w5Run()}return _rl2.apply(this,arguments)}}
+setTimeout(()=>{try{if(!PKEYS.includes('gv_wrev5'))PKEYS.push('gv_wrev5')}catch(e){}},0);
+{const _mi2=mergeIn;mergeIn=function(o){const loc=LS.get('gv_wrev5',null);const r=_mi2.apply(this,arguments);
+ try{const rem=o&&o.gv_wrev5;if(rem&&loc){const bad=Object.assign({},rem.bad||{});for(const k in (loc.bad||{})){const a=loc.bad[k],b=bad[k];bad[k]=b?{n:Math.max(a.n||0,b.n||0),at:Math.max(a.at||0,b.at||0)}:a}
+  const ok=Object.assign({},rem.ok||{});for(const k in (loc.ok||{}))ok[k]=Math.max(ok[k]||0,loc.ok[k]);LS.set('gv_wrev5',{start:loc.start<rem.start?loc.start:rem.start,bad,ok,at:Math.max(loc.at||0,rem.at||0),seed:1})}
+  else if(loc)LS.set('gv_wrev5',loc)}catch(e){}return r}}
 
 ;window.__gvStage=7;
 // ---- settings & sync
