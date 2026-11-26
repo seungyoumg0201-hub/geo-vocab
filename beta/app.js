@@ -1969,6 +1969,48 @@ const startMode=new URLSearchParams(location.search).get('m');
 deckUI();catsUI();go(['review','card','quiz','stats','data'].includes(startMode)?startMode:'home');pushDueToSW();
 ;window.__gvOK=1;
 
+;window.__gvStage=33;
+// ---- 파이널 시험: 표시한 어려운 부분만 모은 단서→용어 세트 (진도는 gv_final 전용)
+let FXD=null;function fxd(){if(!FXD){try{FXD=JSON.parse(document.getElementById('fxd').textContent)}catch(e){FXD=[]}}return FXD}
+function fxGet(){const o=LS.get('gv_final',null);return o&&typeof o==='object'?{start:o.start||null,done:o.done||{},bad:o.bad||{},sess:o.sess||null,at:o.at||0}:{start:null,done:{},bad:{},sess:null,at:0}}
+function fxSet(o){o.at=Date.now();LS.set('gv_final',o)}
+function fxStat(){const L=fxd(),p=fxGet();const tot=L.length,done=L.filter(x=>p.done[x.id]).length,need=tot-done,pct=tot?Math.round(done/tot*1000)/10:0;
+ const has=!!(p.sess&&p.sess.q&&p.sess.i<p.sess.q.length);return {p,L,tot,done,need,pct,has}}
+function fxCard(){const s=fxStat();
+ const cta=!s.tot?'카드를 불러오지 못했어요':s.done>=s.tot?'완주했어요 · 다시 하기':s.has?`▶ 이어서 하기 · 남은 ${s.need}장`:`▶ 시작하기 · ${s.tot}장`;
+ return `<div class="pcard" id="fxcard"><div class="hdash"><div class="ring" style="--p:${s.pct}"><b>${Math.round(s.pct)}%</b></div><div class="hdt"><div class="small mut">파이널 시험 · 단서 → 용어</div><div class="hbig">${s.done}<span class="mut">/${s.tot}</span></div><div class="small mut">표시한 어려운 부분만 · 기존 학습 기록과 따로 저장</div></div></div><button class="cta" id="fxgo">${cta}</button></div>`}
+function fxRun(opts){opts=opts||{};
+ const s0=fxStat();S.lastStart={m:'fx'};try{save()}catch(e){}
+ let L,i=0,ok=0,bad=0;const seen=new Set();
+ const pulled=(!opts.fresh&&s0.p.sess&&s0.p.sess.q&&s0.p.sess.i<s0.p.sess.q.length)?s0.p.sess:null;
+ if(pulled){const map={};s0.L.forEach(x=>map[x.id]=x);L=pulled.q.map(id=>map[id]).filter(Boolean);i=pulled.i||0;ok=pulled.ok||0;bad=pulled.bad||0;(pulled.seen||[]).forEach(id=>seen.add(id))}
+ else{
+  const pend=s0.L.filter(x=>!s0.p.done[x.id]);
+  L=(pend.length?pend:s0.L.slice()).slice();
+  if(!L.length){toast('카드가 없어요');return}
+ }
+ const o=ov('<div id="am"></div>');o.classList.add('amov');const box=o.querySelector('#am');
+ const persist=()=>{const p=fxGet();p.sess={q:L.map(x=>x.id),i,ok,bad,seen:[...seen]};fxSet(p)};
+ const fin=()=>{const p=fxGet();p.sess=null;fxSet(p);const n=seen.size,pct=n?Math.round(ok/n*100):0,st=fxStat();
+  box.innerHTML=`<div class="rescard"><div class="ring" style="--p:${pct};margin:0 auto 14px"><b>${pct}%</b></div><div class="big">${n}장</div><div class="mut">외웠어요 ${ok} · 헷갈려요 ${bad}</div><div class="small mut">파이널 시험 ${st.done}/${st.tot}</div></div><button class="cta" id="amnx">${st.need?'남은 카드 이어하기':'처음부터 다시'}</button><button class="sbtn" id="amx">닫기</button>`;
+  box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();fxRun(st.need?{}:{fresh:1})}};
+ const kh=e=>{if(!document.body.contains(box)){document.removeEventListener('keydown',kh);return}if(e.target.closest&&e.target.closest('input,textarea'))return;box._k&&box._k(e)};document.addEventListener('keydown',kh);
+ const show=()=>{if(i>=L.length)return fin();const x=L[i];
+  box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
+  <div class="amcard revc" id="amc"><div class="amf">${L[i].rq?'<span class="amre">다시 보기</span>':''}<div class="small amcat">파이널 시험 · ${esc(x.cat)}${x.item!=null?` · ${x.item}번`:''}</div><div class="amdef revq">${esc(x.q)}</div><div class="small mut amhint">어떤 용어일까요? 탭해서 확인</div></div>
+  <div class="amb hide"><div class="small amcat">${esc(x.cat)}</div><div class="amterm2">${esc(x.a)}</div><div class="amdef">${esc(x.q)}</div></div></div>
+  <div class="ambtn"><button class="sbtn bad" id="amn">헷갈려요</button><button class="sbtn ok" id="amy">외웠어요</button></div>`;
+  const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
+  box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='1'||e.key=='ArrowLeft'){e.preventDefault();grade(0)}else if(e.key=='2'||e.key=='ArrowRight'){e.preventDefault();grade(1)}};
+  const grade=g=>{if(!L[i].rq){const p=fxGet();if(g){p.done[x.id]=Date.now();if(p.bad)delete p.bad[x.id]}else{p.bad[x.id]={n:((p.bad[x.id]||{}).n||0)+1,at:Date.now()}}fxSet(p);seen.add(x.id);g?ok++:bad++;if(!g)L.splice(Math.min(L.length,i+3),0,Object.assign({},x,{rq:1}))}i++;persist();show()};
+  box.querySelector('#amy').onclick=()=>grade(1);box.querySelector('#amn').onclick=()=>grade(0)};
+ show()}
+function fxReset(){return (async()=>{if(!await askConfirm('파이널 시험 진도를 지우고 처음부터 시작할까요?','다른 학습 기록(단어암기·서술형·복습)은 그대로예요.','다시 시작'))return;LS.set('gv_final',{start:kstYMD(),done:{},bad:{},sess:null,at:Date.now()});try{renderHome()}catch(e){}toast('파이널 시험 진도를 지웠어요')})()}
+(function(){const _rh=renderHome;renderHome=function(){_rh.apply(this,arguments);try{const v=$('#v-home'),pc=v&&v.querySelector('.pcards');if(!pc||pc.querySelector('#fxcard'))return;pc.insertAdjacentHTML('afterbegin',fxCard());const b=pc.querySelector('#fxgo');if(b)b.onclick=()=>{const s=fxStat();if(s.done>=s.tot&&!s.has)fxRun({fresh:1});else fxRun()}}catch(e){}}})();
+{const _rl=resumeLast;resumeLast=function(){const l=S.lastStart||{};if(l.m=='fx')return fxRun();return _rl.apply(this,arguments)}}
+{const _ll=lastLbl;lastLbl=function(){const l=S.lastStart||{};if(l.m=='fx')return '파이널 시험';try{return _ll.apply(this,arguments)}catch(e){return ''}}}
+setTimeout(()=>{try{if(!PKEYS.includes('gv_final'))PKEYS.push('gv_final')}catch(e){}},0);
+
 
 /* r97b(베타): '알아요' 카드 모아 보기 — 잘못 누른 카드를 몰라요/헷갈려요로 되돌림. 기존 저장소(gv_srs·gv_marks)만 사용 */
 function knownList(){const L=[];for(const t of T){const c=srs[t.term];if(!c||!(c.r>0)||marks[t.term]=='bad')continue;const at=c.last||((c.due||0)-(c.i||0)*864e5);L.push({t,at})}L.sort((a,b)=>b.at-a.at);return L}
