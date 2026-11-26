@@ -1995,10 +1995,12 @@ function fxRun(opts){opts=opts||{};
   box.innerHTML=`<div class="rescard"><div class="ring" style="--p:${pct};margin:0 auto 14px"><b>${pct}%</b></div><div class="big">${n}장</div><div class="mut">외웠어요 ${ok} · 헷갈려요 ${bad}</div><div class="small mut">파이널 시험 ${st.done}/${st.tot}</div></div><button class="cta" id="amnx">${st.need?'남은 카드 이어하기':'처음부터 다시'}</button><button class="sbtn" id="amx">닫기</button>`;
   box.querySelector('#amx').onclick=ovClose;box.querySelector('#amnx').onclick=()=>{ovClose();fxRun(st.need?{}:{fresh:1})}};
  const kh=e=>{if(!document.body.contains(box)){document.removeEventListener('keydown',kh);return}if(e.target.closest&&e.target.closest('input,textarea'))return;box._k&&box._k(e)};document.addEventListener('keydown',kh);
+ const fxHtml=s=>String(s||'').split(/\n{2,}/).map(p=>`<p class="fxp">${esc(p).replace(/\n/g,'<br>')}</p>`).join('');
  const show=()=>{if(i>=L.length)return fin();const x=L[i];
+  const hint=x.kind=='pair'?'㉠, ㉡에 해당하는 용어를 떠올린 뒤 탭해서 확인':'해당하는 용어를 떠올린 뒤 탭해서 확인';
   box.innerHTML=`<div class="amtop"><div class="pbar"><i style="width:${i/L.length*100}%"></i></div><span class="small mut">${i+1}/${L.length}</span></div>
-  <div class="amcard revc" id="amc"><div class="amf">${L[i].rq?'<span class="amre">다시 보기</span>':''}<div class="small amcat">파이널 시험 · ${esc(x.cat)}${x.item!=null?` · ${x.item}번`:''}</div><div class="amdef revq">${esc(x.q)}</div><div class="small mut amhint">어떤 용어일까요? 탭해서 확인</div></div>
-  <div class="amb hide"><div class="small amcat">${esc(x.cat)}</div><div class="amterm2">${esc(x.a)}</div><div class="amdef">${esc(x.q)}</div></div></div>
+  <div class="amcard fxcardview" id="amc"><div class="amf">${L[i].rq?'<span class="amre">다시 보기</span>':''}<div class="small amcat">파이널 시험 · ${esc(x.cat)}${x.item!=null?` · ${x.item}번`:''}</div><div class="fxq">${fxHtml(x.q)}</div><div class="small mut amhint">${hint}</div></div>
+  <div class="amb hide"><div class="small amcat">${esc(x.cat)}</div><div class="amterm2 fxterm">${esc(x.a).replace(/\n/g,'<br>')}</div>${x.hint?`<div class="fxhint">${esc(x.hint)}</div>`:''}</div></div>
   <div class="ambtn"><button class="sbtn bad" id="amn">헷갈려요</button><button class="sbtn ok" id="amy">외웠어요</button></div>`;
   const c=box.querySelector('#amc'),flip=()=>{c.querySelector('.amf').classList.toggle('hide');c.querySelector('.amb').classList.toggle('hide')};c.onclick=flip;
   box._k=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();flip()}else if(e.key=='1'||e.key=='ArrowLeft'){e.preventDefault();grade(0)}else if(e.key=='2'||e.key=='ArrowRight'){e.preventDefault();grade(1)}};
